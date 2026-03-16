@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CYBERGUARD – Real Time Detection</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+
+<!-- TOP NAVBAR -->
+<div class="top-navbar">
+  <div class="inner">
+    <div class="logos">
+      <img src="images/cdac_logo.jpg" alt="CDAC" onerror="this.style.display='none'"/>
+      <img src="images/isea_logo.jpg" alt="ISEA" onerror="this.style.display='none'"/>
+      <div class="meity-info">
+        <img src="https://www.meity.gov.in/sites/all/themes/meity/images/emblem.png" alt="MeitY" onerror="this.style.display='none'"/>
+        <span>Ministry of Electronics<br/>&amp; Information Technology</span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="college-logo">COLLEGE</div>
+      <span class="college-name">Your College Name</span>
+      <button class="theme-btn" id="themeBtn"><i data-lucide="moon"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN NAVBAR -->
+<nav class="main-navbar">
+  <div class="inner">
+    <a href="index.html" class="brand"><i data-lucide="shield"></i>CYBERGUARD</a>
+    <div class="nav-links">
+      <a href="awareness.html">AWARENESS</a>
+      <a href="detection.html" class="active">REAL TIME DETECTION</a>
+      <a href="reporting.html">REPORTING</a>
+    </div>
+    <button class="hamburger" id="hamburger"><i data-lucide="menu" id="menuIcon"></i></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="awareness.html">AWARENESS</a>
+    <a href="detection.html" class="active">REAL TIME DETECTION</a>
+    <a href="reporting.html">REPORTING</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="background:linear-gradient(135deg,#dc2626,#ea580c);color:#fff;padding:4rem 1rem;text-align:center;">
+  <div class="container">
+    <h1 style="font-size:2.5rem;font-weight:900;margin-bottom:1rem;">Real Time Detection</h1>
+    <p style="font-size:1.1rem;color:#fecaca;max-width:40rem;margin:0 auto;">Advanced AI-powered tools to detect and prevent cyber threats in real-time</p>
+  </div>
+</section>
+
+<!-- DETECTION FEATURES -->
+<section class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Detection Tools</h2>
+      <p>Multi-layered protection against cyber threats</p>
+    </div>
+    <div class="grid-2" id="detectionFeatures"></div>
+  </div>
+</section>
+
+<!-- VOICE DETECTION DEMO -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="grid-2" style="align-items:center;">
+      <div>
+        <h2 style="font-size:1.75rem;font-weight:800;color:#1f2937;margin-bottom:1rem;">Voice Detection Technology</h2>
+        <p style="color:#4b5563;line-height:1.7;margin-bottom:1.5rem;">Our AI-powered voice detection system analyzes incoming calls in real-time to identify scam patterns, spoofed numbers, and fraudulent behavior before you become a victim.</p>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <div class="card-icon bg-green-100" style="width:44px;height:44px;margin:0;flex-shrink:0;"><i data-lucide="volume-2" style="width:20px;height:20px;color:#16a34a;"></i></div>
+            <div><p style="font-weight:600;color:#1f2937;">Voice Pattern Analysis</p><p style="font-size:0.85rem;color:#6b7280;">Detects automated and recorded voices</p></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <div class="card-icon bg-blue-100" style="width:44px;height:44px;margin:0;flex-shrink:0;"><i data-lucide="phone" style="width:20px;height:20px;color:#2563eb;"></i></div>
+            <div><p style="font-weight:600;color:#1f2937;">Caller ID Verification</p><p style="font-size:0.85rem;color:#6b7280;">Identifies spoofed and fake numbers</p></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <div class="card-icon bg-purple-100" style="width:44px;height:44px;margin:0;flex-shrink:0;"><i data-lucide="activity" style="width:20px;height:20px;color:#9333ea;"></i></div>
+            <div><p style="font-weight:600;color:#1f2937;">Real-time Scoring</p><p style="font-size:0.85rem;color:#6b7280;">Risk score updated during the call</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:1rem;font-weight:700;color:#1f2937;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;">
+          <i data-lucide="scan" style="width:20px;height:20px;color:#dc2626;"></i>Live Call Scanner
+        </h3>
+        <div style="background:#111827;border-radius:0.75rem;padding:1.5rem;color:#fff;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+            <span style="font-size:0.875rem;color:#9ca3af;">Status</span>
+            <span style="display:flex;align-items:center;gap:0.5rem;color:#4ade80;">
+              <span style="width:8px;height:8px;background:#4ade80;border-radius:50%;display:inline-block;" class="animate-pulse"></span>Active
+            </span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.875rem;">Calls Analyzed Today</span><span style="font-size:1.5rem;font-weight:700;">1,247</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.875rem;">Threats Detected</span><span style="font-size:1.5rem;font-weight:700;color:#f87171;">89</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.875rem;">Users Protected</span><span style="font-size:1.5rem;font-weight:700;color:#4ade80;">756</span></div>
+          </div>
+          <button onclick="alert('Voice detection feature coming soon!')" style="width:100%;margin-top:1.5rem;background:#dc2626;color:#fff;padding:0.875rem;border-radius:0.5rem;font-weight:600;font-size:0.9rem;transition:background 0.2s;" onmouseover="this.style.background='#b91c1c'" onmouseout="this.style.background='#dc2626'">
+            Enable Voice Protection
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>How It Works</h2>
+      <p>Four simple steps to stay protected</p>
+    </div>
+    <div class="grid-4" id="howItWorks"></div>
+  </div>
+</section>
+
+<!-- LIVE THREAT ALERTS -->
+<section id="alerts" class="section section-bg">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Live Threat Alerts</h2>
+      <p>Latest detected threats and scams</p>
+    </div>
+    <div style="background:#fff;border-radius:0.75rem;box-shadow:0 4px 12px rgba(0,0,0,0.08);overflow:hidden;">
+      <div style="background:#dc2626;color:#fff;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;">
+        <h3 style="display:flex;align-items:center;gap:0.5rem;font-weight:700;"><i data-lucide="alert-triangle" style="width:20px;height:20px;"></i>Recent Alerts</h3>
+        <span style="font-size:0.8rem;background:#b91c1c;padding:0.25rem 0.75rem;border-radius:9999px;">Live Updates</span>
+      </div>
+      <div id="alertsList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY DASHBOARD -->
+<section class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Your Security Dashboard</h2>
+      <p>Track your protection status</p>
+    </div>
+    <div class="grid-4">
+      <div class="stat-box">
+        <div class="icon-wrap bg-green-100"><i data-lucide="shield" style="width:32px;height:32px;color:#16a34a;"></i></div>
+        <p class="value">Protected</p><p class="label">Device Status</p>
+      </div>
+      <div class="stat-box">
+        <div class="icon-wrap bg-blue-100"><i data-lucide="scan" style="width:32px;height:32px;color:#2563eb;"></i></div>
+        <p class="value">0</p><p class="label">Scans Today</p>
+      </div>
+      <div class="stat-box">
+        <div class="icon-wrap bg-red-100"><i data-lucide="alert-triangle" style="width:32px;height:32px;color:#dc2626;"></i></div>
+        <p class="value">0</p><p class="label">Threats Blocked</p>
+      </div>
+      <div class="stat-box">
+        <div class="icon-wrap bg-purple-100"><i data-lucide="lock" style="width:32px;height:32px;color:#9333ea;"></i></div>
+        <p class="value">100%</p><p class="label">Security Score</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="inner">
+    <div id="footerGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;"></div>
+    <div class="bottom">
+      <p>© 2025 CYBERGUARD. All rights reserved. An initiative under ISEA Project.</p>
+      <div class="bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Sitemap</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const detectionFeatures = [
+  { icon:"mic",           title:"Voice Call Analysis",  desc:"Real-time analysis of incoming calls to detect scam patterns and spoofed numbers.", features:["AI-powered voice recognition","Spam caller database","Real-time alerts","Call recording analysis"] },
+  { icon:"message-square",title:"SMS & Message Filter", desc:"Automatically filter and flag suspicious text messages containing phishing links.",  features:["Link scanning","Keyword detection","Spam classification","Auto-block options"] },
+  { icon:"globe",         title:"URL Scanner",          desc:"Scan any URL before clicking to check if it's safe or malicious.",                   features:["Real-time URL check","Phishing detection","Malware scanning","Reputation scoring"] },
+  { icon:"smartphone",    title:"App Security Scan",    desc:"Analyze installed apps for malware, excessive permissions, and security risks.",     features:["Malware detection","Permission analyzer","Privacy scanner","App reputation"] },
+];
+
+const recentAlerts = [
+  { type:"Phishing",   message:"Fake SBI KYC update SMS circulating",         time:"2 hours ago", severity:"High" },
+  { type:"Scam Call",  message:"New digital arrest scam numbers detected",    time:"4 hours ago", severity:"High" },
+  { type:"Malware",    message:"Fake UPI app stealing credentials",           time:"6 hours ago", severity:"Critical" },
+  { type:"Fraud",      message:"OLX scam using fake army IDs",                time:"8 hours ago", severity:"Medium" },
+];
+
+const howItWorks = [
+  { step:1, title:"Monitor",  desc:"Our system continuously monitors calls, messages, and app activities on your device." },
+  { step:2, title:"Analyze",  desc:"AI algorithms analyze patterns and compare against our threat database." },
+  { step:3, title:"Detect",   desc:"Suspicious activities are flagged in real-time with threat level assessment." },
+  { step:4, title:"Alert",    desc:"Instant notifications warn you about potential threats before any damage occurs." },
+];
+
+const severityColor = { Critical:'#dc2626', High:'#f97316', Medium:'#eab308' };
+const severityBadge = { Critical:'badge-red', High:'badge-orange', Medium:'badge-yellow' };
+
+// Detection Features
+document.getElementById('detectionFeatures').innerHTML = detectionFeatures.map(f =>
+  `<div class="card hover-card">
+    <div style="display:flex;align-items:flex-start;gap:1rem;">
+      <div class="card-icon bg-red-100" style="flex-shrink:0;width:64px;height:64px;margin:0;"><i data-lucide="${f.icon}" style="width:32px;height:32px;color:#dc2626;"></i></div>
+      <div style="flex:1;">
+        <h3 style="font-size:1.1rem;font-weight:800;color:#1f2937;margin-bottom:0.5rem;">${f.title}</h3>
+        <p style="color:#4b5563;font-size:0.875rem;margin-bottom:1rem;">${f.desc}</p>
+        <ul style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+          ${f.features.map(ft=>`<li style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:#4b5563;"><i data-lucide="check-circle" style="width:14px;height:14px;color:#22c55e;flex-shrink:0;"></i>${ft}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  </div>`
+).join('');
+
+// How It Works
+document.getElementById('howItWorks').innerHTML = howItWorks.map(h =>
+  `<div style="text-align:center;">
+    <div style="width:64px;height:64px;background:#dc2626;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;margin:0 auto 1rem;">${h.step}</div>
+    <h3 style="font-size:1.1rem;font-weight:700;color:#1f2937;margin-bottom:0.5rem;">${h.title}</h3>
+    <p style="font-size:0.85rem;color:#4b5563;">${h.desc}</p>
+  </div>`
+).join('');
+
+// Alerts
+document.getElementById('alertsList').innerHTML = recentAlerts.map(a =>
+  `<div class="alert-row">
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <div class="alert-dot" style="background:${severityColor[a.severity]};"></div>
+      <div>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.25rem;">
+          <span style="font-weight:700;font-size:0.9rem;color:#1f2937;">${a.type}</span>
+          <span class="badge ${severityBadge[a.severity]}">${a.severity}</span>
+        </div>
+        <p style="font-size:0.85rem;color:#4b5563;">${a.message}</p>
+      </div>
+    </div>
+    <span style="font-size:0.8rem;color:#9ca3af;white-space:nowrap;">${a.time}</span>
+  </div>`
+).join('');
+
+// Footer
+const govLinks=[{name:"Cybercrime.gov.in",url:"https://cybercrime.gov.in"},{name:"MeitY India",url:"https://www.meity.gov.in"},{name:"MHA - Cyber Security",url:"https://www.mha.gov.in"},{name:"CDAC India",url:"https://www.cdac.in"},{name:"ISEA Project",url:"https://www.isea.gov.in"},{name:"CERT-In",url:"https://www.cert-in.org.in"},{name:"NCIIPC",url:"https://www.nciipc.gov.in"},{name:"Digital India",url:"https://www.digitalindia.gov.in"}];
+const pageLinks=[{name:"Home",path:"index.html"},{name:"Awareness",path:"awareness.html"},{name:"Real Time Detection",path:"detection.html"},{name:"Reporting",path:"reporting.html"},{name:"Digital Arrest",path:"awareness.html#digital-arrest"},{name:"Quiz & Rewards",path:"awareness.html#quiz"},{name:"Workshops",path:"awareness.html#workshops"},{name:"Scam Alerts",path:"detection.html#alerts"}];
+document.getElementById('footerGrid').innerHTML=`<div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Government Resources</h3><ul>${govLinks.map(l=>`<li><a href="${l.url}" target="_blank">${l.name} <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>CYBERGUARD Pages</h3><ul>${pageLinks.map(l=>`<li><a href="${l.path}">${l.name}</a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Contact Us</h3><div class="contact-item"><i data-lucide="map-pin"></i><p>Cyber Security Cell<br/>Ministry of Electronics & IT<br/>New Delhi - 110001</p></div><div class="contact-item"><i data-lucide="phone"></i><p>Helpline: 1930<br/>Toll-Free: 1800-123-4567</p></div><div class="contact-item"><i data-lucide="mail"></i><p>support@cyberguard.gov.in</p></div><div class="helpline-box"><p class="title">Emergency Cyber Crime Helpline</p><p class="number">1930</p><p class="sub">Available 24x7 | Toll Free</p></div></div>`;
+
+// Mobile Menu
+document.getElementById('hamburger').addEventListener('click',()=>{const m=document.getElementById('mobileMenu');m.classList.toggle('open');document.getElementById('menuIcon').setAttribute('data-lucide',m.classList.contains('open')?'x':'menu');lucide.createIcons();});
+// Theme
+document.getElementById('themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');const d=document.body.classList.contains('dark');document.getElementById('themeBtn').innerHTML=d?'<i data-lucide="sun"></i>':'<i data-lucide="moon"></i>';lucide.createIcons();});
+
+lucide.createIcons();
+</script>
+</body>
+</html>

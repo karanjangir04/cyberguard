@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CYBERGUARD – Awareness</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    /* Quiz gradient helpers */
+    .grad-beginner     { background: linear-gradient(135deg,#10b981,#0d9488); }
+    .grad-intermediate { background: linear-gradient(135deg,#3b82f6,#4f46e5); }
+    .grad-advanced     { background: linear-gradient(135deg,#8b5cf6,#7c3aed); }
+    .quiz-option { transition: all 0.15s; }
+    .quiz-option:hover { transform: translateX(4px); }
+    .story-card { background:#fff;border-radius:1rem;box-shadow:0 4px 12px rgba(0,0,0,0.08);padding:1.5rem;border:1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAVBAR -->
+<div class="top-navbar">
+  <div class="inner">
+    <div class="logos">
+      <img src="images/cdac_logo.jpg" alt="CDAC" onerror="this.style.display='none'"/>
+      <img src="images/isea_logo.jpg" alt="ISEA" onerror="this.style.display='none'"/>
+      <div class="meity-info">
+        <img src="https://www.meity.gov.in/sites/all/themes/meity/images/emblem.png" alt="MeitY" onerror="this.style.display='none'"/>
+        <span>Ministry of Electronics<br/>&amp; Information Technology</span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="college-logo">COLLEGE</div>
+      <span class="college-name">Your College Name</span>
+      <button class="theme-btn" id="themeBtn"><i data-lucide="moon"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN NAVBAR -->
+<nav class="main-navbar">
+  <div class="inner">
+    <a href="index.html" class="brand"><i data-lucide="shield"></i>CYBERGUARD</a>
+    <div class="nav-links">
+      <a href="awareness.html" class="active">AWARENESS</a>
+      <a href="detection.html">REAL TIME DETECTION</a>
+      <a href="reporting.html">REPORTING</a>
+    </div>
+    <button class="hamburger" id="hamburger"><i data-lucide="menu" id="menuIcon"></i></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="awareness.html" class="active">AWARENESS</a>
+    <a href="detection.html">REAL TIME DETECTION</a>
+    <a href="reporting.html">REPORTING</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;padding:4rem 1rem;text-align:center;">
+  <div class="container">
+    <h1 style="font-size:2.5rem;font-weight:900;margin-bottom:1rem;">Cyber Awareness</h1>
+    <p style="font-size:1.1rem;color:#bfdbfe;max-width:40rem;margin:0 auto;">Learn, Practice &amp; Stay Protected from Cyber Threats</p>
+  </div>
+</section>
+
+<!-- SCAM STORIES -->
+<section id="digital-arrest" class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Real Scam Stories</h2>
+      <p>Learn from real cases to protect yourself</p>
+    </div>
+    <div class="grid-2" id="storiesGrid"></div>
+  </div>
+</section>
+
+<!-- CASE STUDY CATEGORIES -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Reinforce Cyber Hygiene, Cyber Security &amp; Privacy</h2>
+      <p>Select your category to explore age-based cyber awareness content.</p>
+    </div>
+    <div class="grid-2">
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:1.25rem;padding:2rem;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 10px 25px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <h3 style="font-size:1.75rem;font-weight:600;color:#1f2937;margin-bottom:1.5rem;">Cyber Kids</h3>
+        <a href="casestudy.html?type=kids" style="background:#f59e0b;color:#fff;padding:0.5rem 1.25rem;border-radius:0.5rem;font-size:0.875rem;font-weight:600;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='#d97706'" onmouseout="this.style.background='#f59e0b'">View →</a>
+      </div>
+      <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:1.25rem;padding:2rem;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 10px 25px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <h3 style="font-size:1.75rem;font-weight:600;color:#1f2937;margin-bottom:1.5rem;">Cyber Teens</h3>
+        <a href="casestudy.html?type=teens" style="background:#10b981;color:#fff;padding:0.5rem 1.25rem;border-radius:0.5rem;font-size:0.875rem;font-weight:600;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10b981'">View →</a>
+      </div>
+      <div style="background:#fff1f2;border:1px solid #fecdd3;border-radius:1.25rem;padding:2rem;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 10px 25px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <h3 style="font-size:1.75rem;font-weight:600;color:#1f2937;margin-bottom:1.5rem;">Cyber Adult</h3>
+        <a href="casestudy.html?type=adult" style="background:#f43f5e;color:#fff;padding:0.5rem 1.25rem;border-radius:0.5rem;font-size:0.875rem;font-weight:600;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='#e11d48'" onmouseout="this.style.background='#f43f5e'">View →</a>
+      </div>
+      <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:1.25rem;padding:2rem;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 10px 25px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <h3 style="font-size:1.75rem;font-weight:600;color:#1f2937;margin-bottom:1.5rem;">Cyber Senior Citizen</h3>
+        <a href="casestudy.html?type=oldage" style="background:#8b5cf6;color:#fff;padding:0.5rem 1.25rem;border-radius:0.5rem;font-size:0.875rem;font-weight:600;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='#7c3aed'" onmouseout="this.style.background='#8b5cf6'">View →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ SECTION -->
+<section id="quiz" class="section section-bg">
+  <div class="container">
+    <div class="text-center section-heading">
+      <div style="display:inline-flex;align-items:center;gap:0.5rem;background:#e0e7ff;color:#4338ca;padding:0.375rem 1rem;border-radius:9999px;font-size:0.85rem;font-weight:700;margin-bottom:1rem;border:1px solid #c7d2fe;">
+        <i data-lucide="zap" style="width:14px;height:14px;"></i> Test Your Knowledge
+      </div>
+      <h2 style="font-size:2rem;font-weight:900;">Cybersecurity Quizzes</h2>
+      <p>Earn real certificates and badges as you master each level</p>
+    </div>
+    <div class="grid-3" id="quizCards"></div>
+
+    <!-- Scorecard -->
+    <div class="card" style="margin-top:2rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;border-bottom:1px solid #f3f4f6;margin-bottom:1rem;">
+        <h3 style="font-size:1.1rem;font-weight:900;color:#1f2937;display:flex;align-items:center;gap:0.5rem;"><i data-lucide="medal" style="width:20px;height:20px;color:#6366f1;"></i>Your Scorecard</h3>
+        <span id="scorecardUpdated" style="display:none;font-size:0.75rem;color:#9ca3af;background:#f3f4f6;padding:0.25rem 0.75rem;border-radius:9999px;">Updated live</span>
+      </div>
+      <div class="grid-4" id="scorecardStats"></div>
+      <div style="border-top:1px solid #f3f4f6;padding-top:1rem;margin-top:1rem;">
+        <p style="font-size:0.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Earned Badges</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;" id="badgesRow">
+          <p style="font-size:0.875rem;color:#9ca3af;font-style:italic;">Complete a quiz to earn your first badge!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOPS -->
+<section id="workshops" class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Organize Workshops</h2>
+      <p>Conduct cybersecurity awareness sessions and get rewarded</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="font-size:1.1rem;font-weight:800;color:#1f2937;display:flex;align-items:center;gap:0.5rem;margin-bottom:1.25rem;"><i data-lucide="calendar" style="width:24px;height:24px;color:#2563eb;"></i>How to Organize</h3>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div style="display:flex;align-items:flex-start;gap:1rem;"><div style="background:#2563eb;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">1</div><div><h4 style="font-weight:600;color:#1f2937;">Plan Your Event</h4><p style="font-size:0.875rem;color:#4b5563;">Choose a venue (school, college, community center)</p></div></div>
+          <div style="display:flex;align-items:flex-start;gap:1rem;"><div style="background:#2563eb;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">2</div><div><h4 style="font-weight:600;color:#1f2937;">Conduct Workshop</h4><p style="font-size:0.875rem;color:#4b5563;">Use our free resources and presentation materials</p></div></div>
+          <div style="display:flex;align-items:flex-start;gap:1rem;"><div style="background:#2563eb;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">3</div><div><h4 style="font-weight:600;color:#1f2937;">Submit Details</h4><p style="font-size:0.875rem;color:#4b5563;">Upload photos and participant feedback</p></div></div>
+          <div style="display:flex;align-items:flex-start;gap:1rem;"><div style="background:#2563eb;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">4</div><div><h4 style="font-weight:600;color:#1f2937;">Get Rewarded</h4><p style="font-size:0.875rem;color:#4b5563;">Receive certificates and recognition</p></div></div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#2563eb,#1e40af);border-radius:0.75rem;padding:1.5rem;color:#fff;">
+        <h3 style="font-size:1.1rem;font-weight:800;display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;"><i data-lucide="upload" style="width:24px;height:24px;"></i>Submit Workshop Details</h3>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div><label class="form-label">Organizer Name</label><input type="text" class="form-input" placeholder="Your name" style="color:#1f2937;"/></div>
+          <div><label class="form-label">Institution</label><input type="text" class="form-input" placeholder="School/College/Organization" style="color:#1f2937;"/></div>
+          <div><label class="form-label">Event Date</label><input type="date" class="form-input" style="color:#1f2937;"/></div>
+          <div><label class="form-label">Participants Count</label><input type="number" class="form-input" placeholder="Number of attendees" style="color:#1f2937;"/></div>
+          <button onclick="alert('Form submission coming soon!')" class="btn btn-white" style="width:100%;justify-content:center;">Submit Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO RESOURCES -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Video Resources</h2>
+      <p>Watch and learn from official cybersecurity videos</p>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="padding:0;overflow:hidden;"><div style="aspect-ratio:16/9;"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/u_IGxDgc_Zc" title="Cybersecurity Video 1" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div></div>
+      <div class="card" style="padding:0;overflow:hidden;"><div style="aspect-ratio:16/9;"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/iv7fCxoQtrQ" title="Cybersecurity Video 2" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div></div>
+      <div class="card" style="padding:0;overflow:hidden;"><div style="aspect-ratio:16/9;"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/NdOaF4Cjm5s" title="Cybersecurity Video 3" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOS AND DONTS -->
+<section class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Cyber Safety Guidelines</h2>
+      <p>Essential do's and don'ts for online safety</p>
+    </div>
+    <div class="grid-2">
+      <div style="background:#f0fdf4;border-radius:0.75rem;padding:2rem;border:2px solid #bbf7d0;">
+        <h3 style="font-size:1.25rem;font-weight:800;color:#166534;display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;"><i data-lucide="check-circle" style="width:28px;height:28px;"></i>DO's</h3>
+        <ul id="dosList" style="display:flex;flex-direction:column;gap:0.75rem;"></ul>
+      </div>
+      <div style="background:#fef2f2;border-radius:0.75rem;padding:2rem;border:2px solid #fecaca;">
+        <h3 style="font-size:1.25rem;font-weight:800;color:#991b1b;display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;"><i data-lucide="x-circle" style="width:28px;height:28px;"></i>DON'Ts</h3>
+        <ul id="dontsList" style="display:flex;flex-direction:column;gap:0.75rem;"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="inner">
+    <div id="footerGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;"></div>
+    <div class="bottom">
+      <p>© 2025 CYBERGUARD. All rights reserved. An initiative under ISEA Project.</p>
+      <div class="bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Sitemap</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ QUIZ MODAL ══ -->
+<div id="quizModal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-header" id="quizHeader">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+        <div><p id="quizSubtitle" style="font-size:0.75rem;opacity:0.75;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;"></p><h3 id="quizTitle" style="font-size:1.25rem;font-weight:900;"></h3></div>
+        <div style="text-align:right;"><p id="quizTimer" style="font-size:1.25rem;font-weight:900;font-family:monospace;"></p><p style="font-size:0.7rem;opacity:0.75;">remaining</p></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.8rem;opacity:0.85;margin-bottom:0.5rem;">
+        <span id="quizProgress"></span><span id="quizScore"></span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="modal-body" id="quizBody"></div>
+  </div>
+</div>
+
+<!-- ══ RESULT MODAL ══ -->
+<div id="resultModal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-header" id="resultHeader" style="text-align:center;padding:2rem;">
+      <div id="resultEmoji" style="font-size:3rem;margin-bottom:0.5rem;"></div>
+      <h3 id="resultTitle" style="font-size:1.5rem;font-weight:900;"></h3>
+      <p id="resultSub" style="font-size:0.875rem;opacity:0.85;margin-top:0.25rem;"></p>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;text-align:center;margin-bottom:1.5rem;">
+        <div style="background:#f9fafb;border-radius:0.75rem;padding:1rem;"><p id="resScore" style="font-size:2rem;font-weight:900;color:#1f2937;"></p><p style="font-size:0.75rem;color:#6b7280;">Score</p></div>
+        <div style="background:#f9fafb;border-radius:0.75rem;padding:1rem;"><p id="resCorrect" style="font-size:2rem;font-weight:900;color:#1f2937;"></p><p style="font-size:0.75rem;color:#6b7280;">Correct</p></div>
+        <div style="background:#f9fafb;border-radius:0.75rem;padding:1rem;"><p id="resReward" style="font-size:1.5rem;"></p><p style="font-size:0.75rem;color:#6b7280;">Reward</p></div>
+      </div>
+      <p id="resBadge" style="text-align:center;font-size:0.9rem;color:#4b5563;margin-bottom:1.5rem;"></p>
+      <div style="display:flex;gap:0.75rem;">
+        <button id="certBtn" style="display:none;flex:1;" class="btn btn-blue" onclick="openCert()">View Certificate</button>
+        <button class="btn" style="flex:1;border:2px solid #e5e7eb;color:#374151;" onclick="closeResult()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CERTIFICATE MODAL ══ -->
+<div id="certModal" class="cert-overlay" style="display:none;">
+  <div class="cert-box">
+    <div class="cert-body" id="certBody">
+      <div class="cert-border-outer"></div>
+      <div class="cert-border-inner"></div>
+      <div style="position:relative;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:0.5rem;">
+          <i data-lucide="shield" style="width:20px;height:20px;color:#a5b4fc;"></i>
+          <p style="font-size:0.7rem;font-weight:700;letter-spacing:0.15em;color:#818cf8;text-transform:uppercase;">CyberSafe Academy</p>
+          <i data-lucide="shield" style="width:20px;height:20px;color:#a5b4fc;"></i>
+        </div>
+        <h2 style="font-size:1.75rem;font-weight:900;color:#1f2937;font-family:Georgia,serif;margin-bottom:0.25rem;">Certificate of Achievement</h2>
+        <p style="font-size:0.875rem;color:#6b7280;margin-bottom:1.5rem;">This certifies that</p>
+        <div style="background:rgba(255,255,255,0.7);border:1px solid #e0e7ff;border-radius:0.75rem;padding:0.75rem 2rem;display:inline-block;margin-bottom:1rem;">
+          <p style="font-size:1.5rem;font-weight:700;color:#4f46e5;font-family:Georgia,serif;" id="certName">Distinguished Learner</p>
+        </div>
+        <p style="font-size:0.875rem;color:#4b5563;margin-bottom:0.5rem;">has successfully completed the</p>
+        <p id="certLevel" style="font-size:1.25rem;font-weight:900;margin-bottom:0.25rem;"></p>
+        <p id="certSubtitle" style="font-size:0.875rem;color:#6b7280;margin-bottom:1.5rem;"></p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:2rem;margin-bottom:1.5rem;">
+          <div style="text-align:center;"><p id="certPct" style="font-size:2.5rem;font-weight:900;color:#1f2937;"></p><p style="font-size:0.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;">Score</p></div>
+          <div style="width:1px;height:48px;background:#e5e7eb;"></div>
+          <div style="text-align:center;"><p id="certFraction" style="font-size:2.5rem;font-weight:900;color:#1f2937;"></p><p style="font-size:0.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;">Correct</p></div>
+          <div style="width:1px;height:48px;background:#e5e7eb;"></div>
+          <div style="text-align:center;"><p id="certGrade" style="font-size:1.75rem;"></p><p style="font-size:0.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;">Grade</p></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:1rem;">
+          <span id="certDate"></span>
+          <div class="cert-stars" id="certStars"></div>
+          <span id="certId"></span>
+        </div>
+      </div>
+    </div>
+    <div class="cert-footer">
+      <button class="btn btn-blue" style="flex:1;" onclick="window.print()"><i data-lucide="download" style="width:16px;height:16px;"></i>Download / Print</button>
+      <button class="btn" style="flex:1;border:1px solid #d1d5db;color:#374151;" onclick="closeCert()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────
+const scamStories = [
+  { title:"The Digital Arrest Scam",     category:"Impersonation", description:"A Mumbai businessman received a call from someone claiming to be from CBI, accusing him of money laundering. He was asked to transfer ₹15 lakh to 'clear his name'.", lesson:"Police never ask for money transfers. Always verify with local police station." },
+  { title:"The OLX Army Officer Scam",   category:"E-commerce",    description:"A seller on OLX was contacted by a 'Army officer' who sent a fake payment screenshot and asked the seller to pay 'processing fees'.", lesson:"Never pay to receive payment. Verify funds in your account before shipping." },
+  { title:"The KYC Update Trap",         category:"Phishing",      description:"Thousands received SMS claiming their bank KYC needs update with a link. Clicking led to a fake bank page that stole credentials.", lesson:"Banks never send KYC links via SMS. Visit branch or official website only." },
+  { title:"The Work From Home Job Scam", category:"Employment",    description:"Victims were offered high-paying WFH jobs but asked to pay 'registration fees', 'training fees', and 'equipment deposits'.", lesson:"Legitimate jobs never ask for upfront payments. Research the company thoroughly." },
+];
+
+const QUIZZES = [
+  { level:"Beginner",     subtitle:"Security Fundamentals", questions:5, time:"5 min", reward:"🥉 Cyber Recruit Badge + Certificate",   passMark:60, gradClass:"grad-beginner",
+    data:[
+      { q:"What does HTTPS stand for?", options:["HyperText Transfer Protocol Secure","High Transfer Protocol System","HyperText Transport Protocol Standard","Hybrid Transfer Protocol Service"], answer:0 },
+      { q:"Which of the following is the strongest password?", options:["password123","MyDog2020","T@8#vK!2mX","QWERTY"], answer:2 },
+      { q:"What is phishing?", options:["A type of firewall","Tricking users into revealing sensitive info via fake messages","A network scanning tool","A virus that encrypts files"], answer:1 },
+      { q:"What does 2FA stand for?", options:["Two-Factor Authentication","Two-File Access","Transfer Function Algorithm","Two-Firewall Architecture"], answer:0 },
+      { q:"Which is the safest place to store passwords?", options:["In a text file on your Desktop","Written on a sticky note","A reputable password manager","Saved in your browser only"], answer:2 },
+    ]},
+  { level:"Intermediate", subtitle:"Threat Awareness",       questions:6, time:"8 min", reward:"🥈 Cyber Defender Badge + Certificate", passMark:65, gradClass:"grad-intermediate",
+    data:[
+      { q:"What is a man-in-the-middle (MITM) attack?", options:["When an attacker intercepts communication between two parties","A type of brute-force attack","Injecting malicious code into a database","Overloading a server with requests"], answer:0 },
+      { q:"Which protocol secures email transmission?", options:["FTP","SMTP with TLS","HTTP","Telnet"], answer:1 },
+      { q:"What is SQL injection?", options:["A method to speed up SQL queries","Inserting malicious SQL code into input fields","Encrypting SQL databases","A SQL backup procedure"], answer:1 },
+      { q:"What does a VPN primarily provide?", options:["Faster internet speed","Encrypted tunnel for internet traffic","Free Wi-Fi access","Antivirus protection"], answer:1 },
+      { q:"What is ransomware?", options:["Software that monitors user activity","Malware that encrypts files and demands payment","A legitimate backup tool","An ad-blocking program"], answer:1 },
+      { q:"Which of these is a zero-day vulnerability?", options:["A vulnerability patched on release day","An unknown flaw exploited before a fix exists","A flaw found in 24 hours","A scheduled security update"], answer:1 },
+    ]},
+  { level:"Advanced",     subtitle:"Expert Challenge",        questions:7, time:"10 min",reward:"🥇 Cyber Guardian Badge + Certificate",passMark:70, gradClass:"grad-advanced",
+    data:[
+      { q:"What is the purpose of a DMZ in network security?", options:["To block all external traffic","To create a buffer zone between internal and external networks","To speed up DNS resolution","To encrypt all internal traffic"], answer:1 },
+      { q:"Which cryptographic algorithm is considered most secure today?", options:["MD5","DES","AES-256","SHA-1"], answer:2 },
+      { q:"What is privilege escalation?", options:["Granting admin rights to all users","Gaining higher access rights than initially granted","Removing user permissions","Logging privileged user actions"], answer:1 },
+      { q:"What does OWASP stand for?", options:["Open Web Application Security Project","Online Website Attack Security Protocol","Open Wireless Access Security Platform","Operational Web App Service Portal"], answer:0 },
+      { q:"What is a buffer overflow attack?", options:["Overloading a server with requests","Writing more data to a buffer than it can hold to execute arbitrary code","Flooding a network with broadcast messages","Exhausting CPU resources"], answer:1 },
+      { q:"Which of these best describes 'defense in depth'?", options:["A single powerful firewall","Multiple layered security controls","Encrypting only sensitive data","Restricting internet access to all staff"], answer:1 },
+      { q:"What is a side-channel attack?", options:["Attacking via a secondary network interface","Exploiting information from physical implementation of a system","A frontal brute-force attack","Redirecting network traffic"], answer:1 },
+    ]},
+];
+
+const dos   = ["Verify the identity of callers claiming to be from banks or government","Use strong, unique passwords for each online account","Enable two-factor authentication on all important accounts","Keep your operating system and apps updated","Report suspicious activities to cybercrime.gov.in","Use antivirus software and keep it updated"];
+const donts = ["Never share OTP, PIN, passwords, or CVV with anyone","Don't click on links in unsolicited emails or SMS","Avoid using public WiFi for banking or shopping","Don't download apps from unofficial sources","Never pay money to receive lottery or prize winnings","Don't ignore software update notifications"];
+
+// ── State ─────────────────────────────────────────────────────────────────
+let scores = {}; // { level: { score, total, pct, passed } }
+let activeQuizLevel = null;
+let quizCurrent = 0;
+let quizAnswers = [];
+let quizTimer = null;
+let quizTimeLeft = 0;
+let lastResult = null;
+
+// ── Render Scam Stories ──
+document.getElementById('storiesGrid').innerHTML = scamStories.map(s =>
+  `<div class="story-card hover-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+      <span class="badge badge-red">${s.category}</span>
+      <i data-lucide="alert-triangle" style="width:20px;height:20px;color:#ef4444;"></i>
+    </div>
+    <h3 style="font-size:1.1rem;font-weight:700;color:#1f2937;margin-bottom:0.5rem;">${s.title}</h3>
+    <p style="font-size:0.875rem;color:#4b5563;margin-bottom:0.75rem;line-height:1.6;">${s.description}</p>
+    <div style="background:#f0fdf4;border-radius:0.5rem;padding:0.75rem;">
+      <p style="font-size:0.85rem;color:#166534;"><strong>Lesson:</strong> ${s.lesson}</p>
+    </div>
+  </div>`
+).join('');
+
+// ── Render Quiz Cards ──
+function renderQuizCards() {
+  document.getElementById('quizCards').innerHTML = QUIZZES.map(quiz => {
+    const result = scores[quiz.level];
+    return `<div style="background:#fff;border-radius:1.25rem;box-shadow:0 4px 16px rgba(0,0,0,0.1);overflow:hidden;border:1px solid #f3f4f6;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 28px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div class="${quiz.gradClass}" style="padding:1.5rem;color:#fff;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+          <div style="background:rgba(255,255,255,0.2);border-radius:0.75rem;padding:0.625rem;"><i data-lucide="trophy" style="width:24px;height:24px;"></i></div>
+          ${result ? `<span style="font-size:0.75rem;font-weight:700;padding:0.25rem 0.625rem;border-radius:9999px;background:${result.passed?'#fff':'rgba(239,68,68,0.8)'};color:${result.passed?'#059669':'#fff'}">${result.passed?'✓ Passed':'✗ Failed'}</span>` : ''}
+        </div>
+        <h3 style="font-size:1.25rem;font-weight:900;margin-bottom:0.125rem;">${quiz.level}</h3>
+        <p style="font-size:0.875rem;opacity:0.75;">${quiz.subtitle}</p>
+      </div>
+      <div style="padding:1.25rem;">
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;font-size:0.85rem;color:#6b7280;margin-bottom:1rem;">
+          <span>📋 ${quiz.questions} questions</span><span>⏱ ${quiz.time}</span><span>🎯 ${quiz.passMark}% to pass</span>
+        </div>
+        <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:0.75rem;padding:0.75rem;margin-bottom:1rem;">
+          <p style="font-size:0.75rem;font-weight:700;color:#6366f1;">${quiz.reward}</p>
+        </div>
+        ${result ? `<div style="margin-bottom:1rem;">
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#6b7280;margin-bottom:0.25rem;">
+            <span>Your score</span><span style="font-weight:700;color:${result.passed?'#059669':'#ef4444'}">${result.pct}%</span>
+          </div>
+          <div style="background:#f3f4f6;border-radius:9999px;height:8px;overflow:hidden;">
+            <div style="height:100%;background:${result.passed?'#22c55e':'#f87171'};width:${result.pct}%;border-radius:9999px;transition:width 0.7s;"></div>
+          </div>
+        </div>` : ''}
+        <div style="display:flex;gap:0.5rem;">
+          <button onclick="startQuiz('${quiz.level}')" class="btn ${quiz.gradClass}" style="flex:1;color:#fff;border-radius:0.75rem;padding:0.625rem;font-size:0.875rem;justify-content:center;">
+            ${result ? '↺ Retry' : '▶ Start Quiz'}
+          </button>
+          ${result && result.passed ? `<button onclick="openCertForLevel('${quiz.level}')" style="padding:0.625rem 0.75rem;border-radius:0.75rem;border:2px solid #e5e7eb;color:#6b7280;background:#fff;" title="View Certificate"><i data-lucide="award" style="width:16px;height:16px;"></i></button>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+// ── Render Scorecard ──
+function renderScorecard() {
+  const taken = Object.keys(scores).length;
+  const avg   = taken ? Math.round(Object.values(scores).reduce((s,r)=>s+r.pct,0)/taken) : 0;
+  const certs  = Object.values(scores).filter(r=>r.passed).length;
+  const badges = Object.entries(scores).filter(([,r])=>r.passed).map(([l])=>l);
+
+  if (taken > 0) document.getElementById('scorecardUpdated').style.display = 'inline-block';
+
+  const statData = [
+    { label:'Quizzes Taken',  value:taken,          color:'#2563eb', bg:'#dbeafe' },
+    { label:'Average Score',  value:taken?avg+'%':'0%', color:'#059669', bg:'#dcfce7' },
+    { label:'Certificates',   value:certs,           color:'#7c3aed', bg:'#f3e8ff' },
+    { label:'Badges Earned',  value:badges.length,   color:'#ea580c', bg:'#ffedd5' },
+  ];
+  document.getElementById('scorecardStats').innerHTML = statData.map(s =>
+    `<div style="background:${s.bg};border-radius:0.75rem;padding:1rem;text-align:center;">
+      <p style="font-size:2rem;font-weight:900;color:${s.color};">${s.value}</p>
+      <p style="font-size:0.75rem;color:#6b7280;">${s.label}</p>
+    </div>`
+  ).join('');
+
+  const badgesRow = document.getElementById('badgesRow');
+  if (badges.length === 0) {
+    badgesRow.innerHTML = '<p style="font-size:0.875rem;color:#9ca3af;font-style:italic;">Complete a quiz to earn your first badge!</p>';
+  } else {
+    badgesRow.innerHTML = QUIZZES.map(quiz => {
+      const earned = badges.includes(quiz.level);
+      return `<span style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;border-radius:9999px;font-size:0.875rem;font-weight:600;border:2px ${earned?'solid transparent':'dashed #d1d5db'};background:${earned?'#e0e7ff':'#f9fafb'};color:${earned?'#3730a3':'#d1d5db'};">${earned?'🏅':'⭕'} ${quiz.level}</span>`;
+    }).join('');
+  }
+}
+
+// ── Start Quiz ──
+function startQuiz(level) {
+  activeQuizLevel = level;
+  const quiz = QUIZZES.find(q => q.level === level);
+  quizCurrent = 0;
+  quizAnswers = [];
+  quizTimeLeft = quiz.questions * 60;
+  clearInterval(quizTimer);
+
+  document.getElementById('quizHeader').className = 'modal-header ' + quiz.gradClass;
+  document.getElementById('quizSubtitle').textContent = quiz.subtitle;
+  document.getElementById('quizTitle').textContent = quiz.level + ' Quiz';
+  document.getElementById('quizModal').style.display = 'flex';
+
+  quizTimer = setInterval(() => {
+    quizTimeLeft--;
+    renderQuizQuestion();
+    if (quizTimeLeft <= 0) { clearInterval(quizTimer); finishQuiz(); }
+  }, 1000);
+
+  renderQuizQuestion();
+  lucide.createIcons();
+}
+
+function renderQuizQuestion() {
+  const quiz = QUIZZES.find(q => q.level === activeQuizLevel);
+  const q    = quiz.data[quizCurrent];
+  const mins = String(Math.floor(quizTimeLeft/60)).padStart(2,'0');
+  const secs = String(quizTimeLeft%60).padStart(2,'0');
+  const pct  = ((quizCurrent)/quiz.data.length)*100;
+
+  document.getElementById('quizTimer').textContent   = mins+':'+secs;
+  document.getElementById('quizProgress').textContent = `Question ${quizCurrent+1} of ${quiz.data.length}`;
+  document.getElementById('quizScore').textContent   = `Score: ${quizAnswers.filter(a=>a.correct).length}`;
+  document.getElementById('progressFill').style.width = pct+'%';
+
+  document.getElementById('quizBody').innerHTML =
+    `<p style="font-size:1rem;font-weight:700;color:#1f2937;margin-bottom:1.25rem;">${q.q}</p>
+    ${q.options.map((opt,i) =>
+      `<button class="quiz-option" onclick="selectOption(${i})" style="width:100%;text-align:left;padding:0.875rem 1rem;border:2px solid #e5e7eb;border-radius:0.75rem;margin-bottom:0.75rem;transition:all 0.15s;background:#fff;font-size:0.9rem;cursor:pointer;" onmouseover="if(!this.dataset.locked){this.style.borderColor='#93c5fd';this.style.background='#eff6ff'}" onmouseout="if(!this.dataset.locked&&!this.dataset.selected){this.style.borderColor='#e5e7eb';this.style.background='#fff'}">
+        <span style="font-weight:700;color:#6b7280;margin-right:0.75rem;">${String.fromCharCode(65+i)}.</span>${opt}
+      </button>`
+    ).join('')}
+    <button id="nextBtn" onclick="submitAnswer()" disabled style="width:100%;padding:0.875rem;background:#e5e7eb;color:#9ca3af;border-radius:0.75rem;font-weight:700;font-size:0.9rem;margin-top:0.5rem;transition:all 0.2s;">Next →</button>`;
+}
+
+let selectedOption = null;
+function selectOption(idx) {
+  if (selectedOption !== null) return;
+  selectedOption = idx;
+  const quiz = QUIZZES.find(q => q.level === activeQuizLevel);
+  const correct = quiz.data[quizCurrent].answer;
+  const buttons = document.querySelectorAll('#quizBody .quiz-option');
+  buttons.forEach((btn, i) => {
+    btn.dataset.locked = 'true';
+    btn.onmouseover = null; btn.onmouseout = null;
+    if (i === correct) { btn.style.borderColor='#22c55e'; btn.style.background='#f0fdf4'; btn.style.color='#166534'; }
+    if (i === idx && idx !== correct) { btn.style.borderColor='#ef4444'; btn.style.background='#fef2f2'; btn.style.color='#991b1b'; }
+  });
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.disabled = false;
+  nextBtn.style.background = '#2563eb'; nextBtn.style.color = '#fff';
+  quizAnswers.push({ selected: idx, correct: idx === correct });
+  selectedOption = null;
+}
+
+function submitAnswer() {
+  const quiz = QUIZZES.find(q => q.level === activeQuizLevel);
+  if (quizCurrent + 1 >= quiz.data.length) { clearInterval(quizTimer); finishQuiz(); }
+  else { quizCurrent++; renderQuizQuestion(); }
+}
+
+function finishQuiz() {
+  const quiz   = QUIZZES.find(q => q.level === activeQuizLevel);
+  const score  = quizAnswers.filter(a => a.correct).length;
+  const total  = quiz.data.length;
+  const pct    = Math.round((score / total) * 100);
+  const passed = pct >= quiz.passMark;
+
+  scores[quiz.level] = { score, total, pct, passed };
+  lastResult = { quiz, score, total, pct, passed };
+
+  document.getElementById('quizModal').style.display = 'none';
+
+  const rh = document.getElementById('resultHeader');
+  rh.className = 'modal-header ' + quiz.gradClass;
+  document.getElementById('resultEmoji').textContent  = passed ? '🎉' : '😔';
+  document.getElementById('resultTitle').textContent  = passed ? 'Congratulations!' : 'Keep Trying!';
+  document.getElementById('resultSub').textContent    = passed ? `You passed the ${quiz.level} quiz!` : `You need ${quiz.passMark}% to pass. You scored ${pct}%.`;
+  document.getElementById('resScore').textContent     = pct + '%';
+  document.getElementById('resCorrect').textContent   = score + '/' + total;
+  document.getElementById('resReward').textContent    = passed ? quiz.reward.split(' ')[0] : '📝';
+  document.getElementById('resBadge').textContent     = passed ? quiz.reward : 'Score at least '+quiz.passMark+'% to earn the badge.';
+  document.getElementById('certBtn').style.display    = passed ? 'flex' : 'none';
+  document.getElementById('resultModal').style.display = 'flex';
+
+  renderQuizCards();
+  renderScorecard();
+}
+
+function closeResult()  { document.getElementById('resultModal').style.display = 'none'; }
+
+function openCert() {
+  if (!lastResult) return;
+  showCert(lastResult.quiz, lastResult.score, lastResult.total, lastResult.pct);
+  closeResult();
+}
+
+function openCertForLevel(level) {
+  const result = scores[level];
+  if (!result) return;
+  const quiz = QUIZZES.find(q => q.level === level);
+  showCert(quiz, result.score, result.total, result.pct);
+}
+
+function showCert(quiz, score, total, pct) {
+  const date   = new Date().toLocaleDateString('en-IN', { year:'numeric', month:'long', day:'numeric' });
+  const certId = 'CERT-' + quiz.level.toUpperCase().slice(0,3) + '-' + Date.now().toString(36).toUpperCase();
+  document.getElementById('certLevel').textContent    = quiz.level + ' Cybersecurity Quiz';
+  document.getElementById('certLevel').style.color   = quiz.gradClass.includes('beginner') ? '#059669' : quiz.gradClass.includes('intermediate') ? '#2563eb' : '#7c3aed';
+  document.getElementById('certSubtitle').textContent = quiz.subtitle;
+  document.getElementById('certPct').textContent      = pct + '%';
+  document.getElementById('certFraction').textContent = score + '/' + total;
+  document.getElementById('certGrade').textContent    = pct >= 90 ? '🏆' : pct >= 75 ? '🥇' : '🥈';
+  document.getElementById('certDate').textContent     = date;
+  document.getElementById('certId').textContent       = certId;
+  const stars = document.getElementById('certStars');
+  const filled = Math.ceil(pct/20);
+  stars.innerHTML = [1,2,3,4,5].map(i => `<span style="font-size:14px;color:${i<=filled?'#fbbf24':'#d1d5db'};">★</span>`).join('');
+  document.getElementById('certModal').style.display = 'flex';
+  lucide.createIcons();
+}
+
+function closeCert()    { document.getElementById('certModal').style.display = 'none'; }
+
+// ── Render Do's & Don'ts ──
+document.getElementById('dosList').innerHTML   = dos.map(d   => `<li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.875rem;color:#374151;"><span style="color:#16a34a;flex-shrink:0;">✓</span>${d}</li>`).join('');
+document.getElementById('dontsList').innerHTML = donts.map(d => `<li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.875rem;color:#374151;"><span style="color:#dc2626;flex-shrink:0;">✗</span>${d}</li>`).join('');
+
+// ── Footer ──
+const govLinks=[{name:"Cybercrime.gov.in",url:"https://cybercrime.gov.in"},{name:"MeitY India",url:"https://www.meity.gov.in"},{name:"MHA - Cyber Security",url:"https://www.mha.gov.in"},{name:"CDAC India",url:"https://www.cdac.in"},{name:"ISEA Project",url:"https://www.isea.gov.in"},{name:"CERT-In",url:"https://www.cert-in.org.in"},{name:"NCIIPC",url:"https://www.nciipc.gov.in"},{name:"Digital India",url:"https://www.digitalindia.gov.in"}];
+const pageLinks=[{name:"Home",path:"index.html"},{name:"Awareness",path:"awareness.html"},{name:"Real Time Detection",path:"detection.html"},{name:"Reporting",path:"reporting.html"},{name:"Digital Arrest",path:"awareness.html#digital-arrest"},{name:"Quiz & Rewards",path:"awareness.html#quiz"},{name:"Workshops",path:"awareness.html#workshops"},{name:"Scam Alerts",path:"detection.html#alerts"}];
+document.getElementById('footerGrid').innerHTML=`<div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Government Resources</h3><ul>${govLinks.map(l=>`<li><a href="${l.url}" target="_blank">${l.name} <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>CYBERGUARD Pages</h3><ul>${pageLinks.map(l=>`<li><a href="${l.path}">${l.name}</a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Contact Us</h3><div class="contact-item"><i data-lucide="map-pin"></i><p>Cyber Security Cell<br/>Ministry of Electronics & IT<br/>New Delhi - 110001</p></div><div class="contact-item"><i data-lucide="phone"></i><p>Helpline: 1930<br/>Toll-Free: 1800-123-4567</p></div><div class="contact-item"><i data-lucide="mail"></i><p>support@cyberguard.gov.in</p></div><div class="helpline-box"><p class="title">Emergency Cyber Crime Helpline</p><p class="number">1930</p><p class="sub">Available 24x7 | Toll Free</p></div></div>`;
+
+// Close modal on overlay click
+['quizModal','resultModal','certModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => { if(e.target.id===id) document.getElementById(id).style.display='none'; });
+});
+
+document.getElementById('hamburger').addEventListener('click',()=>{const m=document.getElementById('mobileMenu');m.classList.toggle('open');document.getElementById('menuIcon').setAttribute('data-lucide',m.classList.contains('open')?'x':'menu');lucide.createIcons();});
+document.getElementById('themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');const d=document.body.classList.contains('dark');document.getElementById('themeBtn').innerHTML=d?'<i data-lucide="sun"></i>':'<i data-lucide="moon"></i>';lucide.createIcons();});
+
+renderQuizCards();
+renderScorecard();
+lucide.createIcons();
+</script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CYBERGUARD – Home</title>
+  <link rel="stylesheet" href="style.css"/>
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+
+<!-- ══ TOP NAVBAR ══ -->
+<div class="top-navbar">
+  <div class="inner">
+    <div class="logos">
+      <img src="images/cdac_logo.jpg" alt="CDAC Logo" onerror="this.style.display='none'"/>
+      <img src="images/isea_logo.jpg" alt="ISEA Logo" onerror="this.style.display='none'"/>
+      <div class="meity-info">
+        <img src="https://www.meity.gov.in/sites/all/themes/meity/images/emblem.png" alt="MeitY" onerror="this.style.display='none'"/>
+        <span>Ministry of Electronics<br/>&amp; Information Technology</span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="college-logo">COLLEGE</div>
+      <span class="college-name">Your College Name</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+        <i data-lucide="moon"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN NAVBAR ══ -->
+<nav class="main-navbar">
+  <div class="inner">
+    <a href="index.html" class="brand">
+      <i data-lucide="shield"></i>
+      CYBERGUARD
+    </a>
+    <div class="nav-links">
+      <a href="awareness.html">AWARENESS</a>
+      <a href="detection.html">REAL TIME DETECTION</a>
+      <a href="reporting.html">REPORTING</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <i data-lucide="menu" id="menuIcon"></i>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="awareness.html">AWARENESS</a>
+    <a href="detection.html">REAL TIME DETECTION</a>
+    <a href="reporting.html">REPORTING</a>
+  </div>
+</nav>
+
+<!-- ══ CAROUSEL ══ -->
+<div class="carousel" id="carousel">
+  <div class="slide active"><img src="images/banner1.jpg" alt="Digital Suraksha Banner"/></div>
+  <div class="slide"><img src="images/banner2.jpg" alt="Digital Arrest Banner"/></div>
+  <div class="slide"><img src="images/banner3.jpg" alt="Cybersecurity Workshop Banner"/></div>
+  <div class="slide"><img src="images/banner4.jpg" alt="Report Cyber Crime Banner"/></div>
+  <button class="arrow arrow-left" id="prevBtn" aria-label="Previous"><i data-lucide="chevron-left"></i></button>
+  <button class="arrow arrow-right" id="nextBtn" aria-label="Next"><i data-lucide="chevron-right"></i></button>
+  <div class="dots" id="dots"></div>
+</div>
+
+<!-- ══ NEWS TICKER ══ -->
+<div class="news-ticker">
+  <div class="label"><i data-lucide="alert-triangle"></i><span>LATEST SCAMS</span></div>
+  <div class="track">
+    <div class="ticker-animation" id="ticker"></div>
+  </div>
+</div>
+
+<!-- ══ ABOUT SECTION ══ -->
+<section class="section">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:3rem;">
+      <h1 style="font-size:3.5rem;font-weight:900;font-family:'Rajdhani',sans-serif;" class="gradient-text">CYBERGUARD</h1>
+      <p style="font-size:1.1rem;color:#4b5563;max-width:48rem;margin:0.75rem auto 0;">Protecting Digital India through Awareness, Detection &amp; Reporting</p>
+    </div>
+
+    <div class="grid-2" style="align-items:center;">
+      <div>
+        <h2 style="font-size:1.5rem;font-weight:800;color:#1e3a8a;margin-bottom:1rem;">About CYBERGUARD</h2>
+        <p style="color:#4b5563;line-height:1.7;margin-bottom:0.75rem;">CYBERGUARD is a comprehensive cybersecurity awareness initiative under the ISEA (Information Security Education and Awareness) project, supported by CDAC and the Ministry of Electronics &amp; Information Technology, Government of India.</p>
+        <p style="color:#4b5563;line-height:1.7;">Our mission is to create a cyber-resilient society by educating citizens about digital threats, providing real-time scam detection tools, and facilitating easy reporting of cyber crimes.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem;">
+          <span style="display:flex;align-items:center;gap:0.4rem;background:#eff6ff;padding:0.4rem 1rem;border-radius:9999px;font-size:0.85rem;font-weight:600;color:#1d4ed8;"><i data-lucide="shield" style="width:16px;height:16px;"></i>Protection</span>
+          <span style="display:flex;align-items:center;gap:0.4rem;background:#f0fdf4;padding:0.4rem 1rem;border-radius:9999px;font-size:0.85rem;font-weight:600;color:#15803d;"><i data-lucide="bell" style="width:16px;height:16px;"></i>Alerts</span>
+          <span style="display:flex;align-items:center;gap:0.4rem;background:#faf5ff;padding:0.4rem 1rem;border-radius:9999px;font-size:0.85rem;font-weight:600;color:#7e22ce;"><i data-lucide="book-open" style="width:16px;height:16px;"></i>Education</span>
+        </div>
+      </div>
+
+      <!-- Scam Alerts Notification Box -->
+      <div style="border-radius:0.75rem;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.1);border:1px solid #bfdbfe;">
+        <div style="background:#1e3a8a;color:#fff;padding:0.75rem 1rem;display:flex;align-items:center;gap:0.5rem;">
+          <i data-lucide="bell" style="width:20px;height:20px;"></i>
+          <span style="font-weight:600;">Latest Scam Alerts</span>
+        </div>
+        <div style="height:256px;overflow:hidden;background:#eff6ff;">
+          <div class="notification-scroll" id="scamScroll"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DIGITAL ARREST + QUIZ WINNERS + REPORTING PORTALS ══ -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="grid-3">
+
+      <!-- Digital Arrest -->
+      <div class="card hover-card">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
+          <div class="card-icon bg-red-100"><i data-lucide="alert-octagon" style="width:24px;height:24px;color:#dc2626;"></i></div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:#1f2937;">Digital Arrest</h3>
+        </div>
+        <p style="color:#4b5563;font-size:0.875rem;margin-bottom:1rem;">Learn about Digital Arrest scams where fraudsters impersonate law enforcement officers.</p>
+        <ul style="display:flex;flex-direction:column;gap:0.4rem;">
+          <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#16a34a;flex-shrink:0;"></i>How to identify fake arrest calls</li>
+          <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#16a34a;flex-shrink:0;"></i>Your legal rights explained</li>
+          <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#16a34a;flex-shrink:0;"></i>Real case studies from India</li>
+        </ul>
+      </div>
+
+      <!-- Quiz Winners -->
+      <div class="card hover-card">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
+          <div class="card-icon" style="background:#fef9c3;"><i data-lucide="trophy" style="width:24px;height:24px;color:#ca8a04;"></i></div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:#1f2937;">Quiz Winners</h3>
+        </div>
+        <div id="quizWinners"></div>
+      </div>
+
+      <!-- Workshop -->
+      <div class="card hover-card">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
+          <div class="card-icon bg-blue-100"><i data-lucide="calendar" style="width:24px;height:24px;color:#2563eb;"></i></div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:#1f2937;">Organize Workshops</h3>
+        </div>
+        <p style="color:#4b5563;font-size:0.875rem;margin-bottom:1rem;">Conduct cybersecurity sessions and get rewarded with certificates and recognition.</p>
+        <a href="awareness.html#workshops" class="btn btn-blue" style="width:100%;justify-content:center;">Get Started</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ DO's & DON'Ts ══ -->
+<section class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Cyber Safety Guidelines</h2>
+      <p>Essential rules for staying safe online</p>
+    </div>
+    <div class="grid-2">
+      <div style="background:#f0fdf4;border-radius:0.75rem;padding:2rem;border:2px solid #bbf7d0;">
+        <h3 style="font-size:1.25rem;font-weight:800;color:#166534;display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;"><i data-lucide="check-circle" style="width:28px;height:28px;"></i>DO's</h3>
+        <ul id="dosList" style="display:flex;flex-direction:column;gap:0.75rem;"></ul>
+      </div>
+      <div style="background:#fef2f2;border-radius:0.75rem;padding:2rem;border:2px solid #fecaca;">
+        <h3 style="font-size:1.25rem;font-weight:800;color:#991b1b;display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;"><i data-lucide="x-circle" style="width:28px;height:28px;"></i>DON'Ts</h3>
+        <ul id="dontsList" style="display:flex;flex-direction:column;gap:0.75rem;"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REAL TIME DETECTION ══ -->
+<section class="section section-bg">
+  <div class="container">
+    <div style="background:linear-gradient(135deg,#fff1f2,#fff7ed);border-radius:1.25rem;padding:2rem;border:1px solid #fecaca;">
+      <div class="text-center section-heading">
+        <h2 style="color:#991b1b;">Real Time Detection</h2>
+        <p style="color:#dc2626;">Advanced tools to detect and prevent cyber threats</p>
+      </div>
+      <div class="grid-4" id="detectionCards"></div>
+      <div style="margin-top:2rem;background:#fff;border-radius:0.75rem;padding:1.5rem;">
+        <h3 style="font-size:1.1rem;font-weight:800;color:#1f2937;margin-bottom:1rem;">How It Works</h3>
+        <div class="grid-3" id="howItWorks"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REPORTING ══ -->
+<section class="section">
+  <div class="container">
+    <div style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border-radius:1.25rem;padding:2rem;border:1px solid #bbf7d0;">
+      <div class="text-center section-heading">
+        <h2 style="color:#166534;">Report Cyber Crime</h2>
+        <p style="color:#16a34a;">Quick access to all government reporting portals</p>
+      </div>
+      <!-- Helpline Banner -->
+      <div style="background:#16a34a;color:#fff;border-radius:0.75rem;padding:1.5rem;text-align:center;margin-bottom:2rem;">
+        <p style="font-size:1rem;margin-bottom:0.5rem;">National Cyber Crime Helpline</p>
+        <p style="font-size:3rem;font-weight:900;display:flex;align-items:center;justify-content:center;gap:1rem;">
+          <i data-lucide="phone" style="width:40px;height:40px;"></i>1930
+        </p>
+        <p style="color:#bbf7d0;margin-top:0.5rem;">24x7 Toll-Free | Immediate Assistance</p>
+      </div>
+      <!-- Portals Grid -->
+      <div class="grid-4" id="reportingPortals"></div>
+      <!-- PDF Download -->
+      <div style="margin-top:2rem;background:#fff;border-radius:0.75rem;padding:1.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <div class="card-icon bg-green-100" style="width:48px;height:48px;margin:0;"><i data-lucide="file-text" style="width:22px;height:22px;color:#16a34a;"></i></div>
+          <div>
+            <p style="font-weight:700;color:#1f2937;">Generate Scam Report PDF</p>
+            <p style="font-size:0.85rem;color:#6b7280;">Download comprehensive guide on latest scams</p>
+          </div>
+        </div>
+        <button class="btn btn-green" onclick="alert('PDF Download feature coming soon!')">
+          <i data-lucide="file-text" style="width:18px;height:18px;"></i>Download PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="inner">
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:2rem;" id="footerGrid"></div>
+    <div class="bottom">
+      <p>© 2025 CYBERGUARD. All rights reserved. An initiative under ISEA Project.</p>
+      <div class="bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────
+const scamNews = [
+  "Digital Arrest Scam: Fraudsters posing as police officers demanding money - Stay Alert!",
+  "Phishing Attack: Fake bank emails asking for OTP - Never share your OTP!",
+  "UPI Fraud: Unauthorized transactions reported - Enable UPI PIN for all payments",
+  "Job Scam: Fake job offers asking for registration fees - Verify before paying",
+  "Lottery Scam: Messages claiming you've won a lottery - It's a trap!",
+  "KYC Scam: Fake calls for KYC update - Banks never ask for PIN/OTP",
+  "Investment Scam: High returns promise - If it's too good to be true, it probably is!",
+  "Social Media Hack: Fake profiles asking for money - Verify identity before helping",
+  "QR Code Scam: Scanning unknown QR codes can empty your wallet - Be careful!",
+  "Crypto Scam: Fake cryptocurrency investments - Only use verified exchanges",
+];
+
+const latestScams = [
+  { title:"Digital Arrest Scam: Mumbai businessman loses ₹15 lakh", url:"https://cybercrime.gov.in" },
+  { title:"UPI Fraud Alert: New app malware targeting Android users", url:"https://cybercrime.gov.in" },
+  { title:"Phishing Scam: Fake SBI KYC update emails circulating", url:"https://cybercrime.gov.in" },
+  { title:"Job Scam: Fake WFH job offers on Telegram", url:"https://cybercrime.gov.in" },
+  { title:"Crypto Scam: Fake investment app defrauds 500+ users", url:"https://cybercrime.gov.in" },
+  { title:"OLX Scam: Fraudsters posing as army personnel", url:"https://cybercrime.gov.in" },
+  { title:"Electricity Bill Scam: Fake power disconnection threats", url:"https://cybercrime.gov.in" },
+  { title:"Courier Scam: Fake customs clearance charges demanded", url:"https://cybercrime.gov.in" },
+];
+
+const quizWinners = [
+  { name:"Rahul Sharma", college:"IIT Delhi", score:98, rank:1 },
+  { name:"Priya Patel",  college:"NIT Trichy", score:96, rank:2 },
+  { name:"Amit Kumar",   college:"DTU",        score:95, rank:3 },
+];
+
+const reportingPortals = [
+  { name:"Cybercrime.gov.in",  description:"National Cyber Crime Reporting Portal", url:"https://cybercrime.gov.in" },
+  { name:"JanSankalp Portal",  description:"Citizen Grievance Redressal",           url:"https://jansankalp.nic.in" },
+  { name:"MHA Cyber Security", description:"Ministry of Home Affairs",               url:"https://www.mha.gov.in" },
+  { name:"CERT-In",            description:"Indian Computer Emergency Response Team",url:"https://www.cert-in.org.in" },
+  { name:"NCIIPC",             description:"National Critical Info Infrastructure",  url:"https://www.nciipc.gov.in" },
+  { name:"CHD Cyber Cell",     description:"Cyber Crime Helpline Delhi",             url:"tel:1930" },
+  { name:"Consumer Helpline",  description:"National Consumer Helpline",             url:"tel:1800114000" },
+  { name:"SBI Cyber Crime",    description:"SBI Cyber Crime Reporting",              url:"https://sbi.co.in" },
+];
+
+const dos = [
+  "Verify the identity of callers claiming to be from banks or government",
+  "Use strong, unique passwords for each online account",
+  "Enable two-factor authentication on all important accounts",
+  "Keep your operating system and apps updated",
+  "Report suspicious activities to cybercrime.gov.in",
+  "Use antivirus software and keep it updated",
+];
+const donts = [
+  "Never share OTP, PIN, passwords, or CVV with anyone",
+  "Don't click on links in unsolicited emails or SMS",
+  "Avoid using public WiFi for banking or shopping",
+  "Don't download apps from unofficial sources",
+  "Never pay money to receive lottery or prize winnings",
+  "Don't ignore software update notifications",
+];
+
+const detectionData = [
+  { icon:"mic",       bg:"bg-red-100",    tc:"color:#dc2626", title:"Voice Detection", desc:"AI-powered voice analysis to detect scam calls in real-time." },
+  { icon:"bell",      bg:"bg-orange-100", tc:"color:#ea580c", title:"SMS Filter",       desc:"Smart filtering of phishing SMS and spam messages." },
+  { icon:"shield",    bg:"bg-yellow-100", tc:"color:#ca8a04", title:"URL Scanner",      desc:"Instant analysis of suspicious URLs before you click." },
+  { icon:"file-text", bg:"bg-pink-100",   tc:"color:#db2777", title:"App Analyzer",     desc:"Scans installed apps for malware and suspicious permissions." },
+];
+
+const howItWorksData = [
+  { num:1, title:"Detection", desc:"Our AI monitors calls, SMS, and apps for suspicious activity" },
+  { num:2, title:"Analysis",  desc:"Real-time analysis against our threat database" },
+  { num:3, title:"Alert",     desc:"Instant warning if threat is detected" },
+];
+
+const govLinks = [
+  { name:"Cybercrime.gov.in", url:"https://cybercrime.gov.in" },
+  { name:"MeitY India",        url:"https://www.meity.gov.in" },
+  { name:"MHA - Cyber Security",url:"https://www.mha.gov.in" },
+  { name:"CDAC India",         url:"https://www.cdac.in" },
+  { name:"ISEA Project",       url:"https://www.isea.gov.in" },
+  { name:"CERT-In",            url:"https://www.cert-in.org.in" },
+  { name:"NCIIPC",             url:"https://www.nciipc.gov.in" },
+  { name:"Digital India",      url:"https://www.digitalindia.gov.in" },
+];
+
+const pageLinks = [
+  { name:"Home",               path:"index.html" },
+  { name:"Awareness",          path:"awareness.html" },
+  { name:"Real Time Detection",path:"detection.html" },
+  { name:"Reporting",          path:"reporting.html" },
+  { name:"Digital Arrest",     path:"awareness.html#digital-arrest" },
+  { name:"Quiz & Rewards",     path:"awareness.html#quiz" },
+  { name:"Workshops",          path:"awareness.html#workshops" },
+  { name:"Scam Alerts",        path:"detection.html#alerts" },
+];
+
+// ── Render News Ticker ──
+const ticker = document.getElementById('ticker');
+const allNews = [...scamNews, ...scamNews];
+ticker.innerHTML = allNews.map(n => `<span><span class="dot">●</span> ${n}</span>`).join('');
+
+// ── Render Scam Scroll ──
+const scamScroll = document.getElementById('scamScroll');
+const allScams = [...latestScams, ...latestScams];
+scamScroll.innerHTML = allScams.map(s =>
+  `<a href="${s.url}" target="_blank" rel="noopener noreferrer" style="display:block;padding:0.75rem 1rem;border-bottom:1px solid #bfdbfe;color:#1f2937;font-size:0.875rem;transition:background 0.15s;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background=''">${s.title}</a>`
+).join('');
+
+// ── Render Quiz Winners ──
+const qw = document.getElementById('quizWinners');
+qw.innerHTML = quizWinners.map(w => {
+  const medals = ['🥇','🥈','🥉'];
+  return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid #f3f4f6;">
+    <span style="font-size:1.25rem;">${medals[w.rank-1]}</span>
+    <div style="flex:1;margin-left:0.75rem;"><p style="font-weight:600;font-size:0.875rem;">${w.name}</p><p style="font-size:0.75rem;color:#6b7280;">${w.college}</p></div>
+    <span style="font-weight:700;color:#1e3a8a;">${w.score}%</span>
+  </div>`;
+}).join('');
+
+// ── Render Do's & Don'ts ──
+document.getElementById('dosList').innerHTML = dos.map(d =>
+  `<li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.875rem;color:#374151;"><span style="color:#16a34a;flex-shrink:0;">✓</span>${d}</li>`
+).join('');
+document.getElementById('dontsList').innerHTML = donts.map(d =>
+  `<li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.875rem;color:#374151;"><span style="color:#dc2626;flex-shrink:0;">✗</span>${d}</li>`
+).join('');
+
+// ── Render Detection Cards ──
+document.getElementById('detectionCards').innerHTML = detectionData.map(d =>
+  `<div class="card hover-card">
+    <div class="card-icon ${d.bg}" style="width:56px;height:56px;margin-bottom:1rem;"><i data-lucide="${d.icon}" style="width:28px;height:28px;${d.tc}"></i></div>
+    <h3 style="font-size:1rem;font-weight:700;color:#1f2937;margin-bottom:0.5rem;">${d.title}</h3>
+    <p style="font-size:0.85rem;color:#4b5563;">${d.desc}</p>
+  </div>`
+).join('');
+
+// ── Render How It Works ──
+document.getElementById('howItWorks').innerHTML = howItWorksData.map(h =>
+  `<div style="display:flex;align-items:flex-start;gap:1rem;">
+    <div style="background:#ef4444;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">${h.num}</div>
+    <div><h4 style="font-weight:700;color:#1f2937;">${h.title}</h4><p style="font-size:0.85rem;color:#4b5563;">${h.desc}</p></div>
+  </div>`
+).join('');
+
+// ── Render Reporting Portals ──
+document.getElementById('reportingPortals').innerHTML = reportingPortals.map(p =>
+  `<a href="${p.url}" target="_blank" rel="noopener noreferrer" class="card hover-card" style="display:block;cursor:pointer;">
+    <i data-lucide="external-link" style="width:20px;height:20px;color:#16a34a;margin-bottom:0.5rem;"></i>
+    <h4 style="font-weight:700;font-size:0.9rem;color:#1f2937;">${p.name}</h4>
+    <p style="font-size:0.75rem;color:#6b7280;margin-top:0.25rem;">${p.description}</p>
+  </a>`
+).join('');
+
+// ── Render Footer ──
+document.getElementById('footerGrid').innerHTML = `
+  <div>
+    <h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Government Resources</h3>
+    <ul>${govLinks.map(l=>`<li><a href="${l.url}" target="_blank" rel="noopener noreferrer">${l.name} <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></li>`).join('')}</ul>
+  </div>
+  <div>
+    <h3><i data-lucide="shield" style="width:20px;height:20px;"></i>CYBERGUARD Pages</h3>
+    <ul>${pageLinks.map(l=>`<li><a href="${l.path}">${l.name}</a></li>`).join('')}</ul>
+  </div>
+  <div>
+    <h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Contact Us</h3>
+    <div class="contact-item"><i data-lucide="map-pin"></i><p>Cyber Security Cell<br/>Ministry of Electronics & IT<br/>New Delhi - 110001, India</p></div>
+    <div class="contact-item"><i data-lucide="phone"></i><p>Helpline: 1930<br/>Toll-Free: 1800-123-4567</p></div>
+    <div class="contact-item"><i data-lucide="mail"></i><p>support@cyberguard.gov.in</p></div>
+    <div class="helpline-box">
+      <p class="title">Emergency Cyber Crime Helpline</p>
+      <p class="number">1930</p>
+      <p class="sub">Available 24x7 | Toll Free</p>
+    </div>
+  </div>`;
+
+// ── Carousel ──
+const slides = document.querySelectorAll('.carousel .slide');
+const dotsContainer = document.getElementById('dots');
+let current = 0, timer;
+
+slides.forEach((_,i) => {
+  const dot = document.createElement('button');
+  dot.className = 'dot' + (i===0?' active':'');
+  dot.setAttribute('aria-label', `Go to slide ${i+1}`);
+  dot.addEventListener('click', () => goTo(i));
+  dotsContainer.appendChild(dot);
+});
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  document.querySelectorAll('.carousel .dot')[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slides[current].classList.add('active');
+  document.querySelectorAll('.carousel .dot')[current].classList.add('active');
+}
+function startTimer() { timer = setInterval(() => goTo(current+1), 4000); }
+function resetTimer()  { clearInterval(timer); startTimer(); }
+document.getElementById('prevBtn').addEventListener('click', () => { goTo(current-1); resetTimer(); });
+document.getElementById('nextBtn').addEventListener('click', () => { goTo(current+1); resetTimer(); });
+startTimer();
+
+// ── Mobile Menu ──
+document.getElementById('hamburger').addEventListener('click', () => {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('open');
+  const icon = document.getElementById('menuIcon');
+  icon.setAttribute('data-lucide', menu.classList.contains('open') ? 'x' : 'menu');
+  lucide.createIcons();
+});
+
+// ── Active nav ──
+document.querySelectorAll('.main-navbar .nav-links a, .main-navbar .mobile-menu a').forEach(a => {
+  if (a.href === location.href) a.classList.add('active');
+});
+
+// ── Theme Toggle ──
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  themeBtn.innerHTML = isDark ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+  lucide.createIcons();
+});
+
+// ── Init Icons ──
+lucide.createIcons();
+</script>
+</body>
+</html>

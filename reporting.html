@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CYBERGUARD – Report Cyber Crime</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+
+<!-- TOP NAVBAR -->
+<div class="top-navbar">
+  <div class="inner">
+    <div class="logos">
+      <img src="images/cdac_logo.jpg" alt="CDAC" onerror="this.style.display='none'"/>
+      <img src="images/isea_logo.jpg" alt="ISEA" onerror="this.style.display='none'"/>
+      <div class="meity-info">
+        <img src="https://www.meity.gov.in/sites/all/themes/meity/images/emblem.png" alt="MeitY" onerror="this.style.display='none'"/>
+        <span>Ministry of Electronics<br/>&amp; Information Technology</span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="college-logo">COLLEGE</div>
+      <span class="college-name">Your College Name</span>
+      <button class="theme-btn" id="themeBtn"><i data-lucide="moon"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN NAVBAR -->
+<nav class="main-navbar">
+  <div class="inner">
+    <a href="index.html" class="brand"><i data-lucide="shield"></i>CYBERGUARD</a>
+    <div class="nav-links">
+      <a href="awareness.html">AWARENESS</a>
+      <a href="detection.html">REAL TIME DETECTION</a>
+      <a href="reporting.html" class="active">REPORTING</a>
+    </div>
+    <button class="hamburger" id="hamburger"><i data-lucide="menu" id="menuIcon"></i></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="awareness.html">AWARENESS</a>
+    <a href="detection.html">REAL TIME DETECTION</a>
+    <a href="reporting.html" class="active">REPORTING</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="background:linear-gradient(135deg,#16a34a,#059669);color:#fff;padding:4rem 1rem;text-align:center;">
+  <div class="container">
+    <h1 style="font-size:2.5rem;font-weight:900;margin-bottom:1rem;">Report Cyber Crime</h1>
+    <p style="font-size:1.1rem;color:#bbf7d0;max-width:40rem;margin:0 auto 2rem;">Quick and easy access to all government reporting channels</p>
+    <div style="display:inline-flex;align-items:center;gap:1rem;background:rgba(255,255,255,0.2);border-radius:9999px;padding:1rem 2rem;">
+      <i data-lucide="phone" style="width:32px;height:32px;"></i>
+      <div style="text-align:left;">
+        <p style="font-size:0.875rem;color:#bbf7d0;">Emergency Helpline</p>
+        <p style="font-size:2.5rem;font-weight:900;line-height:1;">1930</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK ACTIONS -->
+<section class="section">
+  <div class="container">
+    <div class="grid-3">
+      <a href="tel:1930" style="background:#dc2626;color:#fff;border-radius:0.75rem;padding:1.5rem;text-align:center;display:block;transition:background 0.2s;" onmouseover="this.style.background='#b91c1c'" onmouseout="this.style.background='#dc2626'">
+        <i data-lucide="phone" style="width:40px;height:40px;margin:0 auto 1rem;display:block;"></i>
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Call 1930 Now</h3>
+        <p style="font-size:0.85rem;color:#fca5a5;">24x7 Toll-Free Helpline</p>
+      </a>
+      <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" style="background:#2563eb;color:#fff;border-radius:0.75rem;padding:1.5rem;text-align:center;display:block;transition:background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+        <i data-lucide="globe" style="width:40px;height:40px;margin:0 auto 1rem;display:block;"></i>
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Report Online</h3>
+        <p style="font-size:0.85rem;color:#bfdbfe;">cybercrime.gov.in</p>
+      </a>
+      <button onclick="alert('PDF download coming soon!')" style="background:#16a34a;color:#fff;border-radius:0.75rem;padding:1.5rem;text-align:center;width:100%;transition:background 0.2s;" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='#16a34a'">
+        <i data-lucide="download" style="width:40px;height:40px;margin:0 auto 1rem;display:block;"></i>
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Download Guide</h3>
+        <p style="font-size:0.85rem;color:#bbf7d0;">How to Report PDF</p>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- REPORTING PORTALS -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Government Reporting Portals</h2>
+      <p>Official channels to report cyber crimes and get help</p>
+    </div>
+    <div class="grid-3" id="portalsGrid"></div>
+  </div>
+</section>
+
+<!-- HELPLINES -->
+<section class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Emergency Helplines</h2>
+      <p>Call these numbers for immediate cyber crime assistance</p>
+    </div>
+    <div class="grid-4" id="helplinesGrid"></div>
+  </div>
+</section>
+
+<!-- STEPS TO REPORT -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>How to Report</h2>
+      <p>Follow these simple steps to report a cyber crime</p>
+    </div>
+    <div class="grid-4" id="stepsGrid"></div>
+  </div>
+</section>
+
+<!-- WHAT TO REPORT -->
+<section class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>What You Can Report</h2>
+      <p>Types of cyber crimes that can be reported</p>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="border-left:4px solid #ef4444;">
+        <h3 style="font-size:1rem;font-weight:700;color:#1f2937;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;"><i data-lucide="alert-triangle" style="width:20px;height:20px;color:#ef4444;"></i>Financial Fraud</h3>
+        <ul style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.875rem;color:#4b5563;">
+          <li>• UPI/Paytm fraud</li><li>• Credit/debit card fraud</li><li>• Banking fraud</li><li>• Investment scams</li><li>• Lottery/prize scams</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:4px solid #3b82f6;">
+        <h3 style="font-size:1rem;font-weight:700;color:#1f2937;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;"><i data-lucide="globe" style="width:20px;height:20px;color:#3b82f6;"></i>Online Crimes</h3>
+        <ul style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.875rem;color:#4b5563;">
+          <li>• Phishing attacks</li><li>• Identity theft</li><li>• Email hacking</li><li>• Social media fraud</li><li>• Data theft</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:4px solid #a855f7;">
+        <h3 style="font-size:1rem;font-weight:700;color:#1f2937;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;"><i data-lucide="user" style="width:20px;height:20px;color:#a855f7;"></i>Harassment</h3>
+        <ul style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.875rem;color:#4b5563;">
+          <li>• Cyber stalking</li><li>• Online bullying</li><li>• Morphing images</li><li>• Defamation</li><li>• Threats and intimidation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTS CHECKLIST -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="card">
+      <h2 style="font-size:1.5rem;font-weight:800;color:#1f2937;display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;">
+        <i data-lucide="file-text" style="width:24px;height:24px;color:#16a34a;"></i>Documents to Keep Ready
+      </h2>
+      <div class="grid-2">
+        <div>
+          <h3 style="font-weight:600;color:#374151;margin-bottom:0.75rem;">For Financial Frauds:</h3>
+          <ul style="display:flex;flex-direction:column;gap:0.5rem;">
+            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Bank statements showing fraudulent transactions</li>
+            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Screenshots of payment confirmations</li>
+            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>SMS/email communications with fraudster</li>
+            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Copy of FIR (if filed with local police)</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-weight:600;color:#374151;margin-bottom:0.75rem;">For Other Cyber Crimes:</h3>
+          <ul style="display:flex;flex-direction:column;gap:0.5rem;">
+            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Screenshots of offensive content</li>
+            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>URLs of offending websites/posts</li>
+            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Details of the accused (if known)</li>
+            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Witness information (if any)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="text-center section-heading">
+      <h2>Frequently Asked Questions</h2>
+      <p>Common questions about reporting cyber crimes</p>
+    </div>
+    <div class="grid-2" id="faqGrid"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="inner">
+    <div id="footerGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;"></div>
+    <div class="bottom">
+      <p>© 2025 CYBERGUARD. All rights reserved. An initiative under ISEA Project.</p>
+      <div class="bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Sitemap</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const portals = [
+  { name:"Cybercrime.gov.in",  desc:"National Cyber Crime Reporting Portal - Report all types of cyber crimes online", url:"https://cybercrime.gov.in",    icon:"shield",        color:"#2563eb", bg:"#dbeafe", features:["24/7 Online Reporting","Anonymous Complaints","Track Status"] },
+  { name:"JanSankalp Portal",  desc:"Citizen Grievance Redressal System for cyber-related complaints",                url:"https://jansankalp.nic.in",   icon:"message-square",color:"#16a34a", bg:"#dcfce7", features:["Grievance Filing","Status Tracking","Resolution Support"] },
+  { name:"MHA Cyber Security", desc:"Ministry of Home Affairs - Cyber and Information Security Division",             url:"https://www.mha.gov.in",      icon:"building-2",    color:"#dc2626", bg:"#fee2e2", features:["Policy Information","Security Guidelines","National Coordination"] },
+  { name:"CERT-In",            desc:"Indian Computer Emergency Response Team - Report security incidents",            url:"https://www.cert-in.org.in",  icon:"shield-check",  color:"#ea580c", bg:"#ffedd5", features:["Incident Reporting","Security Alerts","Advisories"] },
+  { name:"NCIIPC",             desc:"National Critical Information Infrastructure Protection Centre",                  url:"https://www.nciipc.gov.in",   icon:"lock",          color:"#9333ea", bg:"#f3e8ff", features:["CIIPC Protection","Threat Alerts","Sector Coordination"] },
+  { name:"RBI Cyber Security", desc:"Reserve Bank of India - Report banking frauds and phishing",                     url:"https://www.rbi.org.in",      icon:"landmark",      color:"#ca8a04", bg:"#fef9c3", features:["Banking Fraud","Phishing Reports","Customer Protection"] },
+];
+
+const helplines = [
+  { number:"1930",          name:"National Cyber Crime Helpline",     available:"24x7", tollfree:true },
+  { number:"155260",        name:"National Cyber Crime Reporting",    available:"24x7", tollfree:true },
+  { number:"1800-111-222",  name:"CERT-In Incident Response",         available:"24x7", tollfree:true },
+  { number:"1800-425-3800", name:"SBI Cyber Crime Helpline",          available:"24x7", tollfree:true },
+];
+
+const steps = [
+  { step:1, title:"Gather Evidence", desc:"Collect screenshots, emails, transaction details, and any relevant information about the incident." },
+  { step:2, title:"Call 1930",       desc:"For immediate assistance, call the National Cyber Crime Helpline at 1930 (toll-free)." },
+  { step:3, title:"File Online Report", desc:"Visit cybercrime.gov.in and register your complaint with all the details." },
+  { step:4, title:"Track & Follow-up", desc:"Use your complaint number to track status and provide additional information if needed." },
+];
+
+const faqs = [
+  { q:"Is reporting on cybercrime.gov.in free?",       a:"Yes, reporting on the National Cyber Crime Reporting Portal is completely free of charge." },
+  { q:"Can I report anonymously?",                      a:"Yes, you can report cyber crimes anonymously without revealing your identity." },
+  { q:"What is the response time?",                     a:"Financial fraud reports are processed within 24 hours. Other complaints may take 3-7 working days." },
+  { q:"Can I track my complaint?",                      a:"Yes, you will receive a complaint number to track the status of your report online." },
+];
+
+// Portals
+document.getElementById('portalsGrid').innerHTML = portals.map(p =>
+  `<a href="${p.url}" target="_blank" rel="noopener noreferrer" class="card hover-card" style="display:block;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;">
+    <div style="width:56px;height:56px;border-radius:50%;background:${p.bg};display:flex;align-items:center;justify-content:center;margin-bottom:1rem;"><i data-lucide="${p.icon}" style="width:28px;height:28px;color:${p.color};"></i></div>
+    <h3 style="font-size:1rem;font-weight:700;color:#1f2937;margin-bottom:0.5rem;">${p.name}</h3>
+    <p style="font-size:0.8rem;color:#6b7280;margin-bottom:0.75rem;">${p.desc}</p>
+    ${p.features.map(f=>`<div style="display:flex;align-items:center;gap:0.35rem;font-size:0.75rem;color:#6b7280;margin-bottom:0.25rem;"><i data-lucide="check-circle" style="width:12px;height:12px;color:#22c55e;"></i>${f}</div>`).join('')}
+  </a>`
+).join('');
+
+// Helplines
+document.getElementById('helplinesGrid').innerHTML = helplines.map(h =>
+  `<div class="card text-center" style="text-align:center;">
+    <div style="width:56px;height:56px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 0.75rem;"><i data-lucide="phone" style="width:28px;height:28px;color:#16a34a;"></i></div>
+    <p style="font-size:1.5rem;font-weight:900;color:#1f2937;margin-bottom:0.25rem;">${h.number}</p>
+    <p style="font-size:0.85rem;font-weight:600;color:#4b5563;margin-bottom:0.5rem;">${h.name}</p>
+    <div style="display:flex;justify-content:center;gap:0.5rem;">
+      <span class="badge badge-green">${h.available}</span>
+      ${h.tollfree?'<span class="badge badge-blue">Toll-Free</span>':''}
+    </div>
+  </div>`
+).join('');
+
+// Steps
+document.getElementById('stepsGrid').innerHTML = steps.map((s,i) =>
+  `<div style="position:relative;">
+    <div class="card" style="height:100%;">
+      <div style="width:48px;height:48px;background:#16a34a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:700;margin-bottom:1rem;">${s.step}</div>
+      <h3 style="font-size:1rem;font-weight:700;color:#1f2937;margin-bottom:0.5rem;">${s.title}</h3>
+      <p style="font-size:0.875rem;color:#4b5563;">${s.desc}</p>
+    </div>
+    ${i<steps.length-1?'<div style="display:none;" class="step-arrow"></div>':''}
+  </div>`
+).join('');
+
+// FAQ
+document.getElementById('faqGrid').innerHTML = faqs.map(f =>
+  `<div class="card">
+    <h3 style="font-weight:700;color:#1f2937;margin-bottom:0.5rem;">${f.q}</h3>
+    <p style="font-size:0.875rem;color:#4b5563;">${f.a}</p>
+  </div>`
+).join('');
+
+// Footer
+const govLinks=[{name:"Cybercrime.gov.in",url:"https://cybercrime.gov.in"},{name:"MeitY India",url:"https://www.meity.gov.in"},{name:"MHA - Cyber Security",url:"https://www.mha.gov.in"},{name:"CDAC India",url:"https://www.cdac.in"},{name:"ISEA Project",url:"https://www.isea.gov.in"},{name:"CERT-In",url:"https://www.cert-in.org.in"},{name:"NCIIPC",url:"https://www.nciipc.gov.in"},{name:"Digital India",url:"https://www.digitalindia.gov.in"}];
+const pageLinks=[{name:"Home",path:"index.html"},{name:"Awareness",path:"awareness.html"},{name:"Real Time Detection",path:"detection.html"},{name:"Reporting",path:"reporting.html"},{name:"Digital Arrest",path:"awareness.html#digital-arrest"},{name:"Quiz & Rewards",path:"awareness.html#quiz"},{name:"Workshops",path:"awareness.html#workshops"},{name:"Scam Alerts",path:"detection.html#alerts"}];
+document.getElementById('footerGrid').innerHTML=`<div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Government Resources</h3><ul>${govLinks.map(l=>`<li><a href="${l.url}" target="_blank">${l.name} <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>CYBERGUARD Pages</h3><ul>${pageLinks.map(l=>`<li><a href="${l.path}">${l.name}</a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Contact Us</h3><div class="contact-item"><i data-lucide="map-pin"></i><p>Cyber Security Cell<br/>Ministry of Electronics & IT<br/>New Delhi - 110001</p></div><div class="contact-item"><i data-lucide="phone"></i><p>Helpline: 1930<br/>Toll-Free: 1800-123-4567</p></div><div class="contact-item"><i data-lucide="mail"></i><p>support@cyberguard.gov.in</p></div><div class="helpline-box"><p class="title">Emergency Cyber Crime Helpline</p><p class="number">1930</p><p class="sub">Available 24x7 | Toll Free</p></div></div>`;
+
+document.getElementById('hamburger').addEventListener('click',()=>{const m=document.getElementById('mobileMenu');m.classList.toggle('open');document.getElementById('menuIcon').setAttribute('data-lucide',m.classList.contains('open')?'x':'menu');lucide.createIcons();});
+document.getElementById('themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');const d=document.body.classList.contains('dark');document.getElementById('themeBtn').innerHTML=d?'<i data-lucide="sun"></i>':'<i data-lucide="moon"></i>';lucide.createIcons();});
+lucide.createIcons();
+</script>
+</body>
+</html>

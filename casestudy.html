@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CYBERGUARD – Case Studies</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+
+<!-- TOP NAVBAR -->
+<div class="top-navbar">
+  <div class="inner">
+    <div class="logos">
+      <img src="images/cdac_logo.jpg" alt="CDAC" onerror="this.style.display='none'"/>
+      <img src="images/isea_logo.jpg" alt="ISEA" onerror="this.style.display='none'"/>
+      <div class="meity-info">
+        <img src="https://www.meity.gov.in/sites/all/themes/meity/images/emblem.png" alt="MeitY" onerror="this.style.display='none'"/>
+        <span>Ministry of Electronics<br/>&amp; Information Technology</span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="college-logo">COLLEGE</div>
+      <span class="college-name">Your College Name</span>
+      <button class="theme-btn" id="themeBtn"><i data-lucide="moon"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN NAVBAR -->
+<nav class="main-navbar">
+  <div class="inner">
+    <a href="index.html" class="brand"><i data-lucide="shield"></i>CYBERGUARD</a>
+    <div class="nav-links">
+      <a href="awareness.html" class="active">AWARENESS</a>
+      <a href="detection.html">REAL TIME DETECTION</a>
+      <a href="reporting.html">REPORTING</a>
+    </div>
+    <button class="hamburger" id="hamburger"><i data-lucide="menu" id="menuIcon"></i></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="awareness.html" class="active">AWARENESS</a>
+    <a href="detection.html">REAL TIME DETECTION</a>
+    <a href="reporting.html">REPORTING</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="background:linear-gradient(135deg,#1e1b4b,#312e81,#4c1d95);color:#fff;padding:3rem 1rem;text-align:center;">
+  <div class="container">
+    <div id="heroAlert" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#fca5a5;padding:0.5rem 1.25rem;border-radius:9999px;font-weight:600;font-size:0.9rem;margin-bottom:1rem;">
+      <i data-lucide="alert-triangle" style="width:18px;height:18px;"></i>
+      <span id="heroAlertText"></span>
+    </div>
+    <h1 id="heroTitle" style="font-size:2.5rem;font-weight:900;margin-bottom:0.75rem;"></h1>
+    <p id="heroDesc" style="font-size:1rem;color:#c4b5fd;max-width:48rem;margin:0 auto;line-height:1.6;"></p>
+    <div style="margin-top:1.5rem;">
+      <!-- Category tabs -->
+      <div style="display:inline-flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;" id="typeTabs"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section style="background:linear-gradient(135deg,#eff6ff,#fff,#faf5ff);min-height:60vh;padding:3rem 1rem;">
+  <div class="container" style="max-width:1024px;">
+    <div id="caseList" style="display:flex;flex-direction:column;gap:1rem;"></div>
+    <div id="emergencyBanner" style="margin-top:2rem;"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="inner">
+    <div id="footerGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;"></div>
+    <div class="bottom">
+      <p>© 2025 CYBERGUARD. All rights reserved. An initiative under ISEA Project.</p>
+      <div class="bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Sitemap</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── All Case Data ────────────────────────────────────────────────────────
+const oldageCases = [
+  { title:"Digital Arrest Scam", category:"financial", description:"An 81-year-old retired government employee from Ahmedabad received a call from someone claiming to be from the Mumbai Police cyber crime department. The caller informed him that his Aadhaar card was linked to a money laundering case and a parcel containing drugs had been intercepted with his details. The fraudsters used official-sounding language and created a sense of urgency. They convinced him to transfer ₹9.8 lakh to various bank accounts to 'verify his innocence'.", lesson:"Police never ask for money transfers. Verify with local authorities.", prevention:["Always verify the identity of callers claiming to be officials.","Never share Aadhaar, bank, or personal info over phone.","Do not act under pressure; consult family or trusted contacts.","Ignore threats of 'digital arrest' or urgent money transfer demands.","Report suspicious calls to local cyber crime authorities."], source:"Times of India", link:"https://timesofindia.indiatimes.com/city/ahmedabad/digital-arrest-81-yr-old-man-cheated-of-rs-9-8l/articleshow/128044414.cms", amount:"₹9.8 lakh", date:"2024" },
+  { title:"Online Fraud Pension Scam", category:"phishing", description:"A 69-year-old retired bank employee received an SMS that appeared to be from the Pension Department, stating that her pension account needed urgent updating. When she clicked the link and entered all her details including OTP, ₹2 lakh was withdrawn from her account within minutes.", lesson:"Government schemes are never updated via phone links.", prevention:["Always visit official portals or offices for updates.","Never share OTPs, PIN, or CVV with unknown callers.","Verify any money-related requests with family or authorities.","Be suspicious of unsolicited calls about account updates."], source:"Indian Express", link:"#", amount:"₹2 lakh", date:"2024" },
+  { title:"WhatsApp Impersonation Scam", category:"social", description:"A 72-year-old grandmother received a WhatsApp message claiming to be her grandson who needed ₹50,000 urgently for a friend's surgery. The scammer had studied social media to know family names. She transferred the money before realizing the next morning that her grandson was safe at home.", lesson:"Always verify identity through a phone call before sending money, even if the request seems urgent.", prevention:["Call the person directly on their known number to verify.","Be wary of urgent requests for money via messaging apps.","Create a family code word for emergency situations.","Never transfer money without verbal confirmation."], source:"General Advisory", link:"#", amount:"₹50,000", date:"2024" },
+  { title:"Fake KYC Update Scam", category:"identity", description:"A 68-year-old retiree received an email appearing to be from HDFC Bank warning that KYC would expire in 24 hours. He entered all his banking credentials on a fake website, losing ₹3.5 lakh to 12 unauthorized transactions within 30 minutes.", lesson:"Banks never send links for KYC updates via email or SMS.", prevention:["Visit the bank branch or official website directly for KYC.","Check the URL carefully - look for 'https' and official domain.","Never enter banking credentials on links from emails/SMS.","Enable transaction alerts on your mobile number."], source:"Cyber Crime Cell", link:"#", amount:"₹3.5 lakh", date:"2024" },
+  { title:"Investment Scheme Fraud", category:"financial", description:"A 75-year-old retired school principal was added to a WhatsApp group 'Premium Investors Club' and promised 25% monthly returns. After investing ₹15 lakh in three installments, he received returns the first month but was unable to withdraw in the third month — the scammers disappeared with everything.", lesson:"If returns sound too good to be true, they probably are. Always verify investment schemes with financial regulators.", prevention:["Check if the company is registered with SEBI/RBI.","Consult with family members or financial advisors before investing.","Be skeptical of guaranteed high returns promises.","Never invest based solely on phone calls or social media ads."], source:"Economic Times", link:"#", amount:"₹15 lakh", date:"2024" },
+];
+
+const kidsCases = [
+  { title:"Free Robux Scam", category:"phishing", description:"An 11-year-old boy saw a message in Roblox saying 'Get FREE 10,000 ROBUX!' He entered his login credentials on a fake website, then quietly used his dad's UPI to pay ₹50. His Roblox account was stolen and scammers attempted a ₹5,000 UPI transaction.", lesson:"There is no way to get free Robux or any game currency without paying or earning it through the game. Any website promising free currency is trying to steal your account.", prevention:["Never enter your game passwords on any website except the official game.","Real games NEVER give free currency through external websites.","Always ask your parents before clicking links or entering information online.","Tell your parents immediately if you accidentally share information."], source:"Child Safety Online", link:"#", amount:"Lost game account + ₹50", date:"2024" },
+  { title:"Fake YouTube Video & Malware Download", category:"identity", description:"A 10-year-old girl downloaded a 'secret Minecraft mod' from a YouTube link. The file was ransomware that locked all of her mom's work files and demanded $500. The entire laptop was destroyed and 3 years of family photos were lost permanently.", lesson:"Never download anything from the internet without asking your parents first. Many files from random websites contain viruses that can destroy computers.", prevention:["ALWAYS ask parents before downloading anything from the internet.","Don't click on links in YouTube video descriptions without permission.","If your computer shows a warning, STOP and ask an adult.","Tell parents immediately if you accidentally download something."], source:"Digital Kids Safety", link:"#", amount:"Laptop destroyed + Data loss", date:"2024" },
+  { title:"Online Stranger Grooming Attempt", category:"social", description:"A 12-year-old girl befriended an online 'teen' through Among Us who later asked for photos and personal details. When she refused to send inappropriate photos, the person threatened to share her school photo and address. She bravely told her mother, who filed a police complaint. The person was a 35-year-old man targeting multiple children.", lesson:"People online are not always who they say they are. Never share personal information or photos with people you only know online.", prevention:["Never share personal information (address, school name, routine) online.","Tell parents immediately if someone online asks for photos or personal details.","If someone online makes you uncomfortable, TELL A TRUSTED ADULT immediately.","You will NEVER get in trouble for telling parents about online problems."], source:"Child Protection Services", link:"#", amount:"Emotional trauma (attempted exploitation)", date:"2024" },
+  { title:"Fake Shopping Website Scam", category:"financial", description:"A 13-year-old found gaming headphones for ₹800 on a fake website (normally ₹3,500). His father quickly gave his credit card details. The website stole the card and made ₹25,000 in unauthorized transactions. It took 3 months to recover most of the money.", lesson:"If a price seems too good to be true, it's probably a scam. Only shop on well-known, trusted websites.", prevention:["Only buy from well-known websites like Amazon, Flipkart, or official brand stores.","If a price is much cheaper than everywhere else, it's likely fake.","Look for 'https://' and a lock symbol in the website address.","Ask parents to verify the website before entering payment information."], source:"Cyber Crime Cell", link:"#", amount:"₹25,000 attempted fraud", date:"2024" },
+];
+
+const teensCases = [
+  { title:"Social Media Identity Theft", category:"identity", description:"A 16-year-old's Instagram account was hacked after they clicked a 'free followers' link. The hacker used their account to send scam messages to all their followers asking for money, damaging their reputation and friendships.", lesson:"Never click on third-party apps or links that claim to boost followers or likes. These steal your credentials.", prevention:["Never give your social media credentials to third-party apps.","Enable two-factor authentication on all social media accounts.","Regularly check which apps have access to your accounts.","If hacked, change passwords immediately and warn your followers."], source:"Cyber Safety Advisory", link:"#", date:"2024" },
+  { title:"Online Gaming Scam & Peer Pressure", category:"financial", description:"A 17-year-old was pressured by online gaming friends to buy 'cheap' game credits from an unofficial seller. After paying ₹3,000 via UPI, neither the credits nor the seller could be found. The 'gaming friends' disappeared too.", lesson:"Only purchase in-game credits through official game stores. Unofficial sellers are almost always scammers.", prevention:["Only buy game credits from official sources.","Don't let peer pressure push you into unsafe financial decisions.","Unofficial game currency sellers are almost always scammers.","Always verify before sending money to online contacts."], source:"Gaming Safety Report", link:"#", amount:"₹3,000", date:"2024" },
+  { title:"Fake Scholarship Scam", category:"phishing", description:"A class 12 student received an email about a 'Government Scholarship' requiring a ₹500 registration fee. She paid from her pocket money. The website collected thousands of such payments before shutting down.", lesson:"Real government scholarships never require an upfront fee. Always verify through official government portals.", prevention:["Verify scholarships on official government websites (scholarships.gov.in).","Real scholarships NEVER ask for registration fees.","Ask teachers or counselors before applying to unknown scholarships.","Report suspicious scholarship offers to cybercrime.gov.in."], source:"Education Safety Advisory", link:"#", amount:"₹500", date:"2024" },
+];
+
+const adultCases = [
+  { title:"CEO Fraud / Business Email Compromise", category:"financial", description:"A finance manager received an email appearing to be from her CEO asking for an urgent wire transfer of ₹12 lakh to a vendor. The email used the CEO's real name and photo. She processed the transfer. Later, the real CEO had no knowledge of this transaction — it was a spoofed email.", lesson:"Always verbally verify with a known phone number before making large transfers, even if instructions come from the CEO.", prevention:["Always call to verify before making large fund transfers.","Implement a dual-authorization process for large transactions.","Check email headers carefully for spoofed addresses.","Create a verification protocol for urgent financial requests."], source:"Business Security Report", link:"#", amount:"₹12 lakh", date:"2024" },
+  { title:"Fake Job Offer Abroad", category:"identity", description:"A 28-year-old IT professional received a LinkedIn message offering a high-paying job in Dubai. After paying ₹85,000 in 'visa fees', 'medical fees', and 'processing charges', the job offer disappeared and the recruiters became unreachable.", lesson:"Legitimate job recruiters never charge candidates money. Any job requiring upfront fees is a scam.", prevention:["Legitimate employers never ask candidates to pay fees.","Verify the company on official business registries.","Use only official job portals or verified recruiters.","Contact the company directly via their official website to verify."], source:"Employment Scam Report", link:"#", amount:"₹85,000", date:"2024" },
+  { title:"Matrimonial Site Scam", category:"social", description:"A 32-year-old woman connected with someone on a matrimonial site who seemed perfect. After months of building trust, he claimed an emergency abroad and asked for ₹2 lakh. She sent the money. He disappeared. Investigation revealed the profile was completely fake.", lesson:"Never send money to someone you have only met online, no matter how much you trust them.", prevention:["Never send money to someone you haven't met in person.","Video call to verify the person's identity.","Share the profile with family and do background research.","Report suspicious profiles to the matrimonial platform."], source:"Consumer Protection Report", link:"#", amount:"₹2 lakh", date:"2024" },
+];
+
+const allCaseData = { kids: kidsCases, teens: teensCases, adult: adultCases, oldage: oldageCases };
+
+const typeConfig = {
+  kids:   { title:"Cyber Kids Case Studies",            desc:"Real stories about cyber threats targeting children aged 8–12. Learn how to protect young ones online.", alert:"⚠️ Real Stories, Child Safety Focused", emergency:'kids' },
+  teens:  { title:"Cyber Teens Case Studies",           desc:"Cyber threats faced by teenagers aged 13–17. Understand the risks and stay safe on social media and online platforms.", alert:"⚠️ Real Incidents Targeting Teenagers", emergency:'default' },
+  adult:  { title:"Cyber Adult Case Studies",           desc:"Cyber frauds targeting working adults. Protect your financial and professional life from sophisticated scams.", alert:"⚠️ Real Financial Cyber Crimes", emergency:'default' },
+  oldage: { title:"Cyber Senior Citizen Case Studies",  desc:"Cyber scams targeting senior citizens. Learn to protect elderly family members from digital fraud.", alert:"⚠️ Real Incidents Targeting Senior Citizens", emergency:'default' },
+};
+
+const catColors = {
+  financial: { bg:"#fee2e2", text:"#991b1b", border:"#fca5a5" },
+  identity:  { bg:"#f3e8ff", text:"#6b21a8", border:"#d8b4fe" },
+  phishing:  { bg:"#ffedd5", text:"#9a3412", border:"#fdba74" },
+  social:    { bg:"#dbeafe", text:"#1e40af", border:"#93c5fd" },
+};
+const catIcons   = { financial:"₹", identity:"🆔", phishing:"🎣", social:"👥" };
+
+let openIndex = -1;
+
+function getType() {
+  const params = new URLSearchParams(location.search);
+  return params.get('type') || 'oldage';
+}
+
+function init() {
+  const type   = getType();
+  const config = typeConfig[type] || typeConfig.oldage;
+  const cases  = allCaseData[type] || oldageCases;
+
+  document.title = 'CYBERGUARD – ' + config.title;
+  document.getElementById('heroAlertText').textContent = config.alert;
+  document.getElementById('heroTitle').textContent     = config.title;
+  document.getElementById('heroDesc').textContent      = config.desc;
+
+  // Type tabs
+  const tabs = document.getElementById('typeTabs');
+  const types = [
+    { key:'kids',   label:'Cyber Kids' },
+    { key:'teens',  label:'Cyber Teens' },
+    { key:'adult',  label:'Cyber Adult' },
+    { key:'oldage', label:'Senior Citizen' },
+  ];
+  tabs.innerHTML = types.map(t =>
+    `<a href="casestudy.html?type=${t.key}" style="padding:0.375rem 1rem;border-radius:9999px;font-size:0.8rem;font-weight:600;transition:all 0.2s;${t.key===type?'background:#fff;color:#1e3a8a;':'background:rgba(255,255,255,0.2);color:#fff;'}">${t.label}</a>`
+  ).join('');
+
+  // Render cases
+  renderCases(cases, type);
+
+  // Emergency banner
+  const banner = document.getElementById('emergencyBanner');
+  if (config.emergency === 'kids') {
+    banner.innerHTML = `<div style="background:#fee2e2;border:2px solid #fca5a5;border-radius:0.75rem;padding:1.5rem;text-align:center;">
+      <h3 style="font-size:1.1rem;font-weight:700;color:#991b1b;margin-bottom:0.5rem;">🚨 Need Help? Don't Be Afraid to Ask!</h3>
+      <p style="color:#b91c1c;margin-bottom:0.75rem;">If you've been scammed or threatened online, tell your parents or call:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;">
+        <span style="background:#fecaca;padding:0.5rem 1.5rem;border-radius:9999px;font-weight:700;color:#991b1b;">📞 1930 (Cyber Crime)</span>
+        <span style="background:#fecaca;padding:0.5rem 1.5rem;border-radius:9999px;font-weight:700;color:#991b1b;">📞 1098 (Childline)</span>
+      </div>
+      <p style="font-size:0.8rem;color:#b91c1c;margin-top:0.75rem;">Remember: You're not in trouble for being scammed. Your safety matters most!</p>
+    </div>`;
+  } else {
+    banner.innerHTML = `<div style="background:#fee2e2;border:2px solid #fca5a5;border-radius:0.75rem;padding:1.5rem;text-align:center;">
+      <h3 style="font-size:1.1rem;font-weight:700;color:#991b1b;margin-bottom:0.5rem;">🚨 Emergency Cyber Crime Helpline</h3>
+      <p style="color:#b91c1c;margin-bottom:0.75rem;">If you've been a victim of cyber fraud, report immediately:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;">
+        <span style="background:#fecaca;padding:0.5rem 1.5rem;border-radius:9999px;font-weight:700;color:#991b1b;">📞 1930</span>
+        <span style="background:#fecaca;padding:0.5rem 1.5rem;border-radius:9999px;font-weight:700;color:#991b1b;">🌐 cybercrime.gov.in</span>
+      </div>
+    </div>`;
+  }
+
+  lucide.createIcons();
+}
+
+function renderCases(cases, type) {
+  const isKids = type === 'kids';
+  document.getElementById('caseList').innerHTML = cases.map((c, i) => {
+    const cat   = catColors[c.category] || catColors.financial;
+    const wTitle = isKids ? 'The Story' : 'What Happened';
+    const lTitle = isKids ? 'What We Learn' : 'Key Lesson';
+    const pTitle = isKids ? 'How to Stay Safe' : 'How to Protect Yourself';
+    return `
+    <div style="background:#fff;border:2px solid #e5e7eb;border-radius:1rem;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.06);transition:box-shadow 0.2s;" id="case-${i}">
+      <button onclick="toggleCase(${i})" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;background:linear-gradient(to right,#f9fafb,#fff);text-align:left;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='linear-gradient(to right,#f3f4f6,#f9fafb)'" onmouseout="this.style.background='linear-gradient(to right,#f9fafb,#fff)'">
+        <div style="display:flex;align-items:center;gap:1rem;flex:1;">
+          <span style="padding:0.25rem 0.625rem;border-radius:0.5rem;font-size:0.8rem;font-weight:600;background:${cat.bg};color:${cat.text};border:1px solid ${cat.border};white-space:nowrap;">
+            ${catIcons[c.category]} ${c.category.charAt(0).toUpperCase()+c.category.slice(1)}
+          </span>
+          <div>
+            <h3 style="font-size:1rem;font-weight:800;color:#111827;">${c.title}</h3>
+            ${c.amount ? `<p style="font-size:0.8rem;color:#dc2626;font-weight:600;margin-top:0.2rem;">Loss: ${c.amount}</p>` : ''}
+          </div>
+        </div>
+        <span id="chevron-${i}" style="font-size:1.25rem;color:#6b7280;transition:transform 0.3s;flex-shrink:0;">▼</span>
+      </button>
+      <div id="body-${i}" style="display:none;padding:1.5rem;border-top:2px solid #f3f4f6;">
+        <div class="info-block red" style="margin-bottom:1rem;">
+          <div style="display:flex;align-items:flex-start;gap:0.75rem;">
+            <i data-lucide="alert-triangle" style="width:20px;height:20px;color:#dc2626;flex-shrink:0;margin-top:2px;"></i>
+            <div><h4 style="font-weight:700;color:#991b1b;margin-bottom:0.4rem;">${wTitle}</h4><p style="font-size:0.875rem;color:#374151;line-height:1.7;">${c.description}</p></div>
+          </div>
+        </div>
+        <div class="info-block blue" style="margin-bottom:1rem;">
+          <div style="display:flex;align-items:flex-start;gap:0.75rem;">
+            <i data-lucide="book-open" style="width:20px;height:20px;color:#2563eb;flex-shrink:0;margin-top:2px;"></i>
+            <div><h4 style="font-weight:700;color:#1e40af;margin-bottom:0.4rem;">${lTitle}</h4><p style="font-size:0.875rem;color:#374151;">${c.lesson}</p></div>
+          </div>
+        </div>
+        <div class="info-block green" style="margin-bottom:1rem;">
+          <div style="display:flex;align-items:flex-start;gap:0.75rem;">
+            <i data-lucide="shield" style="width:20px;height:20px;color:#16a34a;flex-shrink:0;margin-top:2px;"></i>
+            <div style="flex:1;"><h4 style="font-weight:700;color:#166534;margin-bottom:0.5rem;">${pTitle}</h4>
+            <ul style="display:flex;flex-direction:column;gap:0.4rem;">
+              ${c.prevention.map(p=>`<li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.875rem;color:#374151;"><span style="color:#16a34a;font-weight:700;flex-shrink:0;">✓</span>${p}</li>`).join('')}
+            </ul></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding-top:0.75rem;border-top:1px solid #e5e7eb;">
+          <span style="font-size:0.8rem;color:#6b7280;"><strong>Source:</strong> ${c.source}${c.date?` • ${c.date}`:''}</span>
+          ${c.link && c.link!=='#' ? `<a href="${c.link}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.3rem;color:#2563eb;font-weight:600;font-size:0.8rem;">Read Full Story <i data-lucide="external-link" style="width:14px;height:14px;"></i></a>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+function toggleCase(i) {
+  const body    = document.getElementById('body-'+i);
+  const chevron = document.getElementById('chevron-'+i);
+  const isOpen  = body.style.display !== 'none';
+  // Close all
+  document.querySelectorAll('[id^="body-"]').forEach(el => { el.style.display='none'; });
+  document.querySelectorAll('[id^="chevron-"]').forEach(el => { el.style.transform=''; });
+  if (!isOpen) {
+    body.style.display = 'block';
+    chevron.style.transform = 'rotate(180deg)';
+    lucide.createIcons();
+  }
+}
+
+// Footer
+const govLinks=[{name:"Cybercrime.gov.in",url:"https://cybercrime.gov.in"},{name:"MeitY India",url:"https://www.meity.gov.in"},{name:"MHA - Cyber Security",url:"https://www.mha.gov.in"},{name:"CDAC India",url:"https://www.cdac.in"},{name:"ISEA Project",url:"https://www.isea.gov.in"},{name:"CERT-In",url:"https://www.cert-in.org.in"},{name:"NCIIPC",url:"https://www.nciipc.gov.in"},{name:"Digital India",url:"https://www.digitalindia.gov.in"}];
+const pageLinks=[{name:"Home",path:"index.html"},{name:"Awareness",path:"awareness.html"},{name:"Real Time Detection",path:"detection.html"},{name:"Reporting",path:"reporting.html"},{name:"Digital Arrest",path:"awareness.html#digital-arrest"},{name:"Quiz & Rewards",path:"awareness.html#quiz"},{name:"Workshops",path:"awareness.html#workshops"},{name:"Scam Alerts",path:"detection.html#alerts"}];
+document.getElementById('footerGrid').innerHTML=`<div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Government Resources</h3><ul>${govLinks.map(l=>`<li><a href="${l.url}" target="_blank">${l.name} <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>CYBERGUARD Pages</h3><ul>${pageLinks.map(l=>`<li><a href="${l.path}">${l.name}</a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Contact Us</h3><div class="contact-item"><i data-lucide="map-pin"></i><p>Cyber Security Cell<br/>Ministry of Electronics & IT<br/>New Delhi - 110001</p></div><div class="contact-item"><i data-lucide="phone"></i><p>Helpline: 1930<br/>Toll-Free: 1800-123-4567</p></div><div class="contact-item"><i data-lucide="mail"></i><p>support@cyberguard.gov.in</p></div><div class="helpline-box"><p class="title">Emergency Cyber Crime Helpline</p><p class="number">1930</p><p class="sub">Available 24x7 | Toll Free</p></div></div>`;
+
+document.getElementById('hamburger').addEventListener('click',()=>{const m=document.getElementById('mobileMenu');m.classList.toggle('open');document.getElementById('menuIcon').setAttribute('data-lucide',m.classList.contains('open')?'x':'menu');lucide.createIcons();});
+document.getElementById('themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');const d=document.body.classList.contains('dark');document.getElementById('themeBtn').innerHTML=d?'<i data-lucide="sun"></i>':'<i data-lucide="moon"></i>';lucide.createIcons();});
+
+init();
+</script>
+</body>
+</html>
