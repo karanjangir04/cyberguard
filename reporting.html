@@ -4,10 +4,215 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CYBERGUARD – Report Cyber Crime</title>
-  <link rel="stylesheet" href="style.css"/>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--green:#16a34a;--green-dark:#15803d;--green-light:#dcfce7;--blue:#2563eb;--red:#dc2626;--text:#1f2937;--text-soft:#4b5563;--text-muted:#6b7280;--border:#e5e7eb;--card-bg:#ffffff;--section-bg:#f9fafb;}
+    body.dark{--text:#f9fafb;--text-soft:#d1d5db;--text-muted:#9ca3af;--border:#374151;--card-bg:#1f2937;--section-bg:#111827;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Nunito',sans-serif;color:var(--text);background:#fff;transition:background .3s,color .3s;}
+    body.dark{background:#0f172a;}
+    a{text-decoration:none;color:inherit;}ul{list-style:none;}
+
+    /* URGENCY BANNER */
+    .urgency-banner{background:linear-gradient(90deg,#7f1d1d,#dc2626,#991b1b,#dc2626,#7f1d1d);background-size:300% 100%;animation:bscroll 4s linear infinite;color:#fff;text-align:center;padding:.6rem 1rem;font-family:'Rajdhani',sans-serif;font-size:1rem;letter-spacing:.04em;}
+    @keyframes bscroll{0%{background-position:0%}100%{background-position:300%}}
+    .urgency-banner span{color:#fca5a5;font-weight:700;font-size:1.1rem;}
+
+    /* TOP NAVBAR */
+.top-navbar{background:#1e3a5f;color:#fff;padding:.5rem 1rem;}
+.top-navbar .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.top-navbar .logos{display:flex;align-items:center;gap:1rem;}
+.top-navbar .logos img{height:36px;border-radius:4px;}
+.top-navbar .meity-info{display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:#bfdbfe;}
+.top-navbar .meity-info img{height:30px;}
+.top-navbar .right{display:flex;align-items:center;gap:.75rem;}
+
+/* ✅ Updated college logo (supports image now) */
+.college-logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-right:5px;
+}
+
+/* ✅ Image styling inside logo */
+.college-logo img{
+  height:40px;
+  width:auto;
+  object-fit:contain;
+  border-radius:6px;
+}
+
+/* (kept as-is) */
+.college-name{font-size:.8rem;color:#bfdbfe;}
+.theme-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.theme-btn:hover{background:rgba(255,255,255,.25);}
+.theme-btn svg{width:18px;height:18px;}
+
+    /* MAIN NAVBAR */
+    .main-navbar{background:#fff;border-bottom:2px solid #e5e7eb;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+    body.dark .main-navbar{background:#1f2937;border-color:#374151;}
+    .main-navbar .inner{max-width:1200px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between;height:56px;}
+    .brand{display:flex;align-items:center;gap:.5rem;font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;color:#16a34a;}
+    .brand svg{width:24px;height:24px;}
+    .nav-links{display:flex;gap:.25rem;}
+    .nav-links a{padding:.4rem .9rem;border-radius:8px;font-size:.8rem;font-weight:700;letter-spacing:.05em;color:var(--text-soft);transition:background .2s,color .2s;}
+    .nav-links a:hover,.nav-links a.active{background:#dcfce7;color:#16a34a;}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--text);}
+    .hamburger svg{width:24px;height:24px;}
+    .mobile-menu{display:none;flex-direction:column;background:#fff;border-top:1px solid #e5e7eb;padding:.5rem 1rem;}
+    body.dark .mobile-menu{background:#1f2937;border-color:#374151;}
+    .mobile-menu.open{display:flex;}
+    .mobile-menu a{padding:.75rem 0;font-weight:700;font-size:.9rem;color:var(--text-soft);border-bottom:1px solid var(--border);}
+    .mobile-menu a.active{color:#16a34a;}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}}
+
+    /* SHARED */
+    .section{padding:4rem 1rem;}
+    .section-bg{background:var(--section-bg);}
+    .container{max-width:1100px;margin:0 auto;}
+    .section-heading{margin-bottom:2.5rem;text-align:center;}
+    .section-heading h2{font-size:1.75rem;font-weight:800;color:var(--text);margin-bottom:.4rem;}
+    .section-heading p{color:var(--text-muted);font-size:.95rem;}
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+    .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+    .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
+    .card{background:var(--card-bg);border:1px solid var(--border);border-radius:1rem;padding:1.5rem;}
+    .badge{display:inline-block;padding:.2rem .6rem;border-radius:9999px;font-size:.7rem;font-weight:700;}
+    .badge-green{background:#dcfce7;color:#15803d;}
+    .badge-blue{background:#dbeafe;color:#1d4ed8;}
+
+    /* HERO */
+    .hero{background:linear-gradient(135deg,#16a34a,#059669);color:#fff;padding:4rem 1rem;text-align:center;}
+    .hero h1{font-size:2.5rem;font-weight:900;margin-bottom:1rem;}
+    .hero p{font-size:1.1rem;color:#bbf7d0;max-width:40rem;margin:0 auto 2rem;}
+    .helpline-pill{display:inline-flex;align-items:center;gap:1rem;background:rgba(255,255,255,.2);border-radius:9999px;padding:1rem 2rem;}
+    .helpline-pill svg{width:32px;height:32px;}
+    .hp-num{font-size:2.5rem;font-weight:900;line-height:1;}
+    .hp-lbl{font-size:.875rem;color:#bbf7d0;}
+
+    /* DON'T FEAR */
+    .dont-fear{background:linear-gradient(135deg,#064e3b,#065f46,#047857);color:#fff;padding:3rem 1rem;text-align:center;}
+    .dont-fear .shield-big{font-size:4rem;margin-bottom:1rem;display:block;animation:spulse 2s ease-in-out infinite;}
+    @keyframes spulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+    .dont-fear h2{font-family:'Rajdhani',sans-serif;font-size:2.5rem;font-weight:700;margin-bottom:.5rem;}
+    .dont-fear .sub{color:#a7f3d0;font-size:1.05rem;margin-bottom:2rem;}
+    .timer-boxes{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;}
+    .timer-box{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:.75rem;padding:1rem 1.5rem;text-align:center;min-width:90px;}
+    .timer-box .tnum{font-family:'Rajdhani',sans-serif;font-size:2.5rem;font-weight:700;color:#6ee7b7;line-height:1;}
+    .timer-box .tlbl{font-size:.7rem;color:#a7f3d0;letter-spacing:.1em;margin-top:.25rem;}
+    .fear-tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;max-width:900px;margin:0 auto;}
+    .fear-tip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:.75rem;padding:1rem;text-align:left;display:flex;align-items:flex-start;gap:.75rem;}
+    .fear-tip-icon{font-size:1.5rem;flex-shrink:0;}
+    .fear-tip-text{font-size:.82rem;color:#d1fae5;line-height:1.5;}
+    .fear-tip-text strong{color:#fff;display:block;margin-bottom:.2rem;}
+
+    /* PDF SECTION */
+    .pdf-section{background:linear-gradient(135deg,#1e3a5f,#1d4ed8);color:#fff;padding:3rem 1rem;}
+    .pdf-section h2{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;margin-bottom:.4rem;}
+    .pdf-section .pdf-sub{color:#bfdbfe;margin-bottom:2rem;}
+    .pdf-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto 2rem;}
+    .pdf-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:1rem;padding:1.5rem;transition:transform .2s,background .2s;}
+    .pdf-card:hover{transform:translateY(-4px);background:rgba(255,255,255,.16);}
+    .pdf-card h3{font-size:1rem;font-weight:800;margin-bottom:.4rem;}
+    .pdf-card .pdf-desc{font-size:.78rem;color:#93c5fd;margin-bottom:1rem;}
+    .pdf-steps{margin-bottom:1.25rem;}
+    .pdf-step{display:flex;align-items:flex-start;gap:.5rem;font-size:.76rem;color:#bfdbfe;margin-bottom:.4rem;line-height:1.4;}
+    .pdf-step-num{background:rgba(255,255,255,.25);color:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;flex-shrink:0;margin-top:1px;}
+    .btn-dl{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:#1e3a5f;border:none;border-radius:.5rem;padding:.65rem 1.25rem;font-weight:800;font-size:.82rem;cursor:pointer;transition:background .2s,transform .1s;text-decoration:none;}
+    .btn-dl:hover{background:#dbeafe;transform:scale(1.02);}
+    .btn-dl svg{width:15px;height:15px;flex-shrink:0;}
+
+    /* PORTAL CARDS */
+    .portal-detail-card{background:var(--card-bg);border-radius:1rem;border:1px solid var(--border);overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;}
+    .portal-detail-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.1);}
+    .portal-card-header{padding:1.25rem;display:flex;align-items:flex-start;gap:.75rem;}
+    .portal-icon-wrap{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .portal-icon-wrap svg{width:26px;height:26px;}
+    .portal-card-body{padding:0 1.25rem 1.25rem;flex:1;display:flex;flex-direction:column;}
+    .portal-tag{display:inline-block;padding:.2rem .6rem;border-radius:9999px;font-size:.68rem;font-weight:700;margin:.1rem .1rem .1rem 0;}
+    .portal-use-list{margin-top:.75rem;flex:1;}
+    .portal-use-item{display:flex;align-items:flex-start;gap:.5rem;font-size:.79rem;color:var(--text-soft);padding:.3rem 0;border-bottom:1px solid var(--border);}
+    .portal-use-item:last-child{border-bottom:none;}
+    .portal-visit-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;padding:.5rem 1rem;border-radius:.5rem;font-size:.8rem;font-weight:700;color:#fff;transition:opacity .2s;}
+    .portal-visit-btn:hover{opacity:.85;}
+    .portal-visit-btn svg{width:13px;height:13px;}
+
+    /* VIDEO */
+    .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;}
+    .video-card{background:var(--card-bg);border-radius:1rem;border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+    .video-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.12);}
+    .video-thumb{position:relative;padding-top:56.25%;overflow:hidden;}
+    .video-thumb-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+    .video-thumb-bg img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+    .play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);transition:background .2s;}
+    .video-card:hover .play-overlay{background:rgba(0,0,0,.15);}
+    .play-btn{width:56px;height:56px;background:rgba(220,38,38,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);flex-shrink:0;z-index:1;}
+    .play-btn svg{width:22px;height:22px;fill:#fff;margin-left:3px;}
+    .video-duration{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.8);color:#fff;font-size:.68rem;font-weight:700;padding:.12rem .4rem;border-radius:4px;z-index:1;}
+    .video-info{padding:1rem;}
+    .video-badge{display:inline-block;padding:.15rem .5rem;background:#fee2e2;color:#dc2626;border-radius:9999px;font-size:.65rem;font-weight:700;margin-bottom:.5rem;}
+    .video-info h3{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.3rem;line-height:1.4;}
+    .video-info p{font-size:.74rem;color:var(--text-muted);}
+    /* YT Modal */
+    .yt-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;}
+    .yt-modal.open{display:flex;}
+    .yt-modal-inner{position:relative;width:90%;max-width:820px;}
+    .yt-modal-inner iframe{width:100%;aspect-ratio:16/9;border:none;border-radius:.75rem;}
+    .yt-close{position:absolute;top:-44px;right:0;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1;padding:.25rem .5rem;}
+
+    /* MAP */
+    #mapContainer{width:100%;height:480px;border-radius:1rem;border:2px solid var(--border);overflow:hidden;background:#e5e7eb;position:relative;}
+    #mapContainer iframe{width:100%;height:100%;border:none;}
+    .map-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;text-align:center;border-radius:calc(1rem - 2px);z-index:10;}
+    .map-overlay h3{font-family:'Rajdhani',sans-serif;font-size:1.6rem;margin-bottom:.5rem;}
+    .map-overlay .mo-p{color:#bfdbfe;font-size:.9rem;margin-bottom:1.5rem;max-width:360px;}
+    .btn-location{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:#1e3a5f;border:none;border-radius:.75rem;padding:.75rem 1.5rem;font-weight:700;font-size:.95rem;cursor:pointer;transition:background .2s,transform .1s;}
+    .btn-location:hover{background:#dbeafe;transform:scale(1.02);}
+    .btn-location svg{width:20px;height:20px;}
+    .station-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1.5rem;}
+    .station-card{background:var(--card-bg);border:1px solid var(--border);border-radius:.75rem;padding:1rem;display:flex;gap:.75rem;align-items:flex-start;}
+    .station-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
+    .station-info h4{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.25rem;}
+    .station-info p{font-size:.77rem;color:var(--text-soft);margin-bottom:.15rem;}
+    .station-info a{font-size:.77rem;color:#2563eb;font-weight:700;}
+    #locStatus{padding:.75rem 1rem;border-radius:.5rem;font-size:.85rem;margin-top:1rem;display:none;}
+    #locStatus.loading{display:block;background:#dbeafe;color:#1e40af;}
+    #locStatus.success{display:block;background:#dcfce7;color:#15803d;}
+    #locStatus.error{display:block;background:#fee2e2;color:#dc2626;}
+
+    /* FOOTER */
+    .footer{background:#1e3a5f;color:#fff;padding:3rem 1rem 1.5rem;}
+    .footer .inner{max-width:1200px;margin:0 auto;}
+    .footer h3{display:flex;align-items:center;gap:.4rem;font-size:.9rem;font-weight:700;margin-bottom:1rem;color:#93c5fd;}
+    .footer h3 svg{width:16px;height:16px;}
+    .footer ul{display:flex;flex-direction:column;gap:.4rem;}
+    .footer ul li a{font-size:.8rem;color:#bfdbfe;display:flex;align-items:center;gap:.25rem;transition:color .2s;}
+    .footer ul li a:hover{color:#fff;}
+    .footer ul li a svg{width:11px;height:11px;}
+    .contact-item{display:flex;align-items:flex-start;gap:.5rem;margin-bottom:.75rem;}
+    .contact-item svg{width:16px;height:16px;color:#93c5fd;flex-shrink:0;margin-top:2px;}
+    .contact-item p{font-size:.8rem;color:#bfdbfe;line-height:1.5;}
+    .helpline-box{background:rgba(255,255,255,.1);border-radius:.75rem;padding:1rem;text-align:center;margin-top:.5rem;}
+    .helpline-box .title{font-size:.75rem;color:#93c5fd;margin-bottom:.25rem;}
+    .helpline-box .number{font-family:'Rajdhani',sans-serif;font-size:2.5rem;font-weight:700;color:#fbbf24;line-height:1;}
+    .helpline-box .sub{font-size:.72rem;color:#bfdbfe;margin-top:.25rem;}
+    .footer .bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:2rem;padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.78rem;color:#93c5fd;}
+    .bottom-links{display:flex;gap:1rem;}
+    .bottom-links a{color:#93c5fd;transition:color .2s;}
+    .bottom-links a:hover{color:#fff;}
+
+    @media(max-width:640px){.dont-fear h2{font-size:1.75rem;}.timer-box .tnum{font-size:1.75rem;}.hero h1{font-size:1.75rem;}.footer #footerGrid{grid-template-columns:1fr!important;}}
+  </style>
 </head>
 <body>
+
+<!-- URGENCY BANNER -->
+<div class="urgency-banner">
+  ⚠️ CYBER CRIME HUA? <span>DARIYE MAT!</span> &nbsp;|&nbsp; Turant <span>1930</span> Pe Call Karein &nbsp;|&nbsp; 24 Ghante Ke Andar Report Zaroor Karein! ⚠️
+</div>
 
 <!-- TOP NAVBAR -->
 <div class="top-navbar">
@@ -18,11 +223,13 @@
       <div class="meity-info">
         <img src="https://www.meity.gov.in/sites/all/themes/meity/images/emblem.png" alt="MeitY" onerror="this.style.display='none'"/>
         <span>Ministry of Electronics<br/>&amp; Information Technology</span>
+        <img src="images/eca logo.png" alt="College Logo" onerror="this.style.display='none'"/>
+        <span class="college-name">Engineering College Ajmer, Rajasthan</span>
+        <span class="college-name">CSE CYBER SECURITY DEPARTMENT </span>
+      </div>
       </div>
     </div>
     <div class="right">
-      <div class="college-logo">COLLEGE</div>
-      <span class="college-name">Your College Name</span>
       <button class="theme-btn" id="themeBtn"><i data-lucide="moon"></i></button>
     </div>
   </div>
@@ -47,15 +254,15 @@
 </nav>
 
 <!-- HERO -->
-<section style="background:linear-gradient(135deg,#16a34a,#059669);color:#fff;padding:4rem 1rem;text-align:center;">
+<section class="hero">
   <div class="container">
-    <h1 style="font-size:2.5rem;font-weight:900;margin-bottom:1rem;">Report Cyber Crime</h1>
-    <p style="font-size:1.1rem;color:#bbf7d0;max-width:40rem;margin:0 auto 2rem;">Quick and easy access to all government reporting channels</p>
-    <div style="display:inline-flex;align-items:center;gap:1rem;background:rgba(255,255,255,0.2);border-radius:9999px;padding:1rem 2rem;">
-      <i data-lucide="phone" style="width:32px;height:32px;"></i>
+    <h1>Report Cyber Crime</h1>
+    <p>Quick and easy access to all government reporting channels</p>
+    <div class="helpline-pill">
+      <i data-lucide="phone"></i>
       <div style="text-align:left;">
-        <p style="font-size:0.875rem;color:#bbf7d0;">Emergency Helpline</p>
-        <p style="font-size:2.5rem;font-weight:900;line-height:1;">1930</p>
+        <p class="hp-lbl">Emergency Helpline</p>
+        <p class="hp-num">1930</p>
       </div>
     </div>
   </div>
@@ -65,21 +272,107 @@
 <section class="section">
   <div class="container">
     <div class="grid-3">
-      <a href="tel:1930" style="background:#dc2626;color:#fff;border-radius:0.75rem;padding:1.5rem;text-align:center;display:block;transition:background 0.2s;" onmouseover="this.style.background='#b91c1c'" onmouseout="this.style.background='#dc2626'">
+      <a href="tel:1930" style="background:#dc2626;color:#fff;border-radius:.75rem;padding:1.5rem;text-align:center;display:block;transition:filter .2s;" onmouseover="this.style.filter='brightness(.88)'" onmouseout="this.style.filter='brightness(1)'">
         <i data-lucide="phone" style="width:40px;height:40px;margin:0 auto 1rem;display:block;"></i>
-        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Call 1930 Now</h3>
-        <p style="font-size:0.85rem;color:#fca5a5;">24x7 Toll-Free Helpline</p>
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Call 1930 Now</h3>
+        <p style="font-size:.85rem;color:#fca5a5;">24x7 Toll-Free Helpline</p>
       </a>
-      <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" style="background:#2563eb;color:#fff;border-radius:0.75rem;padding:1.5rem;text-align:center;display:block;transition:background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+      <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" style="background:#2563eb;color:#fff;border-radius:.75rem;padding:1.5rem;text-align:center;display:block;transition:filter .2s;" onmouseover="this.style.filter='brightness(.88)'" onmouseout="this.style.filter='brightness(1)'">
         <i data-lucide="globe" style="width:40px;height:40px;margin:0 auto 1rem;display:block;"></i>
-        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Report Online</h3>
-        <p style="font-size:0.85rem;color:#bfdbfe;">cybercrime.gov.in</p>
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Report Online</h3>
+        <p style="font-size:.85rem;color:#bfdbfe;">cybercrime.gov.in</p>
       </a>
-      <button onclick="alert('PDF download coming soon!')" style="background:#16a34a;color:#fff;border-radius:0.75rem;padding:1.5rem;text-align:center;width:100%;transition:background 0.2s;" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='#16a34a'">
+      <button onclick="downloadFinancialPDF()" style="background:#16a34a;color:#fff;border-radius:.75rem;padding:1.5rem;text-align:center;width:100%;border:none;cursor:pointer;transition:filter .2s;" onmouseover="this.style.filter='brightness(.88)'" onmouseout="this.style.filter='brightness(1)'">
         <i data-lucide="download" style="width:40px;height:40px;margin:0 auto 1rem;display:block;"></i>
-        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Download Guide</h3>
-        <p style="font-size:0.85rem;color:#bbf7d0;">How to Report PDF</p>
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Download Complaint Form</h3>
+        <p style="font-size:.85rem;color:#bbf7d0;">Cybercrime Portal Complaint Form</p>
       </button>
+    </div>
+  </div>
+</section>
+
+<!-- DON'T FEAR -->
+<section class="dont-fear">
+  <div class="container">
+    <span class="shield-big">🛡️</span>
+    <h2>डरिये मत! Turant Report Karein</h2>
+    <p class="sub">Cyber Crime hone ke baad jitni jaldi report karein, utna zyada paisa wapas milne ka chance hota hai.</p>
+    <div class="timer-boxes">
+      <div class="timer-box"><div class="tnum">24</div><div class="tlbl">GHANTE<br>ANDAR</div></div>
+      <div class="timer-box" style="background:rgba(255,255,255,.2);"><div class="tnum">1930</div><div class="tlbl">HELPLINE<br>NUMBER</div></div>
+      <div class="timer-box"><div class="tnum">72%</div><div class="tlbl">MONEY<br>RECOVERY*</div></div>
+    </div>
+    <div class="fear-tips">
+      <div class="fear-tip"><div class="fear-tip-icon">🔒</div><div class="fear-tip-text"><strong>Aapki Identity Safe Hai</strong>Anonymous complaint kar sakte ho — naam batana zaruri nahi</div></div>
+      <div class="fear-tip"><div class="fear-tip-icon">💰</div><div class="fear-tip-text"><strong>Paisa Wapas Mil Sakta Hai</strong>24 ghante mein report karne par bank transaction freeze ho sakta hai</div></div>
+      <div class="fear-tip"><div class="fear-tip-icon">👮</div><div class="fear-tip-text"><strong>Police Helpful Hai</strong>Cyber police specially trained hai — judge nahi karegi, sirf help karegi</div></div>
+      <div class="fear-tip"><div class="fear-tip-icon">📱</div><div class="fear-tip-text"><strong>Ghar Se Report Karein</strong>cybercrime.gov.in pe ghar baith kar online complaint darj karein</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PDF SECTION -->
+<section class="pdf-section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:2rem;">
+      <h2>📄 Complaint Form — Kaise Bharein?</h2>
+      <p class="pdf-sub">Cybercrime portal pe complaint bharne ki step-by-step guide aur printable forms download karein</p>
+    </div>
+    <div class="pdf-cards">
+
+      <div class="pdf-card">
+        <h3>💳 Financial Fraud Complaint</h3>
+        <p class="pdf-desc">UPI fraud, banking fraud, online scam ke liye</p>
+        <div class="pdf-steps">
+          <div class="pdf-step"><div class="pdf-step-num">1</div><span>cybercrime.gov.in kholein → "Report Cyber Crime" click karein</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">2</div><span>Category: "Financial Fraud" chunein → Sub-category select karein</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">3</div><span>Naam, mobile, email bharein (ya anonymous option chunein)</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">4</div><span>Bank details, transaction ID, amount fill karein</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">5</div><span>Screenshots upload → Submit → Complaint ID note karein</span></div>
+        </div>
+        <button class="btn-dl" onclick="downloadFinancialPDF()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Financial Fraud Form Download
+        </button>
+      </div>
+
+      <div class="pdf-card">
+        <h3>👤 Harassment / Identity Theft</h3>
+        <p class="pdf-desc">Social media hack, morphing, stalking ke cases ke liye</p>
+        <div class="pdf-steps">
+          <div class="pdf-step"><div class="pdf-step-num">1</div><span>"Women & Child" ya "Cyber Crime Against Women" category chunein</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">2</div><span>Incident date, platform (Instagram/Facebook/WhatsApp) batayein</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">3</div><span>Accused ka profile link / phone number dein (agar pata ho)</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">4</div><span>Screenshots, URLs evidence upload karein</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">5</div><span>Nearest thana naam dein → Submit → Tracking ID save karein</span></div>
+        </div>
+        <button class="btn-dl" onclick="downloadHarassmentPDF()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Harassment Form Download
+        </button>
+      </div>
+
+      <div class="pdf-card">
+        <h3>🖥️ Hacking / Data Breach</h3>
+        <p class="pdf-desc">Account hack, ransomware, phishing attacks ke liye</p>
+        <div class="pdf-steps">
+          <div class="pdf-step"><div class="pdf-step-num">1</div><span>"Other Cyber Crime" → "Hacking / Damage to Systems" chunein</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">2</div><span>Kaunsa device ya account hack hua — uski details bharein</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">3</div><span>Date & time of incident clearly mention karein</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">4</div><span>Server logs, email headers attach karein agar ho</span></div>
+          <div class="pdf-step"><div class="pdf-step-num">5</div><span>CERT-In ko bhi parallel report karein: cert-in.org.in</span></div>
+        </div>
+        <button class="btn-dl" onclick="downloadHackingPDF()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Hacking Complaint Form Download
+        </button>
+      </div>
+
+    </div>
+    <div style="text-align:center;">
+      <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" class="btn-dl" style="font-size:.95rem;padding:.75rem 2rem;">
+        🌐 Seedha Portal Pe Report Karein — cybercrime.gov.in
+      </a>
     </div>
   </div>
 </section>
@@ -87,18 +380,37 @@
 <!-- REPORTING PORTALS -->
 <section class="section section-bg">
   <div class="container">
-    <div class="text-center section-heading">
+    <div class="section-heading">
       <h2>Government Reporting Portals</h2>
-      <p>Official channels to report cyber crimes and get help</p>
+      <p>Har portal pe aap kya kya kaam kar sakte hain — poori jaankari</p>
     </div>
     <div class="grid-3" id="portalsGrid"></div>
   </div>
 </section>
 
-<!-- HELPLINES -->
+<!-- VIDEO TUTORIALS -->
 <section class="section">
   <div class="container">
-    <div class="text-center section-heading">
+    <div class="section-heading">
+      <h2>🎬 Video Guides — Dekhein aur Sikhein</h2>
+      <p>Thumbnail pe click karein — YouTube pe video seedha khuljayega</p>
+    </div>
+    <div class="video-grid" id="videoGrid"></div>
+  </div>
+</section>
+
+<!-- YouTube Modal -->
+<div class="yt-modal" id="ytModal">
+  <div class="yt-modal-inner">
+    <button class="yt-close" onclick="closeVideo()">✕</button>
+    <iframe id="ytFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- HELPLINES -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="section-heading">
       <h2>Emergency Helplines</h2>
       <p>Call these numbers for immediate cyber crime assistance</p>
     </div>
@@ -106,10 +418,10 @@
   </div>
 </section>
 
-<!-- STEPS TO REPORT -->
-<section class="section section-bg">
+<!-- STEPS -->
+<section class="section">
   <div class="container">
-    <div class="text-center section-heading">
+    <div class="section-heading">
       <h2>How to Report</h2>
       <p>Follow these simple steps to report a cyber crime</p>
     </div>
@@ -118,28 +430,28 @@
 </section>
 
 <!-- WHAT TO REPORT -->
-<section class="section">
+<section class="section section-bg">
   <div class="container">
-    <div class="text-center section-heading">
+    <div class="section-heading">
       <h2>What You Can Report</h2>
       <p>Types of cyber crimes that can be reported</p>
     </div>
     <div class="grid-3">
       <div class="card" style="border-left:4px solid #ef4444;">
-        <h3 style="font-size:1rem;font-weight:700;color:#1f2937;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;"><i data-lucide="alert-triangle" style="width:20px;height:20px;color:#ef4444;"></i>Financial Fraud</h3>
-        <ul style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.875rem;color:#4b5563;">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;"><i data-lucide="alert-triangle" style="width:20px;height:20px;color:#ef4444;"></i>Financial Fraud</h3>
+        <ul style="display:flex;flex-direction:column;gap:.5rem;font-size:.875rem;color:var(--text-soft);">
           <li>• UPI/Paytm fraud</li><li>• Credit/debit card fraud</li><li>• Banking fraud</li><li>• Investment scams</li><li>• Lottery/prize scams</li>
         </ul>
       </div>
       <div class="card" style="border-left:4px solid #3b82f6;">
-        <h3 style="font-size:1rem;font-weight:700;color:#1f2937;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;"><i data-lucide="globe" style="width:20px;height:20px;color:#3b82f6;"></i>Online Crimes</h3>
-        <ul style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.875rem;color:#4b5563;">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;"><i data-lucide="globe" style="width:20px;height:20px;color:#3b82f6;"></i>Online Crimes</h3>
+        <ul style="display:flex;flex-direction:column;gap:.5rem;font-size:.875rem;color:var(--text-soft);">
           <li>• Phishing attacks</li><li>• Identity theft</li><li>• Email hacking</li><li>• Social media fraud</li><li>• Data theft</li>
         </ul>
       </div>
       <div class="card" style="border-left:4px solid #a855f7;">
-        <h3 style="font-size:1rem;font-weight:700;color:#1f2937;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;"><i data-lucide="user" style="width:20px;height:20px;color:#a855f7;"></i>Harassment</h3>
-        <ul style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.875rem;color:#4b5563;">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;"><i data-lucide="user" style="width:20px;height:20px;color:#a855f7;"></i>Harassment</h3>
+        <ul style="display:flex;flex-direction:column;gap:.5rem;font-size:.875rem;color:var(--text-soft);">
           <li>• Cyber stalking</li><li>• Online bullying</li><li>• Morphing images</li><li>• Defamation</li><li>• Threats and intimidation</li>
         </ul>
       </div>
@@ -148,29 +460,29 @@
 </section>
 
 <!-- DOCUMENTS CHECKLIST -->
-<section class="section section-bg">
+<section class="section">
   <div class="container">
     <div class="card">
-      <h2 style="font-size:1.5rem;font-weight:800;color:#1f2937;display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;">
+      <h2 style="font-size:1.5rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;">
         <i data-lucide="file-text" style="width:24px;height:24px;color:#16a34a;"></i>Documents to Keep Ready
       </h2>
       <div class="grid-2">
         <div>
-          <h3 style="font-weight:600;color:#374151;margin-bottom:0.75rem;">For Financial Frauds:</h3>
-          <ul style="display:flex;flex-direction:column;gap:0.5rem;">
-            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Bank statements showing fraudulent transactions</li>
-            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Screenshots of payment confirmations</li>
-            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>SMS/email communications with fraudster</li>
-            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Copy of FIR (if filed with local police)</li>
+          <h3 style="font-weight:700;color:var(--text-soft);margin-bottom:.75rem;">For Financial Frauds:</h3>
+          <ul style="display:flex;flex-direction:column;gap:.5rem;">
+            <li style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-soft);"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Bank statements showing fraudulent transactions</li>
+            <li style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-soft);"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Screenshots of payment confirmations</li>
+            <li style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-soft);"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>SMS/email communications with fraudster</li>
+            <li style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-soft);"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Copy of FIR (if filed with local police)</li>
           </ul>
         </div>
         <div>
-          <h3 style="font-weight:600;color:#374151;margin-bottom:0.75rem;">For Other Cyber Crimes:</h3>
-          <ul style="display:flex;flex-direction:column;gap:0.5rem;">
-            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Screenshots of offensive content</li>
-            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>URLs of offending websites/posts</li>
-            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Details of the accused (if known)</li>
-            <li style="display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:#4b5563;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Witness information (if any)</li>
+          <h3 style="font-weight:700;color:var(--text-soft);margin-bottom:.75rem;">For Other Cyber Crimes:</h3>
+          <ul style="display:flex;flex-direction:column;gap:.5rem;">
+            <li style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-soft);"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Screenshots of offensive content</li>
+            <li style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-soft);"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>URLs of offending websites/posts</li>
+            <li style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-soft);"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Details of the accused (if known)</li>
+            <li style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-soft);"><i data-lucide="check-circle" style="width:16px;height:16px;color:#22c55e;flex-shrink:0;"></i>Witness information (if any)</li>
           </ul>
         </div>
       </div>
@@ -178,10 +490,36 @@
   </div>
 </section>
 
+<!-- MAP -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="section-heading">
+      <h2>📍 Nearest Cyber Crime Station Dhundhein</h2>
+      <p>Apni location share karein — paas ke cyber police station ki jaankari paayein</p>
+    </div>
+    <div id="mapContainer">
+      <div class="map-overlay" id="mapOverlay">
+        <div style="font-size:3rem;margin-bottom:.75rem;">📍</div>
+        <h3>Apni Location Allow Karein</h3>
+        <p class="mo-p">Aapke nearest cyber crime station, helpline aur online reporting link yahan dikhenge</p>
+        <button class="btn-location" onclick="requestLocation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+          Meri Location Use Karein
+        </button>
+      </div>
+    </div>
+    <div id="locStatus"></div>
+    <div class="station-cards-grid" id="stationCards" style="display:none;"></div>
+    <p id="mapNote" style="display:none;margin-top:1rem;padding:.75rem 1rem;background:#fef9c3;border:1px solid #fde68a;border-radius:.5rem;font-size:.8rem;color:#92400e;">
+      ℹ️ <strong>Note:</strong> Map mein aapki current location dikhaye gaye hai. Nearest cyber crime cell ke liye <strong>1930</strong> pe call karein ya <strong>cybercrime.gov.in</strong> pe report darj karein.
+    </p>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="section">
   <div class="container">
-    <div class="text-center section-heading">
+    <div class="section-heading">
       <h2>Frequently Asked Questions</h2>
       <p>Common questions about reporting cyber crimes</p>
     </div>
@@ -201,87 +539,375 @@
 </footer>
 
 <script>
-const portals = [
-  { name:"Cybercrime.gov.in",  desc:"National Cyber Crime Reporting Portal - Report all types of cyber crimes online", url:"https://cybercrime.gov.in",    icon:"shield",        color:"#2563eb", bg:"#dbeafe", features:["24/7 Online Reporting","Anonymous Complaints","Track Status"] },
-  { name:"JanSankalp Portal",  desc:"Citizen Grievance Redressal System for cyber-related complaints",                url:"https://jansankalp.nic.in",   icon:"message-square",color:"#16a34a", bg:"#dcfce7", features:["Grievance Filing","Status Tracking","Resolution Support"] },
-  { name:"MHA Cyber Security", desc:"Ministry of Home Affairs - Cyber and Information Security Division",             url:"https://www.mha.gov.in",      icon:"building-2",    color:"#dc2626", bg:"#fee2e2", features:["Policy Information","Security Guidelines","National Coordination"] },
-  { name:"CERT-In",            desc:"Indian Computer Emergency Response Team - Report security incidents",            url:"https://www.cert-in.org.in",  icon:"shield-check",  color:"#ea580c", bg:"#ffedd5", features:["Incident Reporting","Security Alerts","Advisories"] },
-  { name:"NCIIPC",             desc:"National Critical Information Infrastructure Protection Centre",                  url:"https://www.nciipc.gov.in",   icon:"lock",          color:"#9333ea", bg:"#f3e8ff", features:["CIIPC Protection","Threat Alerts","Sector Coordination"] },
-  { name:"RBI Cyber Security", desc:"Reserve Bank of India - Report banking frauds and phishing",                     url:"https://www.rbi.org.in",      icon:"landmark",      color:"#ca8a04", bg:"#fef9c3", features:["Banking Fraud","Phishing Reports","Customer Protection"] },
+document.addEventListener('DOMContentLoaded', function() {
+const portals=[
+  {name:'Cybercrime.gov.in',desc:'MHA – National Cyber Crime Reporting Portal',url:'https://cybercrime.gov.in',icon:'shield',color:'#2563eb',bg:'#dbeafe',
+   tags:['Financial Fraud','Harassment','Hacking','24x7 Online'],
+   uses:[{e:'💳',t:'UPI / Banking Fraud online report karo'},{e:'📱',t:'Social Media Harassment complaint darj karo'},{e:'🔒',t:'Hacking ya data breach report karo'},{e:'👤',t:'Anonymous complaint dena bhi possible hai'},{e:'📊',t:'Complaint ka status online track karo'},{e:'📁',t:'Evidence / screenshots upload karo'}]},
+  {name:'Sanchar Saathi',desc:'DoT – Phone, SIM & IMEI related problems',url:'https://sancharsaathi.gov.in',icon:'smartphone',color:'#16a34a',bg:'#dcfce7',
+   tags:['Lost Phone','IMEI Tracking','SIM Fraud','Smishing'],
+   uses:[{e:'📵',t:'Chori ya kho gaye phone ko block karo (CEIR)'},{e:'🔍',t:'IMEI number se phone track karo'},{e:'📲',t:'Apne naam pe registered SIM cards dekhna'},{e:'❌',t:'Fake SIM ya unauthorized SIM block karwana'},{e:'💬',t:'SMS Smishing / phishing report karna'},{e:'🧾',t:'Telecom fraud ki complaint darz karna'}]},
+  {name:'MHA – Cyber Security',desc:'Ministry of Home Affairs – National coordination',url:'https://www.mha.gov.in',icon:'building-2',color:'#dc2626',bg:'#fee2e2',
+   tags:['National Security','Policy','Coordination'],
+   uses:[{e:'📜',t:'Cyber crime laws aur policies padhna'},{e:'🛡️',t:'Critical infrastructure attacks report karna'},{e:'⚠️',t:'Bomb threat / cyber terror report karna'},{e:'📰',t:'National cyber security guidelines download karna'},{e:'🤝',t:'State police ke saath national coordination'}]},
+  {name:'CERT-In',desc:'Indian Computer Emergency Response Team',url:'https://www.cert-in.org.in',icon:'shield-check',color:'#ea580c',bg:'#ffedd5',
+   tags:['Hacking','Malware','Ransomware','Phishing'],
+   uses:[{e:'🦠',t:'Virus / malware / ransomware attack report karna'},{e:'🎣',t:'Phishing website ya email report karna'},{e:'💻',t:'Website defacement report karna'},{e:'🔔',t:'Security alerts aur advisories subscribe karna'},{e:'🏢',t:'Organizations ke liye incident response support'},{e:'📧',t:'Suspicious email headers report karna'}]},
+  {name:'NCIIPC',desc:'Critical Information Infrastructure Protection Centre',url:'https://www.nciipc.gov.in',icon:'lock',color:'#9333ea',bg:'#f3e8ff',
+   tags:['Critical Infra','Power Grid','Sector Security'],
+   uses:[{e:'⚡',t:'Power grid / electricity sector cyber attacks'},{e:'🏥',t:'Hospital / health infrastructure hack report'},{e:'🏦',t:'Banking sector critical incidents report karna'},{e:'✈️',t:'Aviation / transport sector incidents'},{e:'🛢️',t:'Oil & gas sector cyber threats report karna'}]},
+  {name:'RBI – Sachet Portal',desc:'Reserve Bank of India – Banking & financial fraud',url:'https://sachet.rbi.org.in',icon:'landmark',color:'#ca8a04',bg:'#fef9c3',
+   tags:['Banking Fraud','Loan Scam','Ponzi Scheme'],
+   uses:[{e:'🏦',t:'Unauthorized banking transactions report karna'},{e:'💸',t:'Fake loan app / predatory lending report karna'},{e:'📈',t:'Ponzi scheme / investment fraud report karna'},{e:'💳',t:'Credit card / debit card cloning complaint'},{e:'🔍',t:'RBI registered NBFC aur bank verify karna'},{e:'📋',t:'Chit fund fraud ya MLM scam report karna'}]},
 ];
 
-const helplines = [
-  { number:"1930",          name:"National Cyber Crime Helpline",     available:"24x7", tollfree:true },
-  { number:"155260",        name:"National Cyber Crime Reporting",    available:"24x7", tollfree:true },
-  { number:"1800-111-222",  name:"CERT-In Incident Response",         available:"24x7", tollfree:true },
-  { number:"1800-425-3800", name:"SBI Cyber Crime Helpline",          available:"24x7", tollfree:true },
+/* Videos — thumbnails loaded via YouTube CDN, fallback colored bg shown if blocked */
+const vidColors=['#1e3a5f','#064e3b','#7c2d12','#7f1d1d','#4c1d95','#1c1917'];
+const videos=[
+  {id:'m4mPQlYGxdQ',title:'Cybercrime Portal Pe Online Complaint Kaise Darj Karein – Step by Step',channel:'MHA Cyber Dost – Official',dur:'7:12',badge:'Govt Official'},
+  {id:'cWWkZgXqmd8',title:'1930 Helpline – Cyber Fraud Hone Par Kya Karein? Poori Jaankari',channel:'Cyber Dost India',dur:'5:30',badge:'Cyber Dost'},
+  {id:'l-mkj2vC6u4',title:'Sanchar Saathi – IMEI Se Kho Gaya Phone Kaise Track Karein',channel:'DoT India – Official',dur:'4:55',badge:'Sanchar Saathi'},
+  {id:'QHhxSI4rC4k',title:'UPI Fraud Se Kaise Bachein – RBI Ki Official Guide',channel:'RBI Official',dur:'6:40',badge:'RBI India'},
+  {id:'ObNNRJhkND4',title:'Phishing Kya Hota Hai – Pehchano aur Report Karo',channel:'CERT-In India',dur:'8:15',badge:'CERT-In'},
+  {id:'gqCN7mAusDo',title:'Digital Arrest Scam – Dariye Mat, Yeh Sab Fraud Hai!',channel:'Cyber Dost India',dur:'4:20',badge:'Must Watch'},
 ];
 
-const steps = [
-  { step:1, title:"Gather Evidence", desc:"Collect screenshots, emails, transaction details, and any relevant information about the incident." },
-  { step:2, title:"Call 1930",       desc:"For immediate assistance, call the National Cyber Crime Helpline at 1930 (toll-free)." },
-  { step:3, title:"File Online Report", desc:"Visit cybercrime.gov.in and register your complaint with all the details." },
-  { step:4, title:"Track & Follow-up", desc:"Use your complaint number to track status and provide additional information if needed." },
+const helplines=[
+  {number:'1930',name:'National Cyber Crime Helpline',avail:'24x7',toll:true},
+  {number:'155260',name:'National Cyber Crime Reporting',avail:'24x7',toll:true},
+  {number:'1800-111-222',name:'CERT-In Incident Response',avail:'24x7',toll:true},
+  {number:'1800-425-3800',name:'SBI Cyber Crime Helpline',avail:'24x7',toll:true},
 ];
 
-const faqs = [
-  { q:"Is reporting on cybercrime.gov.in free?",       a:"Yes, reporting on the National Cyber Crime Reporting Portal is completely free of charge." },
-  { q:"Can I report anonymously?",                      a:"Yes, you can report cyber crimes anonymously without revealing your identity." },
-  { q:"What is the response time?",                     a:"Financial fraud reports are processed within 24 hours. Other complaints may take 3-7 working days." },
-  { q:"Can I track my complaint?",                      a:"Yes, you will receive a complaint number to track the status of your report online." },
+const steps=[
+  {s:1,t:'Gather Evidence',d:'Collect screenshots, emails, transaction details, and any relevant information.'},
+  {s:2,t:'Call 1930',d:'For immediate help call National Cyber Crime Helpline 1930 (toll-free, 24x7).'},
+  {s:3,t:'File Online Report',d:'Visit cybercrime.gov.in, register and submit complaint with all evidence.'},
+  {s:4,t:'Track & Follow-up',d:'Use your Complaint ID to track status and provide additional info when needed.'},
 ];
 
-// Portals
-document.getElementById('portalsGrid').innerHTML = portals.map(p =>
-  `<a href="${p.url}" target="_blank" rel="noopener noreferrer" class="card hover-card" style="display:block;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;">
-    <div style="width:56px;height:56px;border-radius:50%;background:${p.bg};display:flex;align-items:center;justify-content:center;margin-bottom:1rem;"><i data-lucide="${p.icon}" style="width:28px;height:28px;color:${p.color};"></i></div>
-    <h3 style="font-size:1rem;font-weight:700;color:#1f2937;margin-bottom:0.5rem;">${p.name}</h3>
-    <p style="font-size:0.8rem;color:#6b7280;margin-bottom:0.75rem;">${p.desc}</p>
-    ${p.features.map(f=>`<div style="display:flex;align-items:center;gap:0.35rem;font-size:0.75rem;color:#6b7280;margin-bottom:0.25rem;"><i data-lucide="check-circle" style="width:12px;height:12px;color:#22c55e;"></i>${f}</div>`).join('')}
-  </a>`
-).join('');
+const faqs=[
+  {q:'Is reporting on cybercrime.gov.in free?',a:'Haan, National Cyber Crime Reporting Portal pe report karna bilkul free hai. Koi charge nahi.'},
+  {q:'Kya main anonymously report kar sakta hoon?',a:'Haan, aap apna naam bataaye bina bhi cyber crime report kar sakte hain portal pe.'},
+  {q:'Complaint ka response kitne time mein aata hai?',a:'Financial fraud reports 24 ghante mein process hoti hain. Baaki complaints 3-7 working days le sakti hain.'},
+  {q:'Kya main complaint track kar sakta hoon?',a:'Haan, complaint ke baad ek Complaint ID milti hai jisse status online check kar sakte ho.'},
+  {q:'Sanchar Saathi se phone kaise block karein?',a:'sancharsaathi.gov.in → "Block Stolen/Lost Mobile" → IMEI number enter karein → submit karein.'},
+  {q:'Banking fraud hone par sabse pehle kya karein?',a:'Turant bank ko call karein aur transaction freeze/block karwayein, phir 1930 pe call karein — jitni jaldi utna acha.'},
+];
 
-// Helplines
-document.getElementById('helplinesGrid').innerHTML = helplines.map(h =>
-  `<div class="card text-center" style="text-align:center;">
-    <div style="width:56px;height:56px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 0.75rem;"><i data-lucide="phone" style="width:28px;height:28px;color:#16a34a;"></i></div>
-    <p style="font-size:1.5rem;font-weight:900;color:#1f2937;margin-bottom:0.25rem;">${h.number}</p>
-    <p style="font-size:0.85rem;font-weight:600;color:#4b5563;margin-bottom:0.5rem;">${h.name}</p>
-    <div style="display:flex;justify-content:center;gap:0.5rem;">
-      <span class="badge badge-green">${h.available}</span>
-      ${h.tollfree?'<span class="badge badge-blue">Toll-Free</span>':''}
+/* ===== RENDER PORTALS ===== */
+document.getElementById('portalsGrid').innerHTML=portals.map(p=>`
+<div class="portal-detail-card">
+  <div class="portal-card-header">
+    <div class="portal-icon-wrap" style="background:${p.bg};"><i data-lucide="${p.icon}" style="color:${p.color};width:26px;height:26px;"></i></div>
+    <div>
+      <h3 style="font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:.2rem;">${p.name}</h3>
+      <p style="font-size:.71rem;color:var(--text-muted);line-height:1.4;">${p.desc}</p>
     </div>
-  </div>`
-).join('');
+  </div>
+  <div class="portal-card-body">
+    <div style="margin-bottom:.75rem;">${p.tags.map(t=>`<span class="portal-tag" style="background:${p.bg};color:${p.color};">${t}</span>`).join('')}</div>
+    <p style="font-size:.7rem;font-weight:800;color:var(--text-muted);letter-spacing:.06em;margin-bottom:.5rem;">IS PORTAL PE AAP KYA KAR SAKTE HAIN:</p>
+    <div class="portal-use-list">${p.uses.map(u=>`<div class="portal-use-item"><span>${u.e}</span><span>${u.t}</span></div>`).join('')}</div>
+    <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="portal-visit-btn" style="background:${p.color};">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Portal Kholein
+    </a>
+  </div>
+</div>`).join('');
 
-// Steps
-document.getElementById('stepsGrid').innerHTML = steps.map((s,i) =>
-  `<div style="position:relative;">
-    <div class="card" style="height:100%;">
-      <div style="width:48px;height:48px;background:#16a34a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:700;margin-bottom:1rem;">${s.step}</div>
-      <h3 style="font-size:1rem;font-weight:700;color:#1f2937;margin-bottom:0.5rem;">${s.title}</h3>
-      <p style="font-size:0.875rem;color:#4b5563;">${s.desc}</p>
+/* ===== RENDER VIDEOS ===== */
+document.getElementById('videoGrid').innerHTML=videos.map((v,i)=>`
+<div class="video-card" onclick="playVideo('${v.id}')">
+  <div class="video-thumb">
+    <div class="video-thumb-bg" style="background:${vidColors[i%vidColors.length]};">
+      <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.title}" loading="lazy"
+           onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
     </div>
-    ${i<steps.length-1?'<div style="display:none;" class="step-arrow"></div>':''}
-  </div>`
-).join('');
+    <div class="play-overlay">
+      <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+    </div>
+    <div class="video-duration">${v.dur}</div>
+  </div>
+  <div class="video-info">
+    <span class="video-badge">${v.badge}</span>
+    <h3>${v.title}</h3>
+    <p>📺 ${v.channel}</p>
+  </div>
+</div>`).join('');
 
-// FAQ
-document.getElementById('faqGrid').innerHTML = faqs.map(f =>
-  `<div class="card">
-    <h3 style="font-weight:700;color:#1f2937;margin-bottom:0.5rem;">${f.q}</h3>
-    <p style="font-size:0.875rem;color:#4b5563;">${f.a}</p>
-  </div>`
-).join('');
+/* ===== RENDER HELPLINES ===== */
+document.getElementById('helplinesGrid').innerHTML=helplines.map(h=>`
+<div class="card" style="text-align:center;">
+  <div style="width:56px;height:56px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;">
+    <i data-lucide="phone" style="width:28px;height:28px;color:#16a34a;"></i>
+  </div>
+  <p style="font-size:1.5rem;font-weight:900;color:var(--text);margin-bottom:.25rem;">${h.number}</p>
+  <p style="font-size:.85rem;font-weight:600;color:var(--text-soft);margin-bottom:.5rem;">${h.name}</p>
+  <div style="display:flex;justify-content:center;gap:.5rem;">
+    <span class="badge badge-green">${h.avail}</span>${h.toll?'<span class="badge badge-blue">Toll-Free</span>':''}
+  </div>
+</div>`).join('');
 
-// Footer
-const govLinks=[{name:"Cybercrime.gov.in",url:"https://cybercrime.gov.in"},{name:"MeitY India",url:"https://www.meity.gov.in"},{name:"MHA - Cyber Security",url:"https://www.mha.gov.in"},{name:"CDAC India",url:"https://www.cdac.in"},{name:"ISEA Project",url:"https://www.isea.gov.in"},{name:"CERT-In",url:"https://www.cert-in.org.in"},{name:"NCIIPC",url:"https://www.nciipc.gov.in"},{name:"Digital India",url:"https://www.digitalindia.gov.in"}];
-const pageLinks=[{name:"Home",path:"index.html"},{name:"Awareness",path:"awareness.html"},{name:"Real Time Detection",path:"detection.html"},{name:"Reporting",path:"reporting.html"},{name:"Digital Arrest",path:"awareness.html#digital-arrest"},{name:"Quiz & Rewards",path:"awareness.html#quiz"},{name:"Workshops",path:"awareness.html#workshops"},{name:"Scam Alerts",path:"detection.html#alerts"}];
-document.getElementById('footerGrid').innerHTML=`<div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Government Resources</h3><ul>${govLinks.map(l=>`<li><a href="${l.url}" target="_blank">${l.name} <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>CYBERGUARD Pages</h3><ul>${pageLinks.map(l=>`<li><a href="${l.path}">${l.name}</a></li>`).join('')}</ul></div><div><h3><i data-lucide="shield" style="width:20px;height:20px;"></i>Contact Us</h3><div class="contact-item"><i data-lucide="map-pin"></i><p>Cyber Security Cell<br/>Ministry of Electronics & IT<br/>New Delhi - 110001</p></div><div class="contact-item"><i data-lucide="phone"></i><p>Helpline: 1930<br/>Toll-Free: 1800-123-4567</p></div><div class="contact-item"><i data-lucide="mail"></i><p>support@cyberguard.gov.in</p></div><div class="helpline-box"><p class="title">Emergency Cyber Crime Helpline</p><p class="number">1930</p><p class="sub">Available 24x7 | Toll Free</p></div></div>`;
+/* ===== RENDER STEPS ===== */
+document.getElementById('stepsGrid').innerHTML=steps.map(s=>`
+<div class="card">
+  <div style="width:48px;height:48px;background:#16a34a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:700;margin-bottom:1rem;">${s.s}</div>
+  <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.5rem;">${s.t}</h3>
+  <p style="font-size:.875rem;color:var(--text-soft);">${s.d}</p>
+</div>`).join('');
 
-document.getElementById('hamburger').addEventListener('click',()=>{const m=document.getElementById('mobileMenu');m.classList.toggle('open');document.getElementById('menuIcon').setAttribute('data-lucide',m.classList.contains('open')?'x':'menu');lucide.createIcons();});
-document.getElementById('themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');const d=document.body.classList.contains('dark');document.getElementById('themeBtn').innerHTML=d?'<i data-lucide="sun"></i>':'<i data-lucide="moon"></i>';lucide.createIcons();});
+/* ===== RENDER FAQ ===== */
+document.getElementById('faqGrid').innerHTML=faqs.map(f=>`
+<div class="card">
+  <h3 style="font-weight:700;color:var(--text);margin-bottom:.5rem;">${f.q}</h3>
+  <p style="font-size:.875rem;color:var(--text-soft);">${f.a}</p>
+</div>`).join('');
+
+const govLinks=[{n:'Cybercrime.gov.in',u:'https://cybercrime.gov.in'},{n:'Sanchar Saathi',u:'https://sancharsaathi.gov.in'},{n:'MeitY India',u:'https://www.meity.gov.in'},{n:'MHA Cyber Security',u:'https://www.mha.gov.in'},{n:'CDAC India',u:'https://www.cdac.in'},{n:'ISEA Project',u:'https://www.isea.gov.in'},{n:'CERT-In',u:'https://www.cert-in.org.in'},{n:'NCIIPC',u:'https://www.nciipc.gov.in'}];
+const pageLinks=[{n:'Home',p:'index.html'},{n:'Awareness',p:'awareness.html'},{n:'Real Time Detection',p:'detection.html'},{n:'Reporting',p:'reporting.html'},{n:'Digital Arrest',p:'awareness.html#digital-arrest'},{n:'Quiz & Rewards',p:'awareness.html#quiz'},{n:'Workshops',p:'awareness.html#workshops'},{n:'Scam Alerts',p:'detection.html#alerts'}];
+document.getElementById('footerGrid').innerHTML=`
+<div><h3><i data-lucide="globe"></i>Government Resources</h3><ul>${govLinks.map(l=>`<li><a href="${l.u}" target="_blank" rel="noopener noreferrer">${l.n} <i data-lucide="external-link"></i></a></li>`).join('')}</ul></div>
+<div><h3><i data-lucide="shield"></i>CYBERGUARD Pages</h3><ul>${pageLinks.map(l=>`<li><a href="${l.p}">${l.n}</a></li>`).join('')}</ul></div>
+<div><h3><i data-lucide="phone"></i>Contact Us</h3>
+<div class="contact-item"><i data-lucide="map-pin"></i><p>Cyber Security Cell<br/>Ministry of Electronics & IT<br/>New Delhi – 110001</p></div>
+<div class="contact-item"><i data-lucide="phone"></i><p>Helpline: 1930<br/>Toll-Free: 1800-123-4567</p></div>
+<div class="contact-item"><i data-lucide="mail"></i><p>support@cyberguard.gov.in</p></div>
+<div class="helpline-box"><p class="title">Emergency Cyber Crime Helpline</p><p class="number">1930</p><p class="sub">Available 24x7 | Toll Free</p></div></div>`;
+
+/* ===== NAVBAR ===== */
+document.getElementById('hamburger').addEventListener('click',function(){
+  const m=document.getElementById('mobileMenu');m.classList.toggle('open');
+  document.getElementById('menuIcon').setAttribute('data-lucide',m.classList.contains('open')?'x':'menu');
+  lucide.createIcons();
+});
+document.getElementById('themeBtn').addEventListener('click',function(){
+  document.body.classList.toggle('dark');
+  const d=document.body.classList.contains('dark');
+  document.getElementById('themeBtn').innerHTML=d?'<i data-lucide="sun"></i>':'<i data-lucide="moon"></i>';
+  lucide.createIcons();
+});
+
+/* ===== FINAL lucide init — after ALL dynamic content is injected ===== */
 lucide.createIcons();
+
+  document.getElementById('ytModal').addEventListener('click',function(e){if(e.target===this)closeVideo();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVideo();});
+}); /* end DOMContentLoaded */
+
+/* ===== VIDEO & PDF FUNCTIONS — outside DOMContentLoaded so onclick can reach them ===== */
+function playVideo(id){
+  /* Try iframe modal first; if YouTube blocks embed (CSP/X-Frame-Options), open in new tab */
+  const modal=document.getElementById('ytModal');
+  const frame=document.getElementById('ytFrame');
+  const embedUrl='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0';
+  frame.src=embedUrl;
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+
+  /* Detect if iframe failed to load (e.g., X-Frame-Options block) and fallback to new tab */
+  frame.onload=function(){
+    try{
+      /* If contentDocument is null, iframe was blocked — open in new tab */
+      if(!frame.contentWindow){openYTTab(id);}
+    }catch(e){/* cross-origin — this is normal for YouTube, ignore */}
+  };
+  frame.onerror=function(){openYTTab(id);};
+}
+function openYTTab(id){
+  closeVideo();
+  window.open('https://www.youtube.com/watch?v='+id,'_blank','noopener,noreferrer');
+}
+function closeVideo(){
+  const modal=document.getElementById('ytModal');
+  modal.classList.remove('open');
+  document.getElementById('ytFrame').src='';
+}
+
+/* ===== MAP / LOCATION FUNCTIONS ===== */
+function requestLocation(){
+  const st=document.getElementById('locStatus');
+  st.className='loading';
+  st.textContent='📡 Aapki location dhundhi ja rahi hai... Please wait...';
+  st.style.display='block';
+
+  if(!navigator.geolocation){
+    st.className='error';
+    st.innerHTML='❌ <strong>Browser Support Issue:</strong> Aapka browser location feature support nahi karta.<br>📞 Please call <strong>1930</strong> for cyber crime helpline.';
+    return;
+  }
+
+  st.innerHTML += '<br><small style="color:#6b7280;">🔒 Browser se location permission allow karein</small>';
+
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      console.log('Location found:', pos.coords);
+      showMap(pos.coords.latitude, pos.coords.longitude);
+    },
+    err=>{
+      console.error('Location error:', err);
+      st.className='error';
+      let errorMsg='❌ Location Error: ';
+      switch(err.code){
+        case err.PERMISSION_DENIED:
+          errorMsg += '<strong>Permission Denied!</strong><br>🔧 Browser settings mein location permission enable karein:<br>• Chrome: Click lock icon → Location → Allow<br>• Firefox: Click shield icon → Location → Allow<br>• Safari: Preferences → Privacy → Location → Allow<br><br><button onclick="requestLocation()" style="background:#16a34a;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;margin-top:8px;">🔄 Try Again</button>';
+          break;
+        case err.POSITION_UNAVAILABLE:
+          errorMsg += '<strong>Location Unavailable!</strong><br>GPS signal weak hai. Open area mein try karein ya manual location use karein.';
+          break;
+        case err.TIMEOUT:
+          errorMsg += '<strong>Timeout!</strong><br>Location find karne mein time lag raha hai.<br><button onclick="requestLocation()" style="background:#dc2626;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;margin-top:8px;">🔄 Retry</button>';
+          break;
+        default:
+          errorMsg += '<strong>Unknown Error!</strong><br>Network check karein aur dobara try karein.';
+      }
+      st.innerHTML=errorMsg;
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 300000
+    }
+  );
+}
+
+function showMap(lat,lng){
+  document.getElementById('mapOverlay').style.display='none';
+  const c=document.getElementById('mapContainer');
+  c.innerHTML='';
+
+  const iframe=document.createElement('iframe');
+  iframe.src=`https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+  iframe.title='Your Location on Google Maps';
+  iframe.loading='lazy';
+  iframe.allowFullscreen=true;
+  iframe.style.width='100%';
+  iframe.style.height='100%';
+  iframe.style.border='none';
+  iframe.style.borderRadius='1rem';
+  c.appendChild(iframe);
+
+  const st=document.getElementById('locStatus');
+  st.className='success';
+  st.innerHTML=`✅ Location mili: <strong>${lat.toFixed(4)}, ${lng.toFixed(4)}</strong> — Neeche nearest stations ki jaankari dekhein.`;
+
+  const gm=`https://www.google.com/maps/search/cyber+crime+police+station/@${lat},${lng},14z`;
+  const gp=`https://www.google.com/maps/search/police+station/@${lat},${lng},14z`;
+
+  document.getElementById('stationCards').style.display='grid';
+  document.getElementById('mapNote').style.display='block';
+  document.getElementById('stationCards').innerHTML=`
+    <div class="station-card"><div class="station-icon" style="background:#dbeafe;">🚔</div><div class="station-info"><h4>Nearest Cyber Crime Cell</h4><p>📍 Aapki location ke sabse paas</p><p>🕐 24x7 Available</p><a href="${gm}" target="_blank" rel="noopener noreferrer">🗺️ Google Maps Pe Dhundhein →</a></div></div>
+    <div class="station-card"><div class="station-icon" style="background:#dcfce7;">📞</div><div class="station-info"><h4>National Cyber Helpline</h4><p>📞 <strong>1930</strong> — Turant Call Karein</p><p>🕐 24 Ghante, 7 Din</p><a href="tel:1930">📲 Abhi Call Karein – 1930</a></div></div>
+    <div class="station-card"><div class="station-icon" style="background:#f3e8ff;">🏛️</div><div class="station-info"><h4>Local Police Station</h4><p>📍 Nearest thane pe bhi FIR darj kar sakte hain</p><p>📞 Emergency: <strong>112</strong></p><a href="${gp}" target="_blank" rel="noopener noreferrer">🗺️ Police Station Map Pe Dekhein →</a></div></div>
+    <div class="station-card"><div class="station-icon" style="background:#fef9c3;">💻</div><div class="station-info"><h4>Online Report — Ghar Se</h4><p>Station jaane ki zarurat nahi!</p><p>🌐 24x7 Available</p><a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer">🌐 cybercrime.gov.in →</a></div></div>
+  `;
+}
+
+/* ===== PDF DOWNLOAD FUNCTIONS ===== */
+function downloadFinancialPDF(){
+  const form={
+    title:'FINANCIAL FRAUD COMPLAINT FORM',
+    subtitle:'UPI / Banking / Online Payment Fraud Report',
+    sections:[
+      {title:'PERSONAL INFORMATION',fields:['Name:','Phone Number:','Email ID:','Address:','City:','State:','PIN Code:']},
+      {title:'INCIDENT DETAILS',fields:['Date & Time of Incident:','Type of Fraud:','Amount Lost (₹):','Bank/UPI App Name:','Transaction ID/Reference:','Fraud Description:']},
+      {title:'BANKING DETAILS',fields:['Bank Name:','Account Number:','IFSC Code:','UPI ID (if applicable):','Card Number (last 4 digits):']},
+      {title:'EVIDENCE ATTACHMENTS',fields:['Screenshot 1:','Screenshot 2:','Screenshot 3:','Transaction Receipt:','Other Documents:']}
+    ]
+  };
+  const html=buildFormHTML(form);
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='Financial_Fraud_Complaint_Form.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function downloadHarassmentPDF(){
+  const form={
+    title:'CYBER HARASSMENT COMPLAINT FORM',
+    subtitle:'Social Media / Online Harassment Report',
+    sections:[
+      {title:'PERSONAL INFORMATION',fields:['Name:','Phone Number:','Email ID:','Social Media Handle:','Platform Used:','Address:','City:','State:']},
+      {title:'HARASSMENT DETAILS',fields:['Date Started:','Type of Harassment:','Harasser Details:','Platform/Website:','Profile/Username:','Messages/Screenshots:']},
+      {title:'INCIDENT DESCRIPTION',fields:['What happened:','When it happened:','How many times:','Threats received:','Evidence available:']},
+      {title:'IMPACT & SUPPORT',fields:['Emotional impact:','Need police protection:','Previous complaints:','Support needed:']}
+    ]
+  };
+  const html=buildFormHTML(form);
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='Cyber_Harassment_Complaint_Form.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function downloadHackingPDF(){
+  const form={
+    title:'CYBER HACKING COMPLAINT FORM',
+    subtitle:'Website/Account Hacking & Data Breach Report',
+    sections:[
+      {title:'PERSONAL INFORMATION',fields:['Name:','Phone Number:','Email ID:','Address:','City:','State:','PIN Code:']},
+      {title:'ACCOUNT DETAILS',fields:['Hacked Account Type:','Username/Email:','Website/Platform:','Date of Hack:','Time of Hack:']},
+      {title:'HACK DETAILS',fields:['How did you know:','Changes made:','Data stolen:','Ransom demanded:','Amount demanded:']},
+      {title:'TECHNICAL INFO',fields:['IP Address (if known):','Device affected:','Browser used:','Antivirus software:','System details:']}
+    ]
+  };
+  const html=buildFormHTML(form);
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='Cyber_Hacking_Complaint_Form.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+<script>
+function buildFormHTML(form){
+  var sections=form.sections.map(function(sec){
+    return '<div class="sec-title">'+sec.title+'</div>'+
+      sec.fields.map(function(f){return '<div class="field">'+(f||'&nbsp;')+'</div>';}).join('');
+  }).join('');
+  return'<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><title>'+form.title+'</title>'
+  +'<style>'
+  +'@media print{.noprint{display:none!important;}}'
+  +'body{font-family:Arial,sans-serif;font-size:11pt;color:#000;max-width:750px;margin:20px auto;padding:0 15px;}'
+  +'.header{text-align:center;border:3px solid #1a3d6e;padding:14px 20px;margin-bottom:20px;background:#eef2ff;border-radius:6px;}'
+  +'.header h1{color:#1a3d6e;font-size:15pt;margin:6px 0 4px;}'
+  +'.header h2{color:#dc2626;font-size:11pt;margin:0 0 4px;}'
+  +'.header p{font-size:9pt;color:#555;margin:0;}'
+  +'.sec-title{background:#1a3d6e;color:#fff;padding:6px 12px;font-weight:bold;font-size:10pt;margin:18px 0 6px;border-radius:4px;}'
+  +'.field{padding:5px 2px;border-bottom:1px solid #ccc;font-size:10.5pt;line-height:1.9;min-height:1.9em;}'
+  +'.alert{background:#fef2f2;border:2px solid #dc2626;border-radius:6px;padding:12px;margin-top:22px;text-align:center;}'
+  +'.alert p{color:#dc2626;font-weight:bold;font-size:11pt;margin:0;}'
+  +'.hbox{background:#1a3d6e;color:#fff;text-align:center;padding:16px;margin-top:18px;border-radius:6px;}'
+  +'.hbox p{margin:3px 0;font-size:11pt;}'
+  +'.hbox .num{font-size:32pt;font-weight:900;color:#fbbf24;line-height:1;}'
+  +'.print-btn{display:block;width:220px;margin:18px auto;padding:10px 20px;background:#1a3d6e;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;}'
+  +'</style></head><body>'
+  +'<div class="header"><h1>'+form.title+'</h1><h2>'+form.subtitle+'</h2>'
+  +'<p>Ministry of Home Affairs | Government of India | cybercrime.gov.in | Helpline: 1930</p></div>'
+  +'<button class="print-btn noprint" onclick="window.print()">Print / Save as PDF</button>'
+  +sections
+  +'<div class="alert"><p>Is form ke saath sare evidence attach karein aur turant cybercrime.gov.in pe submit karein!</p></div>'
+  +'<div class="hbox"><p>NATIONAL CYBER CRIME HELPLINE</p><p class="num">1930</p><p>24x7 Toll-Free | cybercrime.gov.in</p></div>'
+  +'</body></html>';
+}
+
+
+
 </script>
 </body>
 </html>
