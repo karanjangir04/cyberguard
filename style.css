@@ -51,12 +51,20 @@ input, textarea, select { font-family: inherit; }
 
 /* ── Animations ── */
 @keyframes ticker {
-  0%   { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  0%   { transform: translateX(-100%); }  /* start from left */
+  100% { transform: translateX(100%); }   /* move to right */
 }
-.ticker-animation { animation: ticker 30s linear infinite; }
-.ticker-animation:hover { animation-play-state: paused; }
 
+/* Slow + readable */
+.ticker-animation {
+  animation: ticker 120s linear infinite;
+  letter-spacing: 1px;
+}
+
+/* Pause on hover */
+.ticker-animation:hover {
+  animation-play-state: paused;
+}
 @keyframes scrollUp {
   0%   { transform: translateY(0); }
   100% { transform: translateY(-50%); }
