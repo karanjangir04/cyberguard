@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CYBERGUARD – Report Cyber Crime</title>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="auth.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -218,15 +219,9 @@
 <div class="top-navbar">
   <div class="inner">
     <div class="logos">
-      <img src="images/cdac_logo.jpg" alt="CDAC" onerror="this.style.display='none'"/>
-      <img src="images/isea_logo.jpg" alt="ISEA" onerror="this.style.display='none'"/>
-      <div class="meity-info">
-        <img src="https://www.meity.gov.in/sites/all/themes/meity/images/emblem.png" alt="MeitY" onerror="this.style.display='none'"/>
-        <span>Ministry of Electronics<br/>&amp; Information Technology</span>
-        <img src="images/eca logo.png" alt="College Logo" onerror="this.style.display='none'"/>
-        <span class="college-name">Engineering College Ajmer, Rajasthan</span>
-        <span class="college-name">CSE CYBER SECURITY DEPARTMENT </span>
-      </div>
+      <img src="images/eca logo.png" alt="College Logo" onerror="this.style.display='none'"/>
+      <span class="college-name">Engineering College Ajmer, Rajasthan</span>
+      <span class="college-name">CSE CYBER SECURITY DEPARTMENT </span>
       </div>
     </div>
     <div class="right">
@@ -287,6 +282,68 @@
         <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Download Complaint Form</h3>
         <p style="font-size:.85rem;color:#bbf7d0;">Cybercrime Portal Complaint Form</p>
       </button>
+    </div>
+  </div>
+</section>
+
+<!-- ONLINE INCIDENT REPORT FORM -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="section-heading">
+      <h2>📝 Submit Incident Report Online</h2>
+      <p>Fill this form to report a cyber crime — your report will be saved with a tracking ID</p>
+    </div>
+    <div class="card" style="max-width:720px;margin:0 auto;border:2px solid #bbf7d0;">
+      <div id="reportMsg" style="display:none;padding:1rem;border-radius:.75rem;font-size:.9rem;font-weight:600;margin-bottom:1.25rem;"></div>
+      <div id="reportForm">
+        <div class="grid-2" style="margin-bottom:1rem;">
+          <div>
+            <label style="font-size:.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.3rem;">Your Name *</label>
+            <input type="text" id="rptName" placeholder="Full name" style="width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:inherit;font-size:.875rem;color:var(--text);background:var(--card-bg);outline:none;"/>
+          </div>
+          <div>
+            <label style="font-size:.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.3rem;">Email</label>
+            <input type="email" id="rptEmail" placeholder="your@email.com" style="width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:inherit;font-size:.875rem;color:var(--text);background:var(--card-bg);outline:none;"/>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-bottom:1rem;">
+          <div>
+            <label style="font-size:.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.3rem;">Phone Number</label>
+            <input type="tel" id="rptPhone" placeholder="+91 XXXXX XXXXX" style="width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:inherit;font-size:.875rem;color:var(--text);background:var(--card-bg);outline:none;"/>
+          </div>
+          <div>
+            <label style="font-size:.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.3rem;">Crime Type *</label>
+            <select id="rptType" style="width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:inherit;font-size:.875rem;color:var(--text);background:var(--card-bg);outline:none;cursor:pointer;">
+              <option value="">Select crime type...</option>
+              <option value="financial_fraud">💳 Financial Fraud (UPI/Banking)</option>
+              <option value="phishing">🎣 Phishing Attack</option>
+              <option value="harassment">👤 Cyber Harassment / Stalking</option>
+              <option value="hacking">💻 Hacking / Data Breach</option>
+              <option value="identity_theft">🔒 Identity Theft</option>
+              <option value="other">📋 Other Cyber Crime</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom:1.25rem;">
+          <label style="font-size:.82rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.3rem;">Description of Incident *</label>
+          <textarea id="rptDesc" rows="4" placeholder="Describe what happened — include dates, amounts, platforms involved..." style="width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:inherit;font-size:.875rem;color:var(--text);background:var(--card-bg);outline:none;resize:vertical;"></textarea>
+        </div>
+        <button onclick="submitReport()" id="rptBtn" style="width:100%;padding:.85rem;background:#16a34a;color:#fff;border:none;border-radius:.75rem;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:background .2s;" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='#16a34a'">
+          <i data-lucide="send" style="width:18px;height:18px;"></i>Submit Report
+        </button>
+      </div>
+      <!-- Tracking Result -->
+      <div id="trackingResult" style="display:none;text-align:center;">
+        <div style="font-size:3rem;margin-bottom:.75rem;">✅</div>
+        <h3 style="font-size:1.25rem;font-weight:800;color:#16a34a;margin-bottom:.5rem;">Report Submitted Successfully!</h3>
+        <p style="color:var(--text-soft);margin-bottom:1rem;">Your report has been saved. Use your tracking ID to check status:</p>
+        <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:.75rem;padding:1.25rem;margin-bottom:1rem;">
+          <p style="font-size:.75rem;color:#6b7280;margin-bottom:.25rem;">TRACKING ID</p>
+          <p id="trackingIdDisplay" style="font-size:1.75rem;font-weight:900;color:#16a34a;font-family:monospace;letter-spacing:.05em;"></p>
+        </div>
+        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:1rem;">📌 Save this ID! You can use it to track your complaint status.</p>
+        <button onclick="resetReportForm()" style="padding:.65rem 1.5rem;background:#2563eb;color:#fff;border:none;border-radius:.5rem;font-weight:700;cursor:pointer;">Submit Another Report</button>
+      </div>
     </div>
   </div>
 </section>
@@ -694,6 +751,67 @@ lucide.createIcons();
   document.getElementById('ytModal').addEventListener('click',function(e){if(e.target===this)closeVideo();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVideo();});
 }); /* end DOMContentLoaded */
+
+/* ===== INCIDENT REPORT FORM ===== */
+async function submitReport(){
+  const name=document.getElementById('rptName').value.trim();
+  const email=document.getElementById('rptEmail').value.trim();
+  const phone=document.getElementById('rptPhone').value.trim();
+  const crimeType=document.getElementById('rptType').value;
+  const description=document.getElementById('rptDesc').value.trim();
+  const msg=document.getElementById('reportMsg');
+  const btn=document.getElementById('rptBtn');
+
+  if(!name||!crimeType||!description){
+    msg.style.display='block';msg.style.background='#fee2e2';msg.style.color='#dc2626';
+    msg.textContent='Please fill Name, Crime Type and Description (required fields).';
+    return;
+  }
+  if(description.length<10){
+    msg.style.display='block';msg.style.background='#fee2e2';msg.style.color='#dc2626';
+    msg.textContent='Description must be at least 10 characters long.';
+    return;
+  }
+
+  btn.disabled=true;btn.innerHTML='<div style="width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;"></div>Submitting...';
+  msg.style.display='none';
+
+  try{
+    const headers={'Content-Type':'application/json'};
+    const token=localStorage.getItem('cyberguard_token');
+    if(token) headers['Authorization']='Bearer '+token;
+
+    const res=await fetch('/api/reports',{
+      method:'POST',
+      headers,
+      body:JSON.stringify({name,email,phone,crimeType,description})
+    });
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||'Failed to submit');
+
+    // Show tracking result
+    document.getElementById('reportForm').style.display='none';
+    document.getElementById('trackingResult').style.display='block';
+    document.getElementById('trackingIdDisplay').textContent=data.trackingId;
+    msg.style.display='none';
+  }catch(err){
+    msg.style.display='block';msg.style.background='#fee2e2';msg.style.color='#dc2626';
+    msg.textContent=err.message;
+  }
+  btn.disabled=false;btn.innerHTML='<i data-lucide="send" style="width:18px;height:18px;"></i>Submit Report';
+  if(typeof lucide!=='undefined') lucide.createIcons();
+}
+
+function resetReportForm(){
+  document.getElementById('reportForm').style.display='block';
+  document.getElementById('trackingResult').style.display='none';
+  document.getElementById('rptName').value='';
+  document.getElementById('rptEmail').value='';
+  document.getElementById('rptPhone').value='';
+  document.getElementById('rptType').value='';
+  document.getElementById('rptDesc').value='';
+  document.getElementById('reportMsg').style.display='none';
+}
 
 /* ===== VIDEO & PDF FUNCTIONS — outside DOMContentLoaded so onclick can reach them ===== */
 function playVideo(id){

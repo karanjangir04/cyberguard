@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CYBERGUARD – Login / Register</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet"/>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+    .login-page{
+      min-height:100vh;
+      background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 30%,#e0e7ff 60%,#f0fdf4 100%);
+      display:flex;flex-direction:column;
+      position:relative;overflow:hidden;
+      font-family:'Inter',sans-serif;
+    }
+
+    /* Decorative shapes */
+    .login-page::before{
+      content:'';position:absolute;width:500px;height:500px;
+      background:radial-gradient(circle,rgba(37,99,235,0.08) 0%,transparent 70%);
+      top:-150px;right:-100px;border-radius:50%;z-index:0;
+      animation:floatOrb 12s ease-in-out infinite;
+    }
+    .login-page::after{
+      content:'';position:absolute;width:400px;height:400px;
+      background:radial-gradient(circle,rgba(22,163,74,0.06) 0%,transparent 70%);
+      bottom:-100px;left:-80px;border-radius:50%;z-index:0;
+      animation:floatOrb 15s ease-in-out infinite reverse;
+    }
+    @keyframes floatOrb{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(30px,-20px) scale(1.1);}}
+
+    /* Floating cyber icons */
+    .float-icon{position:absolute;z-index:0;opacity:0.06;font-size:3rem;animation:floatIcon 20s linear infinite;}
+    @keyframes floatIcon{
+      0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
+      10%{opacity:0.06;}90%{opacity:0.06;}
+      100%{transform:translateY(-100px) rotate(360deg);opacity:0;}
+    }
+
+    /* Main Content */
+    .login-main{
+      flex:1;display:flex;align-items:center;justify-content:center;
+      padding:2rem 1rem;position:relative;z-index:1;
+    }
+
+    .login-container{width:100%;max-width:480px;}
+
+    /* Card */
+    .auth-card{
+      background:#fff;
+      border:1px solid rgba(37,99,235,0.1);
+      border-radius:1.5rem;
+      box-shadow:0 20px 60px rgba(30,58,138,0.08),0 1px 3px rgba(0,0,0,0.04);
+      overflow:hidden;
+      transition:transform 0.3s ease,box-shadow 0.3s ease;
+    }
+    .auth-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 28px 70px rgba(30,58,138,0.12),0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* Header */
+    .auth-header{
+      background:linear-gradient(135deg,#1e3a8a,#2563eb,#1d4ed8);
+      padding:2.5rem 2rem 2rem;text-align:center;
+      position:relative;overflow:hidden;
+    }
+    .auth-header::before{
+      content:'';position:absolute;inset:0;
+      background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E");
+      background-size:60px 60px;
+    }
+    .shield-wrap{
+      width:72px;height:72px;
+      background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);
+      border:2px solid rgba(255,255,255,0.2);
+      border-radius:1.125rem;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 1rem;position:relative;
+      animation:shieldPulse 3s ease-in-out infinite;
+    }
+    @keyframes shieldPulse{
+      0%,100%{transform:translateY(0);box-shadow:0 0 0 0 rgba(255,255,255,0.2);}
+      50%{transform:translateY(-4px);box-shadow:0 8px 30px rgba(255,255,255,0.15);}
+    }
+    .shield-wrap i{width:36px;height:36px;color:#fff;}
+    .brand-title{font-family:'Rajdhani',sans-serif;font-size:1.75rem;font-weight:700;color:#fff;letter-spacing:0.1em;margin-bottom:0.25rem;position:relative;}
+    .brand-sub{font-size:0.85rem;color:#bfdbfe;position:relative;}
+
+    /* Tabs */
+    .auth-tabs{
+      display:flex;margin:0 2rem;
+      background:#f1f5f9;border-radius:0.75rem;
+      padding:4px;margin-top:-1.25rem;position:relative;z-index:2;
+      border:1px solid #e2e8f0;
+      box-shadow:0 4px 12px rgba(0,0,0,0.04);
+    }
+    .auth-tab{
+      flex:1;padding:0.65rem;text-align:center;font-size:0.85rem;font-weight:700;
+      color:#64748b;cursor:pointer;border-radius:0.6rem;
+      transition:all 0.3s;letter-spacing:0.04em;
+    }
+    .auth-tab.active{
+      background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;
+      box-shadow:0 4px 16px rgba(37,99,235,0.3);
+    }
+    .auth-tab:not(.active):hover{color:#1e3a8a;background:rgba(37,99,235,0.05);}
+
+    /* Form body */
+    .auth-body{padding:2rem 2rem 1.5rem;}
+    .form-panel{display:none;}
+    .form-panel.active{display:block;animation:slideUp 0.35s ease;}
+    @keyframes slideUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+    .field{margin-bottom:1.125rem;}
+    .field label{
+      display:block;font-size:0.78rem;font-weight:700;color:#475569;
+      margin-bottom:0.4rem;letter-spacing:0.04em;text-transform:uppercase;
+    }
+    .input-wrap{position:relative;display:flex;align-items:center;}
+    .input-wrap i,
+    .input-wrap svg{
+      position:absolute;left:0.9rem;top:50%;transform:translateY(-50%);
+      color:#94a3b8;width:18px;height:18px;pointer-events:none;
+      transition:color 0.2s;z-index:1;
+    }
+    .field input{
+      width:100%;padding:0.8rem 0.9rem 0.8rem 2.8rem;
+      background:#f8fafc;border:1.5px solid #e2e8f0;
+      border-radius:0.75rem;color:#1e293b;font-size:0.9rem;
+      font-family:'Inter',sans-serif;transition:all 0.25s;outline:none;
+    }
+    .field input:focus{
+      border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,0.1);
+      background:#fff;
+    }
+    .field input:focus + i,
+    .field input:focus ~ i{color:#2563eb !important;}
+    .field input::placeholder{color:#94a3b8;}
+
+    .submit-btn{
+      width:100%;padding:0.9rem;
+      background:linear-gradient(135deg,#1e3a8a,#2563eb);
+      color:#fff;border:none;border-radius:0.75rem;
+      font-size:0.95rem;font-weight:700;font-family:'Inter',sans-serif;
+      cursor:pointer;transition:all 0.3s;letter-spacing:0.02em;
+      display:flex;align-items:center;justify-content:center;gap:0.5rem;
+      position:relative;overflow:hidden;
+    }
+    .submit-btn::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.15) 50%,transparent 60%);
+      transform:translateX(-100%);transition:transform 0.6s;
+    }
+    .submit-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 28px rgba(37,99,235,0.35);
+    }
+    .submit-btn:hover::after{transform:translateX(100%);}
+    .submit-btn:active{transform:translateY(0);}
+    .submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none !important;box-shadow:none !important;}
+
+    /* Messages */
+    .msg{padding:0.75rem 1rem;border-radius:0.75rem;font-size:0.82rem;font-weight:600;margin-bottom:1rem;display:none;align-items:center;gap:0.5rem;}
+    .msg.show{display:flex;}
+    .msg.error{background:#fee2e2;border:1px solid #fecaca;color:#dc2626;}
+    .msg.success{background:#dcfce7;border:1px solid #bbf7d0;color:#16a34a;}
+
+    /* Footer */
+    .auth-footer{padding:0 2rem 2rem;text-align:center;}
+    .auth-footer a.back-link{
+      display:inline-flex;align-items:center;gap:0.35rem;
+      color:#2563eb;font-weight:600;font-size:0.85rem;text-decoration:none;
+      transition:all 0.2s;padding:0.5rem 1rem;border-radius:0.5rem;
+    }
+    .auth-footer a.back-link:hover{background:#eff6ff;color:#1e3a8a;}
+
+    .security-badges{
+      display:flex;align-items:center;justify-content:center;gap:1.5rem;
+      margin-top:1.25rem;padding-top:1rem;
+      border-top:1px solid #f1f5f9;
+    }
+    .sec-badge{display:flex;align-items:center;gap:0.35rem;font-size:0.72rem;color:#94a3b8;font-weight:500;}
+    .sec-badge i{width:12px;height:12px;color:#2563eb;}
+
+    /* Feature cards */
+    .features-row{
+      display:flex;gap:0.75rem;margin-top:1.5rem;
+    }
+    .feature-chip{
+      flex:1;display:flex;align-items:center;gap:0.5rem;
+      background:#f8fafc;border:1px solid #e2e8f0;border-radius:0.75rem;
+      padding:0.75rem;font-size:0.78rem;color:#475569;font-weight:500;
+      transition:all 0.25s;
+    }
+    .feature-chip:hover{
+      background:#eff6ff;border-color:#bfdbfe;transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(37,99,235,0.08);
+    }
+    .feature-chip i{width:16px;height:16px;color:#2563eb;flex-shrink:0;}
+
+    .spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    @media(max-width:480px){
+      .login-container{padding:0 0.25rem;}
+      .auth-header{padding:2rem 1.5rem 1.5rem;}
+      .auth-body{padding:1.5rem;}
+      .auth-tabs{margin:0 1.5rem;margin-top:-1.25rem;}
+      .auth-footer{padding:0 1.5rem 1.5rem;}
+      .features-row{flex-direction:column;}
+    }
+  </style>
+</head>
+<body class="login-page">
+
+<!-- Floating cyber icons -->
+<script>
+const icons = ['🛡️','🔒','🔐','💻','🌐','⚡','🔑','📡','🛡️','🔒','💠','🖥️'];
+for(let i=0;i<12;i++){
+  const el=document.createElement('div');
+  el.className='float-icon';
+  el.textContent=icons[i%icons.length];
+  el.style.left=Math.random()*100+'%';
+  el.style.fontSize=(Math.random()*2+1.5)+'rem';
+  el.style.animationDuration=(Math.random()*20+15)+'s';
+  el.style.animationDelay=(Math.random()*10)+'s';
+  document.body.appendChild(el);
+}
+</script>
+
+<!-- Main Login Content -->
+<div class="login-main">
+  <div class="login-container">
+    <div class="auth-card">
+
+      <!-- Header -->
+      <div class="auth-header">
+        <div class="shield-wrap"><i data-lucide="shield"></i></div>
+        <div class="brand-title">CYBERGUARD</div>
+        <div class="brand-sub">Secure Authentication Portal</div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchTab('login')" id="tabLogin">
+          <i data-lucide="log-in" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i>LOGIN
+        </div>
+        <div class="auth-tab" onclick="switchTab('register')" id="tabRegister">
+          <i data-lucide="user-plus" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i>REGISTER
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="auth-body">
+        <!-- Login Form -->
+        <div class="form-panel active" id="loginPanel">
+          <div class="msg" id="loginMsg"></div>
+          <form onsubmit="handleLogin(event)">
+            <div class="field">
+              <label>Email Address</label>
+              <div class="input-wrap">
+                <i data-lucide="mail"></i>
+                <input type="email" id="loginEmail" placeholder="you@example.com" required autocomplete="email"/>
+              </div>
+            </div>
+            <div class="field">
+              <label>Password</label>
+              <div class="input-wrap">
+                <i data-lucide="lock"></i>
+                <input type="password" id="loginPassword" placeholder="••••••••" required minlength="6" autocomplete="current-password"/>
+              </div>
+            </div>
+            <button type="submit" class="submit-btn" id="loginBtn">
+              <i data-lucide="log-in" style="width:18px;height:18px;"></i>Sign In
+            </button>
+          </form>
+          <div class="features-row">
+            <div class="feature-chip"><i data-lucide="zap"></i>Track Reports</div>
+            <div class="feature-chip"><i data-lucide="award"></i>Earn Badges</div>
+            <div class="feature-chip"><i data-lucide="bar-chart-2"></i>Save Scores</div>
+          </div>
+        </div>
+
+        <!-- Register Form -->
+        <div class="form-panel" id="registerPanel">
+          <div class="msg" id="registerMsg"></div>
+          <form onsubmit="handleRegister(event)">
+            <div class="field">
+              <label>Full Name</label>
+              <div class="input-wrap">
+                <i data-lucide="user"></i>
+                <input type="text" id="regName" placeholder="Your full name" required minlength="2" autocomplete="name"/>
+              </div>
+            </div>
+            <div class="field">
+              <label>Email Address</label>
+              <div class="input-wrap">
+                <i data-lucide="mail"></i>
+                <input type="email" id="regEmail" placeholder="you@example.com" required autocomplete="email"/>
+              </div>
+            </div>
+            <div class="field">
+              <label>College / Institution <span style="font-weight:400;text-transform:none;color:#94a3b8;">(optional)</span></label>
+              <div class="input-wrap">
+                <i data-lucide="building-2"></i>
+                <input type="text" id="regCollege" placeholder="e.g. Engineering College Ajmer" autocomplete="organization"/>
+              </div>
+            </div>
+            <div class="field">
+              <label>Password</label>
+              <div class="input-wrap">
+                <i data-lucide="lock"></i>
+                <input type="password" id="regPassword" placeholder="Min 6 characters" required minlength="6" autocomplete="new-password"/>
+              </div>
+            </div>
+            <button type="submit" class="submit-btn" id="registerBtn">
+              <i data-lucide="user-plus" style="width:18px;height:18px;"></i>Create Account
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="auth-footer">
+        <a href="index.html" class="back-link">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>Back to CYBERGUARD Home
+        </a>
+        <div class="security-badges">
+          <span class="sec-badge"><i data-lucide="shield-check"></i>256-bit Encryption</span>
+          <span class="sec-badge"><i data-lucide="lock"></i>Secure Auth</span>
+          <span class="sec-badge"><i data-lucide="server"></i>ISEA Project</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tab){
+  document.getElementById('tabLogin').classList.toggle('active',tab==='login');
+  document.getElementById('tabRegister').classList.toggle('active',tab==='register');
+  document.getElementById('loginPanel').classList.toggle('active',tab==='login');
+  document.getElementById('registerPanel').classList.toggle('active',tab==='register');
+  hideMsg('loginMsg');hideMsg('registerMsg');
+}
+function showMsg(id,text,type){const el=document.getElementById(id);el.textContent=text;el.className='msg show '+type;}
+function hideMsg(id){document.getElementById(id).className='msg';}
+
+async function handleLogin(e){
+  e.preventDefault();
+  const btn=document.getElementById('loginBtn');
+  const email=document.getElementById('loginEmail').value.trim();
+  const password=document.getElementById('loginPassword').value;
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div>Signing in...';
+  hideMsg('loginMsg');
+  try{
+    const res=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||'Login failed');
+    localStorage.setItem('cyberguard_token',data.token);
+    localStorage.setItem('cyberguard_user',JSON.stringify(data.user));
+    showMsg('loginMsg','✅ Login successful! Redirecting...','success');
+    setTimeout(()=>window.location.href='index.html',800);
+  }catch(err){
+    showMsg('loginMsg',err.message,'error');
+    btn.disabled=false;btn.innerHTML='<i data-lucide="log-in" style="width:18px;height:18px;"></i>Sign In';
+    lucide.createIcons();
+  }
+}
+
+async function handleRegister(e){
+  e.preventDefault();
+  const btn=document.getElementById('registerBtn');
+  const name=document.getElementById('regName').value.trim();
+  const email=document.getElementById('regEmail').value.trim();
+  const college=document.getElementById('regCollege').value.trim();
+  const password=document.getElementById('regPassword').value;
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div>Creating account...';
+  hideMsg('registerMsg');
+  try{
+    const res=await fetch('/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,password,college})});
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||'Registration failed');
+    localStorage.setItem('cyberguard_token',data.token);
+    localStorage.setItem('cyberguard_user',JSON.stringify(data.user));
+    showMsg('registerMsg','✅ Account created! Redirecting...','success');
+    setTimeout(()=>window.location.href='index.html',800);
+  }catch(err){
+    showMsg('registerMsg',err.message,'error');
+    btn.disabled=false;btn.innerHTML='<i data-lucide="user-plus" style="width:18px;height:18px;"></i>Create Account';
+    lucide.createIcons();
+  }
+}
+
+if(localStorage.getItem('cyberguard_token')){window.location.href='index.html';}
+lucide.createIcons();
+</script>
+</body>
+</html>

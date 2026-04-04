@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css"/>
   <!-- Lucide Icons via CDN -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="auth.js"></script>
 </head>
 <body>
 
@@ -16,13 +17,6 @@
     
     <!-- Left Logos -->
     <div class="logos">
-      <img src="images/cdac_logo.jpg" alt="CDAC Logo" onerror="this.style.display='none'"/>
-      <img src="images/isea_logo.jpg" alt="ISEA Logo" onerror="this.style.display='none'"/>
-      
-      <div class="meity-info">
-        <img src="https://www.meity.gov.in/sites/all/themes/meity/images/emblem.png" alt="MeitY" onerror="this.style.display='none'"/>
-        <span>Ministry of Electronics<br/>&amp; Information Technology</span>
-      </div>
     </div>
 
     <!-- Right Section -->
@@ -225,9 +219,9 @@
             <p style="font-size:0.85rem;color:#6b7280;">Download comprehensive guide on latest scams</p>
           </div>
         </div>
-        <button class="btn btn-green" onclick="alert('PDF Download feature coming soon!')">
-          <i data-lucide="file-text" style="width:18px;height:18px;"></i>Download PDF
-        </button>
+        <a href="reporting.html" class="btn btn-green">
+          <i data-lucide="file-text" style="width:18px;height:18px;"></i>Go to Reporting
+        </a>
       </div>
     </div>
   </div>
@@ -344,27 +338,53 @@ const pageLinks = [
 ];
 
 // ── Render News Ticker ──
-const ticker = document.getElementById('ticker');
-const allNews = [...scamNews, ...scamNews];
-ticker.innerHTML = allNews.map(n => `<span><span class="dot">●</span> ${n}</span>`).join('');
+function renderTicker(newsArr) {
+  const ticker = document.getElementById('ticker');
+  const allNews = [...newsArr, ...newsArr];
+  ticker.innerHTML = allNews.map(n => `<span><span class="dot">●</span> ${n}</span>`).join('');
+}
+renderTicker(scamNews);
 
 // ── Render Scam Scroll ──
-const scamScroll = document.getElementById('scamScroll');
-const allScams = [...latestScams, ...latestScams];
-scamScroll.innerHTML = allScams.map(s =>
-  `<a href="${s.url}" target="_blank" rel="noopener noreferrer" style="display:block;padding:0.75rem 1rem;border-bottom:1px solid #bfdbfe;color:#1f2937;font-size:0.875rem;transition:background 0.15s;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background=''">${s.title}</a>`
-).join('');
+function renderScamScroll(scamsArr) {
+  const scamScroll = document.getElementById('scamScroll');
+  const allScams = [...scamsArr, ...scamsArr];
+  scamScroll.innerHTML = allScams.map(s =>
+    `<a href="${s.url}" target="_blank" rel="noopener noreferrer" style="display:block;padding:0.75rem 1rem;border-bottom:1px solid #bfdbfe;color:#1f2937;font-size:0.875rem;transition:background 0.15s;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background=''"> ${s.title}</a>`
+  ).join('');
+}
+renderScamScroll(latestScams);
+
+// ── Try fetching from API ──
+fetch('/api/scam-alerts').then(r=>r.json()).then(data=>{
+  if(data.alerts && data.alerts.length){
+    const apiNews = data.alerts.map(a=>a.title);
+    const apiScams = data.alerts.map(a=>({title:a.title,url:a.url||'https://cybercrime.gov.in'}));
+    renderTicker(apiNews);
+    renderScamScroll(apiScams);
+  }
+}).catch(()=>{/* fallback to hardcoded - already rendered */});
 
 // ── Render Quiz Winners ──
-const qw = document.getElementById('quizWinners');
-qw.innerHTML = quizWinners.map(w => {
+function renderQuizWinners(winners) {
+  const qw = document.getElementById('quizWinners');
   const medals = ['🥇','🥈','🥉'];
-  return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid #f3f4f6;">
-    <span style="font-size:1.25rem;">${medals[w.rank-1]}</span>
-    <div style="flex:1;margin-left:0.75rem;"><p style="font-weight:600;font-size:0.875rem;">${w.name}</p><p style="font-size:0.75rem;color:#6b7280;">${w.college}</p></div>
-    <span style="font-weight:700;color:#1e3a8a;">${w.score}%</span>
-  </div>`;
-}).join('');
+  qw.innerHTML = winners.map((w,i) => {
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid #f3f4f6;">
+      <span style="font-size:1.25rem;">${medals[i]||'🏅'}</span>
+      <div style="flex:1;margin-left:0.75rem;"><p style="font-weight:600;font-size:0.875rem;">${w.name}</p><p style="font-size:0.75rem;color:#6b7280;">${w.college||''}</p></div>
+      <span style="font-weight:700;color:#1e3a8a;">${w.score}%</span>
+    </div>`;
+  }).join('');
+}
+renderQuizWinners(quizWinners);
+
+// Try fetching top quiz scorers from API
+fetch('/api/quiz-scores/top').then(r=>r.json()).then(data=>{
+  if(data.winners && data.winners.length){
+    renderQuizWinners(data.winners);
+  }
+}).catch(()=>{/* fallback to hardcoded */});
 
 // ── Render Do's & Don'ts ──
 document.getElementById('dosList').innerHTML = dos.map(d =>
