@@ -30,7 +30,7 @@
     .dashboard-container { max-width: 1200px; margin: 3rem auto; padding: 0 1rem; }
     
     .dashboard-header { margin-bottom: 2rem; position: relative; }
-    .dashboard-header h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .dashboard-header h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .dashboard-header p { color: var(--dash-text-soft); font-size: 1.1rem; margin-top: 0.5rem; }
 
     .dash-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
@@ -86,6 +86,30 @@
     .download-btn { background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.8rem; cursor: pointer; border: none; display: flex; align-items: center; gap: 0.4rem; transition: background 0.2s; }
     .download-btn:hover { background: #1d4ed8; }
     .download-btn[disabled] { background: #94a3b8; cursor: not-allowed; }
+
+    /* Modals & Glow Effects */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(10px); z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-card { background: var(--dash-card); width: 90%; max-width: 450px; border-radius: 20px; padding: 2rem; box-shadow: 0 25px 50px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); transform: scale(0.9); transition: transform 0.3s; position: relative; overflow:hidden; }
+    .modal-overlay.active .modal-card { transform: scale(1); }
+    .modal-card::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(220,38,38,0.1), rgba(37,99,235,0.05)); z-index:0; pointer-events:none;}
+    .modal-content { position: relative; z-index: 1; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .modal-header h2 { font-size: 1.5rem; font-weight: 800; color: var(--dash-text); }
+    .close-modal { background: none; border: none; color: var(--dash-text-soft); cursor: pointer; transition: color 0.2s; }
+    .close-modal:hover { color: var(--primary); }
+    .input-grp { margin-bottom: 1rem; }
+    .input-grp label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--dash-text-soft); margin-bottom: 0.4rem; }
+    .input-grp input { width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: var(--dash-bg); color: var(--dash-text); font-family: inherit; font-size: 0.95rem; transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
+    body.dark .input-grp input { border-color: rgba(255,255,255,0.1); }
+    .input-grp input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+    .btn-block { width: 100%; padding: 0.85rem; border-radius: 10px; border: none; background: linear-gradient(135deg, var(--primary), #b91c1c); color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .btn-block:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(220,38,38,0.3); }
+
+    .edit-btn { background: rgba(37,99,235,0.1); color: var(--accent); padding: 0.4rem 0.8rem; border-radius: 8px; border: none; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: background 0.2s; margin-left: auto; }
+    .edit-btn:hover { background: rgba(37,99,235,0.2); }
+    body.dark .edit-btn { background: rgba(37,99,235,0.2); color: #60a5fa; }
+    body.dark .edit-btn:hover { background: rgba(37,99,235,0.3); }
 
     /* Print Template Overlay */
     #printCertOverlay { display: none; position: fixed; inset: 0; background: #fff; z-index: 9999; padding: 2rem; align-items: center; justify-content: center; }
@@ -153,10 +177,16 @@
       
       <!-- Profile Details -->
       <div class="card profile-card">
-        <h3><i data-lucide="user-check"></i> Profile Overview</h3>
+        <h3 style="display:flex;align-items:center;">
+          <i data-lucide="user-check" style="margin-right:0.5rem;"></i> Profile Overview
+          <button class="edit-btn" onclick="openModal('profileModal')"><i data-lucide="edit-3"></i> Edit</button>
+        </h3>
         <ul class="profile-info" id="profileList">
           <li><strong>Loading...</strong></li>
         </ul>
+        <button class="edit-btn" style="margin-top:20px; background:rgba(220,38,38,0.1); color:var(--primary); justify-content:center; width:100%;" onclick="openModal('passwordModal')">
+          <i data-lucide="key"></i> Change Password
+        </button>
       </div>
 
       <!-- Quiz Scores -->
@@ -195,6 +225,55 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- Profile Edit Modal -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-card">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Profile</h2>
+          <button class="close-modal" onclick="closeModal('profileModal')"><i data-lucide="x"></i></button>
+        </div>
+        <form id="profileForm">
+          <p id="profileError" style="color:var(--primary); font-size:0.85rem; margin-bottom:10px; display:none;"></p>
+          <div class="input-grp">
+            <label>Full Name</label>
+            <input type="text" id="editName" required />
+          </div>
+          <div class="input-grp">
+            <label>College / Institution</label>
+            <input type="text" id="editCollege" />
+          </div>
+          <button type="submit" class="btn-block" id="saveProfileBtn">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Password Edit Modal -->
+  <div class="modal-overlay" id="passwordModal">
+    <div class="modal-card">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Change Password</h2>
+          <button class="close-modal" onclick="closeModal('passwordModal')"><i data-lucide="x"></i></button>
+        </div>
+        <form id="passwordForm">
+          <p id="passwordError" style="color:var(--primary); font-size:0.85rem; margin-bottom:10px; display:none;"></p>
+          <p id="passwordSuccess" style="color:#16a34a; font-size:0.85rem; margin-bottom:10px; display:none;"></p>
+          <div class="input-grp">
+            <label>Current Password</label>
+            <input type="password" id="currentPassword" required />
+          </div>
+          <div class="input-grp">
+            <label>New Password</label>
+            <input type="password" id="newPassword" required minlength="6" />
+          </div>
+          <button type="submit" class="btn-block" id="savePasswordBtn">Update Password</button>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -374,6 +453,80 @@
       // Attempt to clean up specific print artifact glitches dynamically 
       setTimeout(() => { if(typeof lucide !== 'undefined') lucide.createIcons(); }, 100);
     }
+
+    // Modal Logic
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    // Handle Profile Form Submit
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('saveProfileBtn');
+      const errorEl = document.getElementById('profileError');
+      btn.innerText = 'Saving...';
+      errorEl.style.display = 'none';
+
+      try {
+        const payload = {
+          name: document.getElementById('editName').value,
+          college: document.getElementById('editCollege').value
+        };
+        const res = await fetch('/api/auth/profile', {
+          method: 'PUT',
+          headers: AUTH.headers(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        
+        if(!res.ok) throw new Error(data.error || 'Server error');
+        
+        // Update Localstorage token
+        if(data.token) AUTH.login(data.token, data.user);
+        
+        // Reload page to reflect stunning updates smoothly
+        window.location.reload();
+      } catch(err) {
+        btn.innerText = 'Save Changes';
+        errorEl.innerText = err.message;
+        errorEl.style.display = 'block';
+      }
+    });
+
+    // Handle Password Form Submit
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('savePasswordBtn');
+      const errEl = document.getElementById('passwordError');
+      const succEl = document.getElementById('passwordSuccess');
+      btn.innerText = 'Updating...';
+      errEl.style.display = 'none';
+      succEl.style.display = 'none';
+
+      try {
+        const payload = {
+          currentPassword: document.getElementById('currentPassword').value,
+          newPassword: document.getElementById('newPassword').value
+        };
+        const res = await fetch('/api/auth/password', {
+          method: 'PUT',
+          headers: AUTH.headers(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        
+        if(!res.ok) throw new Error(data.error || 'Server error');
+        
+        btn.innerText = 'Update Password';
+        succEl.innerText = 'Password successfully changed!';
+        succEl.style.display = 'block';
+        document.getElementById('passwordForm').reset();
+        setTimeout(() => closeModal('passwordModal'), 2000);
+      } catch(err) {
+        btn.innerText = 'Update Password';
+        errEl.innerText = err.message;
+        errEl.style.display = 'block';
+      }
+    });
   </script>
 </body>
 </html>

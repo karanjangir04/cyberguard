@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema({
     trim: true,
     default: ''
   },
+  resetOtp: {
+    type: String
+  },
+  resetOtpExpire: {
+    type: Date
+  },
   createdAt: {
     type: Date,
     default: Date.now

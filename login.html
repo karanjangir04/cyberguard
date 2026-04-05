@@ -268,12 +268,15 @@ for(let i=0;i<12;i++){
                 <input type="email" id="loginEmail" placeholder="you@example.com" required autocomplete="email"/>
               </div>
             </div>
-            <div class="field">
+            <div class="field" style="margin-bottom:0.5rem;">
               <label>Password</label>
               <div class="input-wrap">
                 <i data-lucide="lock"></i>
                 <input type="password" id="loginPassword" placeholder="••••••••" required minlength="6" autocomplete="current-password"/>
               </div>
+            </div>
+            <div style="text-align:right; margin-bottom:1.125rem;">
+              <a href="#" onclick="switchTab('forgot'); return false;" style="font-size:0.8rem; font-weight:600; color:#2563eb; text-decoration:none; transition:color 0.2s;">Forgot Password?</a>
             </div>
             <button type="submit" class="submit-btn" id="loginBtn">
               <i data-lucide="log-in" style="width:18px;height:18px;"></i>Sign In
@@ -284,6 +287,56 @@ for(let i=0;i<12;i++){
             <div class="feature-chip"><i data-lucide="award"></i>Earn Badges</div>
             <div class="feature-chip"><i data-lucide="bar-chart-2"></i>Save Scores</div>
           </div>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div class="form-panel" id="forgotPanel">
+          <div class="msg" id="forgotMsg"></div>
+          <form onsubmit="handleForgot(event)">
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:1rem; font-weight:500;">Enter your email to receive a password reset OTP.</p>
+            <div class="field">
+              <label>Email Address</label>
+              <div class="input-wrap">
+                <i data-lucide="mail"></i>
+                <input type="email" id="forgotEmail" placeholder="you@example.com" required autocomplete="email"/>
+              </div>
+            </div>
+            <button type="submit" class="submit-btn" id="forgotBtn">
+              <i data-lucide="send" style="width:18px;height:18px;"></i>Send OTP
+            </button>
+            <div style="text-align:center; margin-top:1rem;">
+              <a href="#" onclick="switchTab('login'); return false;" style="font-size:0.85rem; font-weight:600; color:#64748b; text-decoration:none;"><i data-lucide="arrow-left" style="width:14px;height:14px;vertical-align:-2px;"></i> Back to Login</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Reset Password Form -->
+        <div class="form-panel" id="resetPanel">
+          <div class="msg" id="resetMsg"></div>
+          <form onsubmit="handleReset(event)">
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:1rem; font-weight:500;">Enter the OTP sent to your email and your new password.</p>
+            <input type="hidden" id="resetEmail" />
+            <div class="field">
+              <label>Enter OTP</label>
+              <div class="input-wrap">
+                <i data-lucide="key"></i>
+                <input type="text" id="resetOtp" placeholder="6-digit unique OTP" required />
+              </div>
+            </div>
+            <div class="field">
+              <label>New Password</label>
+              <div class="input-wrap">
+                <i data-lucide="lock"></i>
+                <input type="password" id="resetPassword" placeholder="Min 6 characters" required minlength="6" />
+              </div>
+            </div>
+            <button type="submit" class="submit-btn" id="resetBtn">
+              <i data-lucide="check-circle" style="width:18px;height:18px;"></i>Reset Password
+            </button>
+            <div style="text-align:center; margin-top:1rem;">
+              <a href="#" onclick="switchTab('login'); return false;" style="font-size:0.85rem; font-weight:600; color:#64748b; text-decoration:none;">Cancel</a>
+            </div>
+          </form>
         </div>
 
         <!-- Register Form -->
@@ -347,10 +400,13 @@ function switchTab(tab){
   document.getElementById('tabRegister').classList.toggle('active',tab==='register');
   document.getElementById('loginPanel').classList.toggle('active',tab==='login');
   document.getElementById('registerPanel').classList.toggle('active',tab==='register');
-  hideMsg('loginMsg');hideMsg('registerMsg');
+  document.getElementById('forgotPanel').classList.toggle('active',tab==='forgot');
+  document.getElementById('resetPanel').classList.toggle('active',tab==='reset');
+  hideMsg('loginMsg');hideMsg('registerMsg');hideMsg('forgotMsg');hideMsg('resetMsg');
+  lucide.createIcons();
 }
 function showMsg(id,text,type){const el=document.getElementById(id);el.textContent=text;el.className='msg show '+type;}
-function hideMsg(id){document.getElementById(id).className='msg';}
+function hideMsg(id){const el=document.getElementById(id); if(el) el.className='msg';}
 
 async function handleLogin(e){
   e.preventDefault();
@@ -396,6 +452,51 @@ async function handleRegister(e){
     btn.disabled=false;btn.innerHTML='<i data-lucide="user-plus" style="width:18px;height:18px;"></i>Create Account';
     lucide.createIcons();
   }
+}
+
+async function handleForgot(e){
+  e.preventDefault();
+  const btn=document.getElementById('forgotBtn');
+  const email=document.getElementById('forgotEmail').value.trim();
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div>Sending OTP...';
+  hideMsg('forgotMsg');
+  try{
+    const res=await fetch('/api/auth/forgot-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||'Failed to send OTP');
+    showMsg('forgotMsg','OTP dispatched to email.','success');
+    document.getElementById('resetEmail').value = email;
+    setTimeout(() => { switchTab('reset'); showMsg('resetMsg','Please check your email for the OTP','success'); }, 1500);
+  }catch(err){
+    showMsg('forgotMsg',err.message,'error');
+  }
+  btn.disabled=false;btn.innerHTML='<i data-lucide="send" style="width:18px;height:18px;"></i>Send OTP';
+  lucide.createIcons();
+}
+
+async function handleReset(e){
+  e.preventDefault();
+  const btn=document.getElementById('resetBtn');
+  const email=document.getElementById('resetEmail').value;
+  const otp=document.getElementById('resetOtp').value.trim();
+  const newPassword=document.getElementById('resetPassword').value;
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div>Resetting...';
+  hideMsg('resetMsg');
+  try{
+    const res=await fetch('/api/auth/reset-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,otp,newPassword})});
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||'Failed to reset password');
+    showMsg('resetMsg','Password reset successfully!','success');
+    setTimeout(() => { 
+      switchTab('login'); 
+      showMsg('loginMsg','Password reset successfully. Please login.','success'); 
+      document.getElementById('loginEmail').value = email;
+    }, 2000);
+  }catch(err){
+    showMsg('resetMsg',err.message,'error');
+  }
+  btn.disabled=false;btn.innerHTML='<i data-lucide="check-circle" style="width:18px;height:18px;"></i>Reset Password';
+  lucide.createIcons();
 }
 
 if(localStorage.getItem('cyberguard_token')){window.location.href='index.html';}
