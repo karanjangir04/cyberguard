@@ -13,12 +13,25 @@
 <!-- TOP NAVBAR -->
 <div class="top-navbar">
   <div class="inner">
+    
+    <!-- Left Logos -->
     <div class="logos">
     </div>
+
+    <!-- Right Section -->
     <div class="right">
-      <div class="college-logo">COLLEGE</div>
-      <span class="college-name">Your College Name</span>
-      <button class="theme-btn" id="themeBtn"><i data-lucide="moon"></i></button>
+      
+      <!-- ✅ College Logo Added -->
+      <div class="college-logos">
+        <img src="images/COLLEGE.jpg" alt="College Logo" class="college-logo" onerror="this.style.display='none'"/>
+      </div>
+
+      <span class="college-name">Engineering College Ajmer Rajasthan</span>
+
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+        <i data-lucide="moon"></i>
+      </button>
+
     </div>
   </div>
 </div>
@@ -26,13 +39,18 @@
 <!-- MAIN NAVBAR -->
 <nav class="main-navbar">
   <div class="inner">
-    <a href="index.html" class="brand"><i data-lucide="shield"></i>CYBERGUARD</a>
+    <a href="index.html" class="brand">
+      <i data-lucide="shield"></i>
+      CYBERGUARD
+    </a>
     <div class="nav-links">
       <a href="awareness.html" class="active">AWARENESS</a>
       <a href="detection.html">REAL TIME DETECTION</a>
       <a href="reporting.html">REPORTING</a>
     </div>
-    <button class="hamburger" id="hamburger"><i data-lucide="menu" id="menuIcon"></i></button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <i data-lucide="menu" id="menuIcon"></i>
+    </button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="awareness.html" class="active">AWARENESS</a>

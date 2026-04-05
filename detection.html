@@ -62,10 +62,11 @@
   .top-navbar .inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
   .top-navbar .logos { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
   .top-navbar .logos img { height: 38px; object-fit: contain; border-radius: 4px; filter: brightness(0.9); }
+  img.college-logo { width: 36px; height: 36px; object-fit: contain; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); margin-right: 8px; }
   .top-navbar .meity-info { display: flex; align-items: center; gap: 0.5rem; }
   .top-navbar .meity-info img { height: 32px; }
   .top-navbar .meity-info span { font-size: 0.7rem; color: #9ca3af; line-height: 1.3; }
-  .top-navbar .top-right { display: flex; align-items: center; gap: 0.75rem; }
+  .top-navbar .right { display: flex; align-items: center; gap: 0.75rem; }
   .top-navbar .time-badge { font-family: var(--font-mono); font-size: 0.72rem; color: #4ade80; background: #052e16; border: 1px solid #16a34a30; padding: 0.25rem 0.6rem; border-radius: 9999px; display: flex; align-items: center; gap: 0.4rem; }
   .top-navbar .time-badge .dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; animation: pulse 1.5s infinite; }
 
@@ -603,14 +604,25 @@
 <!-- TOP NAVBAR -->
 <div class="top-navbar">
   <div class="inner">
+    
+    <!-- Left Logos -->
     <div class="logos">
     </div>
-    <div class="top-right">
-      <div class="time-badge">
-        <span class="dot"></span>
-        <span id="liveClock">--:--:--</span>
-        &nbsp;|&nbsp;System Online
+
+    <!-- Right Section -->
+    <div class="right">
+      
+      <!-- ✅ College Logo Added -->
+      <div class="college-logos">
+        <img src="images/COLLEGE.jpg" alt="College Logo" class="college-logo" onerror="this.style.display='none'"/>
       </div>
+
+      <span class="college-name">Engineering College Ajmer Rajasthan</span>
+
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+        <i data-lucide="moon" id="themeIcon"></i>
+      </button>
+
     </div>
   </div>
 </div>
@@ -619,21 +631,17 @@
 <nav class="main-navbar">
   <div class="inner">
     <a href="index.html" class="brand">
-      <i data-lucide="shield"></i>CYBERGUARD
+      <i data-lucide="shield"></i>
+      CYBERGUARD
     </a>
     <div class="nav-links">
       <a href="awareness.html">AWARENESS</a>
       <a href="detection.html" class="active">REAL TIME DETECTION</a>
       <a href="reporting.html">REPORTING</a>
     </div>
-    <div class="nav-right">
-      <button class="theme-btn" id="themeBtn" title="Toggle theme">
-        <i data-lucide="moon" id="themeIcon" style="width:18px;height:18px;"></i>
-      </button>
-      <button class="hamburger" id="hamburger">
-        <i data-lucide="menu" id="menuIcon" style="width:18px;height:18px;"></i>
-      </button>
-    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <i data-lucide="menu" id="menuIcon"></i>
+    </button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="awareness.html">AWARENESS</a>
@@ -2814,8 +2822,10 @@ function stopVoiceDetection() {
 
 /* ═══ CLOCK ═══ */
 function updateClock() {
+  const el = document.getElementById("liveClock");
+  if (!el) return;
   const now = new Date(), pad = n => String(n).padStart(2,"0");
-  document.getElementById("liveClock").textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  el.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
 }
 updateClock(); setInterval(updateClock, 1000);
 

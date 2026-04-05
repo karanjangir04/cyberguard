@@ -31,19 +31,13 @@
 .top-navbar .right{display:flex;align-items:center;gap:.75rem;}
 
 /* ✅ Updated college logo (supports image now) */
-.college-logo{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-right:5px;
-}
-
-/* ✅ Image styling inside logo */
-.college-logo img{
-  height:40px;
-  width:auto;
+img.college-logo {
+  width:36px;
+  height:36px;
   object-fit:contain;
-  border-radius:6px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.2);
+  margin-right:8px;
 }
 
 /* (kept as-is) */
@@ -218,14 +212,25 @@
 <!-- TOP NAVBAR -->
 <div class="top-navbar">
   <div class="inner">
+    
+    <!-- Left Logos -->
     <div class="logos">
-      <img src="images/eca logo.png" alt="College Logo" onerror="this.style.display='none'"/>
-      <span class="college-name">Engineering College Ajmer, Rajasthan</span>
-      <span class="college-name">CSE CYBER SECURITY DEPARTMENT </span>
-      </div>
     </div>
+
+    <!-- Right Section -->
     <div class="right">
-      <button class="theme-btn" id="themeBtn"><i data-lucide="moon"></i></button>
+      
+      <!-- ✅ College Logo Added -->
+      <div class="college-logos">
+        <img src="images/COLLEGE.jpg" alt="College Logo" class="college-logo" onerror="this.style.display='none'"/>
+      </div>
+
+      <span class="college-name">Engineering College Ajmer Rajasthan</span>
+
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+        <i data-lucide="moon"></i>
+      </button>
+
     </div>
   </div>
 </div>
@@ -233,13 +238,18 @@
 <!-- MAIN NAVBAR -->
 <nav class="main-navbar">
   <div class="inner">
-    <a href="index.html" class="brand"><i data-lucide="shield"></i>CYBERGUARD</a>
+    <a href="index.html" class="brand">
+      <i data-lucide="shield"></i>
+      CYBERGUARD
+    </a>
     <div class="nav-links">
       <a href="awareness.html">AWARENESS</a>
       <a href="detection.html">REAL TIME DETECTION</a>
       <a href="reporting.html" class="active">REPORTING</a>
     </div>
-    <button class="hamburger" id="hamburger"><i data-lucide="menu" id="menuIcon"></i></button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <i data-lucide="menu" id="menuIcon"></i>
+    </button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="awareness.html">AWARENESS</a>

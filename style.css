@@ -121,11 +121,12 @@ input, textarea, select { font-family: inherit; }
 .top-navbar .meity-info span { font-size: 0.75rem; color: #4b5563; line-height: 1.3; }
 .top-navbar .right { display: flex; align-items: center; gap: 1rem; }
 .top-navbar .college-logo {
-  width: 48px; height: 48px; background: #1e3a8a; border-radius: 50%;
+  width: 36px; height: 36px; background: transparent; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   color: #fff; font-weight: 700; font-size: 0.65rem; text-align: center;
+  object-fit: contain; border: 1px solid #e5e7eb;
 }
-.top-navbar .college-name { font-size: 0.875rem; font-weight: 600; color: #374151; }
+.top-navbar .college-name { font-size: 0.82rem; font-weight: 600; color: #374151; }
 .top-navbar .theme-btn {
   padding: 0.5rem; border-radius: 50%;
   background: #f3f4f6; transition: background 0.2s;
