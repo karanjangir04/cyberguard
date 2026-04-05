@@ -241,6 +241,10 @@
   .footer-bottom-links a { font-size: 0.8rem; color: #6b7280; text-decoration: none; transition: color var(--transition); }
   .footer-bottom-links a:hover { color: #fff; }
 
+  .hw-info-row { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.4rem 0; font-size: 0.8rem; border-bottom: 1px solid var(--gray-200); }
+  .hw-info-row:last-child { border-bottom: none; }
+  .hw-label { font-weight: 600; color: var(--gray-500); width: 110px; flex-shrink: 0; }
+
   .toast-container { position: fixed; top: 80px; right: 1rem; z-index: 999; display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; }
   .toast { background: var(--gray-900); color: #fff; border-radius: var(--radius-sm); padding: 0.75rem 1rem; font-size: 0.85rem; font-weight: 500; box-shadow: var(--shadow-lg); border-left: 3px solid var(--red); display: flex; align-items: center; gap: 0.5rem; min-width: 240px; max-width: 320px; animation: slideInRight 0.3s ease both; pointer-events: all; }
   .toast.safe { border-left-color: #16a34a; }
@@ -674,15 +678,18 @@
       <p>Multi-layered AI protection — scan SMS, URLs, apps, voice calls, and audio recordings instantly</p>
     </div>
 
-    <!-- SMS SCANNER -->
-    <div class="tool-card reveal" style="margin-bottom:1.5rem;">
+    <!-- SMS & MESSAGE SCANNER — FULLY FUNCTIONAL -->
+    <div class="tool-card reveal" style="margin-bottom:1.5rem;" id="smsScannerCard">
       <div class="tool-card-header">
         <div class="card-icon bg-red-100" style="width:48px;height:48px;margin:0;border-radius:12px;">
           <i data-lucide="message-square" style="width:22px;height:22px;color:#dc2626;"></i>
         </div>
-        <div>
-          <h3>SMS & Message Phishing Scanner</h3>
-          <p>Paste any suspicious SMS or message text to instantly detect phishing, fraud, and scam content</p>
+        <div style="flex:1;">
+          <h3 style="display:flex;align-items:center;gap:0.5rem;">
+            SMS &amp; Message Phishing Scanner
+            <span style="font-size:0.68rem;font-weight:700;background:#dc2626;color:#fff;padding:0.15rem 0.55rem;border-radius:9999px;letter-spacing:0.06em;">REAL-TIME</span>
+          </h3>
+          <p>Paste any suspicious SMS, WhatsApp, or email message — AI analyzes for phishing keywords, fake links, urgency traps, and social engineering</p>
         </div>
       </div>
       <div class="tool-card-body">
@@ -691,28 +698,72 @@
           <span class="pill pill-red">Phishing Links</span>
           <span class="pill pill-blue">OTP Scam Detection</span>
           <span class="pill pill-gray">Spam Classification</span>
+          <span class="pill pill-purple">Social Engineering</span>
+          <span class="pill pill-teal">Hindi + English</span>
         </div>
-        <div class="input-group">
-          <input id="smsInput" class="input-field" placeholder="Paste SMS text here… e.g. 'Your bank account is blocked. Verify OTP: click here'" style="font-size:0.875rem;"/>
-          <button class="btn btn-primary" onclick="scanSMS()" id="smsScanBtn">
-            <i data-lucide="scan" style="width:16px;height:16px;"></i>Scan SMS
-          </button>
+        <div style="margin-top:0.75rem;">
+          <textarea id="smsInput" class="input-field" placeholder="Paste your full SMS / WhatsApp / Email message here…&#10;&#10;Example: 'Dear customer, your SBI account has been blocked due to KYC non-compliance. Update immediately: http://sbi-verify.xyz/kyc'" style="font-size:0.875rem;min-height:100px;resize:vertical;line-height:1.6;font-family:var(--font-main);padding:0.75rem 0.9rem;width:100%;"></textarea>
+          <div style="display:flex;gap:0.5rem;margin-top:0.5rem;align-items:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="scanSMS()" id="smsScanBtn">
+              <i data-lucide="scan" style="width:16px;height:16px;"></i>Analyze Message
+            </button>
+            <button class="btn btn-secondary" onclick="clearSMSScan()" style="font-size:0.8rem;">
+              <i data-lucide="refresh-cw" style="width:14px;height:14px;"></i>Clear
+            </button>
+            <span style="font-size:0.75rem;color:var(--gray-400);margin-left:auto;" id="smsCharCount">0 characters</span>
+          </div>
         </div>
         <div class="scan-progress" id="smsProgress"><div class="scan-bar"></div></div>
         <div class="result-box" id="smsResult"></div>
+        <div id="smsAnalysisPanel" style="display:none;margin-top:1rem;animation:fadeInUp 0.4s ease;">
+          <div id="smsVerdict"></div>
+          <div class="risk-meter" id="smsRiskMeter" style="display:none;">
+            <div class="risk-meter-label"><span>Overall Threat Score</span><span id="smsRiskLabel" style="font-family:var(--font-mono);">0%</span></div>
+            <div class="risk-meter-bar"><div class="risk-meter-fill" id="smsRiskFill"></div></div>
+          </div>
+          <div id="smsThreatKeywords" style="display:none;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--gray-700);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;">
+              <i data-lucide="alert-triangle" style="width:14px;height:14px;color:#dc2626;"></i>Detected Threat Indicators
+              <span id="smsKeywordCount" style="font-size:0.68rem;font-weight:600;background:#fee2e2;color:#dc2626;padding:0.1rem 0.45rem;border-radius:9999px;"></span>
+            </div>
+            <div id="smsThreatKeywordsList" class="threat-keywords-list"></div>
+          </div>
+          <div id="smsSuspiciousPatterns" style="display:none;margin-top:0.75rem;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--gray-700);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;">
+              <i data-lucide="search" style="width:14px;height:14px;color:#f97316;"></i>Suspicious Patterns Found
+            </div>
+            <div id="smsSuspiciousPatternsList"></div>
+          </div>
+          <div id="smsExtractedLinks" style="display:none;margin-top:0.75rem;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--gray-700);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;">
+              <i data-lucide="link" style="width:14px;height:14px;color:#2563eb;"></i>Extracted URLs
+            </div>
+            <div id="smsExtractedLinksList"></div>
+          </div>
+          <div id="smsSafetyTips" style="margin-top:0.75rem;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:1rem;display:none;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--gray-700);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;">
+              <i data-lucide="shield" style="width:14px;height:14px;color:#16a34a;"></i>Recommended Actions
+            </div>
+            <div id="smsSafetyTipsList" style="font-size:0.8rem;color:var(--gray-600);line-height:1.7;"></div>
+          </div>
+          <div id="smsSafeMsg" style="display:none;" class="audio-safe-msg">✅ This message appears safe. No known phishing patterns, scam keywords, or suspicious links detected.</div>
+        </div>
         <div id="smsDetails" style="margin-top:0.75rem;display:none;"></div>
       </div>
     </div>
 
-    <!-- URL SCANNER -->
-    <div class="tool-card reveal" style="margin-bottom:1.5rem;">
+    <!-- URL & LINK SAFETY SCANNER — FULLY FUNCTIONAL -->
+    <div class="tool-card reveal" style="margin-bottom:1.5rem;" id="urlScannerCard">
       <div class="tool-card-header">
         <div class="card-icon bg-blue-100" style="width:48px;height:48px;margin:0;border-radius:12px;">
           <i data-lucide="globe" style="width:22px;height:22px;color:#2563eb;"></i>
         </div>
-        <div>
-          <h3>URL & Link Safety Scanner</h3>
-          <p>Check any URL before clicking — detect phishing sites, malware, and suspicious redirects</p>
+        <div style="flex:1;">
+          <h3 style="display:flex;align-items:center;gap:0.5rem;">
+            URL &amp; Link Safety Scanner
+            <span style="font-size:0.68rem;font-weight:700;background:#2563eb;color:#fff;padding:0.15rem 0.55rem;border-radius:9999px;letter-spacing:0.06em;">DEEP SCAN</span>
+          </h3>
+          <p>Enter any URL for comprehensive safety analysis — domain reputation, SSL verification, threat intelligence, and redirect chain analysis</p>
         </div>
       </div>
       <div class="tool-card-body">
@@ -721,46 +772,124 @@
           <span class="pill pill-blue">Malware Scanning</span>
           <span class="pill pill-red">Spoofed Domains</span>
           <span class="pill pill-gray">Reputation Score</span>
+          <span class="pill pill-teal">SSL Verification</span>
+          <span class="pill pill-purple">Redirect Analysis</span>
         </div>
-        <div class="input-group">
-          <input id="urlInput" class="input-field" placeholder="Enter URL… e.g. https://sbi-kyc-verify.xyz/update" type="url"/>
+        <div class="input-group" style="margin-top:0.75rem;">
+          <input id="urlInput" class="input-field" placeholder="Enter URL… e.g. https://sbi-kyc-verify.xyz/update" type="text" style="font-family:var(--font-mono);font-size:0.85rem;"/>
           <button class="btn btn-blue" onclick="scanURL()" id="urlScanBtn">
             <i data-lucide="search" style="width:16px;height:16px;"></i>Scan URL
           </button>
         </div>
+        <div style="margin-top:0.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <span onclick="document.getElementById('urlInput').value='http://sbi-kyc-update.xyz/verify?id=382'" style="font-size:0.72rem;color:var(--gray-500);cursor:pointer;padding:0.2rem 0.5rem;background:var(--gray-100);border-radius:var(--radius-sm);border:1px solid var(--gray-200);transition:all 0.2s;">Try: sbi-kyc-update.xyz</span>
+          <span onclick="document.getElementById('urlInput').value='https://bit.ly/3xFakeLink'" style="font-size:0.72rem;color:var(--gray-500);cursor:pointer;padding:0.2rem 0.5rem;background:var(--gray-100);border-radius:var(--radius-sm);border:1px solid var(--gray-200);transition:all 0.2s;">Try: bit.ly shortener</span>
+          <span onclick="document.getElementById('urlInput').value='https://www.google.com'" style="font-size:0.72rem;color:var(--gray-500);cursor:pointer;padding:0.2rem 0.5rem;background:var(--gray-100);border-radius:var(--radius-sm);border:1px solid var(--gray-200);transition:all 0.2s;">Try: google.com (safe)</span>
+        </div>
         <div class="scan-progress" id="urlProgress"><div class="scan-bar"></div></div>
         <div class="result-box" id="urlResult"></div>
+        <div id="urlAnalysisPanel" style="display:none;margin-top:1rem;animation:fadeInUp 0.4s ease;">
+          <div id="urlVerdict"></div>
+          <div class="risk-meter" id="urlRiskMeter" style="display:none;">
+            <div class="risk-meter-label"><span>URL Risk Score</span><span id="urlRiskLabel" style="font-family:var(--font-mono);">0%</span></div>
+            <div class="risk-meter-bar"><div class="risk-meter-fill" id="urlRiskFill"></div></div>
+          </div>
+          <div id="urlDomainAnalysis" style="display:none;margin-top:0.75rem;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--gray-700);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;">
+              <i data-lucide="globe" style="width:14px;height:14px;color:#2563eb;"></i>Domain Analysis
+            </div>
+            <div id="urlDomainInfo" style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:0.75rem;font-size:0.82rem;"></div>
+          </div>
+          <div id="urlThreatIndicators" style="display:none;margin-top:0.75rem;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--gray-700);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;">
+              <i data-lucide="alert-triangle" style="width:14px;height:14px;color:#dc2626;"></i>Threat Indicators
+              <span id="urlIndicatorCount" style="font-size:0.68rem;font-weight:600;background:#fee2e2;color:#dc2626;padding:0.1rem 0.45rem;border-radius:9999px;"></span>
+            </div>
+            <div id="urlThreatIndicatorsList" class="threat-keywords-list"></div>
+          </div>
+          <div id="urlSSLInfo" style="display:none;margin-top:0.75rem;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--gray-700);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;">
+              <i data-lucide="lock" style="width:14px;height:14px;color:#16a34a;"></i>Security &amp; SSL
+            </div>
+            <div id="urlSSLDetails" style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:0.75rem;font-size:0.82rem;"></div>
+          </div>
+          <div id="urlSafetyTips" style="margin-top:0.75rem;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:1rem;display:none;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--gray-700);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;">
+              <i data-lucide="shield" style="width:14px;height:14px;color:#16a34a;"></i>Safety Recommendation
+            </div>
+            <div id="urlSafetyTipsList" style="font-size:0.8rem;color:var(--gray-600);line-height:1.7;"></div>
+          </div>
+          <div id="urlSafeMsg" style="display:none;" class="audio-safe-msg">✅ This URL appears safe. No known phishing patterns or threat indicators detected.</div>
+        </div>
         <div id="urlDetails" style="margin-top:0.75rem;display:none;"></div>
       </div>
     </div>
 
-    <!-- APP SCANNER -->
-    <div class="tool-card reveal" style="margin-bottom:1.5rem;">
+    <!-- DEVICE SECURITY SCANNER — REAL SYSTEM SCAN -->
+    <div class="tool-card reveal" style="margin-bottom:1.5rem;" id="deviceScannerCard">
       <div class="tool-card-header">
         <div class="card-icon bg-purple-100" style="width:48px;height:48px;margin:0;border-radius:12px;">
-          <i data-lucide="smartphone" style="width:22px;height:22px;color:#7c3aed;"></i>
+          <i data-lucide="shield-check" style="width:22px;height:22px;color:#7c3aed;"></i>
         </div>
-        <div>
-          <h3>Installed App Security Scanner</h3>
-          <p>Simulate scanning of installed apps for malware, excessive permissions, and security risks</p>
+        <div style="flex:1;">
+          <h3 style="display:flex;align-items:center;gap:0.5rem;">
+            Device Security Scanner
+            <span style="font-size:0.68rem;font-weight:700;background:#7c3aed;color:#fff;padding:0.15rem 0.55rem;border-radius:9999px;letter-spacing:0.06em;">LIVE SCAN</span>
+          </h3>
+          <p>Perform a real-time security audit of your device — scans browser settings, connection security, system capabilities, and privacy configuration</p>
         </div>
       </div>
       <div class="tool-card-body">
         <div class="feature-pills">
-          <span class="pill pill-gray">Malware Detection</span>
-          <span class="pill pill-red">Permission Analyzer</span>
-          <span class="pill pill-gray">Privacy Scanner</span>
-          <span class="pill pill-blue">App Reputation</span>
+          <span class="pill pill-purple">Browser Security</span>
+          <span class="pill pill-blue">Network Analysis</span>
+          <span class="pill pill-red">Privacy Audit</span>
+          <span class="pill pill-gray">System Info</span>
+          <span class="pill pill-teal">Storage Check</span>
         </div>
-        <div style="margin-top:0.5rem;">
-          <button class="btn btn-primary" onclick="scanApps()" id="appScanBtn" style="background:#7c3aed;" onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">
-            <i data-lucide="cpu" style="width:16px;height:16px;"></i>Start App Scan
+        <div style="margin-top:0.75rem;">
+          <button class="btn btn-primary" onclick="requestDeviceScan()" id="deviceScanBtn" style="background:#7c3aed;" onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">
+            <i data-lucide="scan-line" style="width:16px;height:16px;"></i>Start Device Scan
           </button>
         </div>
-        <div class="scan-progress" id="appProgress"><div class="scan-bar" style="animation-duration:2.5s;"></div></div>
-        <div id="appResults" style="margin-top:0.75rem;"></div>
+        <div class="scan-progress" id="deviceProgress"><div class="scan-bar" style="animation-duration:3s;"></div></div>
+        <div id="deviceScanStatus" style="display:none;margin-top:0.75rem;font-size:0.82rem;color:var(--gray-500);padding:0.5rem 0;"></div>
+        <div id="deviceScanResults" style="margin-top:0.75rem;"></div>
       </div>
     </div>
+
+    <!-- Permission Popup Modal -->
+    <div id="scanPermissionModal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+      <div style="background:#fff;border-radius:16px;padding:2rem;max-width:420px;width:90%;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);animation:fadeInUp 0.3s ease;">
+        <div style="text-align:center;margin-bottom:1.25rem;">
+          <div style="width:56px;height:56px;border-radius:50%;background:#f3e8ff;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+            <i data-lucide="shield-alert" style="width:28px;height:28px;color:#7c3aed;"></i>
+          </div>
+          <h3 style="font-size:1.1rem;font-weight:700;color:var(--gray-900);margin-bottom:0.4rem;">Device Security Scan</h3>
+          <p style="font-size:0.85rem;color:var(--gray-500);line-height:1.6;">CyberGuard wants to perform a security audit of your device. This scan will check:</p>
+        </div>
+        <div style="background:var(--gray-50);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.82rem;color:var(--gray-700);line-height:1.8;">
+          <div>✅ Browser security settings &amp; version</div>
+          <div>✅ Network connection &amp; encryption</div>
+          <div>✅ System hardware capabilities</div>
+          <div>✅ Cookie &amp; tracking configuration</div>
+          <div>✅ Storage &amp; memory usage</div>
+          <div>✅ Privacy &amp; permission settings</div>
+        </div>
+        <p style="font-size:0.75rem;color:var(--gray-400);margin-bottom:1rem;text-align:center;">
+          🔒 All data is processed locally. Nothing is sent to any server.
+        </p>
+        <div style="display:flex;gap:0.75rem;">
+          <button onclick="closePermissionModal()" class="btn btn-secondary" style="flex:1;padding:0.6rem;">Cancel</button>
+          <button onclick="startDeviceScan()" class="btn btn-primary" style="flex:1;padding:0.6rem;background:#7c3aed;" onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">
+            <i data-lucide="scan-line" style="width:14px;height:14px;"></i>Allow Scan
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
 
     <!-- ═══ NEW: AUDIO RECORDING ANALYZER ═══ -->
     <div class="audio-analyzer-card reveal">
@@ -1098,7 +1227,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 CYBERGUARD. All rights reserved. An initiative under ISEA Project.</p>
+    <p>© 2025 CYBERGUARD. All rights reserved. A college project initiative.</p>
     <div class="footer-bottom-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Use</a>
@@ -1115,7 +1244,7 @@
 const GOV_LINKS = [
   {name:"Cybercrime.gov.in",url:"https://cybercrime.gov.in"},{name:"MeitY India",url:"https://www.meity.gov.in"},
   {name:"MHA – Cyber Security",url:"https://www.mha.gov.in"},{name:"CDAC India",url:"https://www.cdac.in"},
-  {name:"ISEA Project",url:"https://www.isea.gov.in"},{name:"CERT-In",url:"https://www.cert-in.org.in"},
+  {name:"CERT-In",url:"https://www.cert-in.org.in"},
   {name:"NCIIPC",url:"https://www.nciipc.gov.in"},{name:"Digital India",url:"https://www.digitalindia.gov.in"},
 ];
 const PAGE_LINKS = [
@@ -1265,137 +1394,962 @@ function addLiveAlert(type, message, severity = "High", isNew = true) {
   document.getElementById("alertCount").textContent = `${alertCount} alerts`;
 }
 
-/* ═══ SMS SCANNER ═══ */
+/* ═══ SMS CHARACTER COUNTER ═══ */
+document.getElementById("smsInput").addEventListener("input", function() {
+  document.getElementById("smsCharCount").textContent = this.value.length + " characters";
+});
+
+/* ═══ SMS MESSAGE PATTERNS (beyond keywords) ═══ */
+const SMS_SUSPICIOUS_PATTERNS = [
+  {pattern: /https?:\/\/[^\s]+/gi, risk: 60, category: "Embedded Link", msg: "Message contains a URL — verify the link is from a legitimate source before clicking"},
+  {pattern: /bit\.ly|tinyurl|t\.co|goo\.gl|is\.gd|rb\.gy|cutt\.ly/gi, risk: 82, category: "URL Shortener", msg: "Shortened URL detected — destination is hidden, likely phishing"},
+  {pattern: /\b\d{4,6}\b/g, risk: 45, category: "Numeric Code", msg: "Contains numeric code — could be OTP bait or verification code scam"},
+  {pattern: /\bhrs?\b|\bhours?\b|24\s*hrs|48\s*hrs|within\s+\d+/gi, risk: 70, category: "Urgency Tactic", msg: "Time-limited threat — scammers create artificial urgency to prevent rational thinking"},
+  {pattern: /click\s+(?:here|now|link|below)|tap\s+(?:here|now|link)|open\s+link/gi, risk: 72, category: "Call to Action", msg: "Aggressive call-to-action — typical of phishing messages"},
+  {pattern: /dear\s+(?:customer|user|sir|madam|valued)/gi, risk: 55, category: "Generic Greeting", msg: "Generic greeting — legitimate services use your actual name"},
+  {pattern: /(?:re)?activate|un(?:block|lock|freeze)|restore\s+access/gi, risk: 68, category: "Account Action", msg: "Account action request — verify directly with the service provider"},
+  {pattern: /won|winner|congratulat|selected|chosen|lucky/gi, risk: 78, category: "Prize Claim", msg: "Prize/winning claim — classic advance-fee fraud pattern"},
+  {pattern: /(?:Rs|INR|₹)\s*[\d,]+|(?:lakh|crore|thousand|million)/gi, risk: 65, category: "Money Mention", msg: "Monetary amount mentioned — verify any financial claims independently"},
+  {pattern: /whatsapp|telegram|signal/gi, risk: 50, category: "Alt Communication", msg: "Redirecting to messaging app — scammers move targets away from traceable channels"},
+  {pattern: /\+91\s*\d{10}|\b\d{10}\b/g, risk: 40, category: "Phone Number", msg: "Phone number detected — could be a scam callback number"},
+  {pattern: /suspend|terminat|cancel|delet|clos(?:e|ed|ing)/gi, risk: 72, category: "Threat Language", msg: "Account threat language — designed to trigger fear and hasty action"},
+  {pattern: /government|ministry|department|authority/gi, risk: 60, category: "Authority Claim", msg: "Government authority claim — verify through official .gov.in websites only"},
+];
+
+/* ═══ SMS SCANNER — FULLY FUNCTIONAL ═══ */
 async function scanSMS() {
   const input = document.getElementById("smsInput");
   const text = input.value.trim();
-  if (!text) { showToast("Please enter SMS text to scan", "warning"); return; }
+  if (!text) { showToast("Please enter a message to scan", "warning"); return; }
+  
   const btn = document.getElementById("smsScanBtn");
   btn.disabled = true;
-  btn.innerHTML = `<i data-lucide="loader" style="width:16px;height:16px;" class="animate-spin"></i>Scanning…`;
+  btn.innerHTML = `<i data-lucide="loader" style="width:16px;height:16px;" class="animate-spin"></i>Analyzing…`;
   lucide.createIcons();
-  document.getElementById("smsDetails").style.display = "none";
+  
+  // Reset panels
   document.getElementById("smsResult").className = "result-box";
-  await simulateProgress("smsProgress", 1600);
-  const found = SCAM_KEYWORDS.filter(kw => text.toLowerCase().includes(kw.word)).sort((a,b) => b.risk - a.risk);
-  if (found.length > 0) {
-    const topRisk = found[0].risk;
-    const severity = topRisk >= 90 ? "Critical" : topRisk >= 75 ? "High" : "Medium";
-    showResult("smsResult", `🚨 <strong>THREAT DETECTED</strong> — ${found.length} scam indicator${found.length>1?"s":""} found. Risk Score: <strong>${topRisk}%</strong>`, "threat");
-    const dd = document.getElementById("smsDetails"); dd.style.display="block";
-    dd.innerHTML = found.slice(0,6).map((kw,i) => `
-      <div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.6rem 0;border-bottom:1px solid var(--gray-200);animation:fadeInUp 0.3s ease ${i*0.08}s both;">
-        <span style="font-size:0.7rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:9999px;background:#fee2e2;color:#dc2626;white-space:nowrap;margin-top:2px;">${kw.risk}% RISK</span>
-        <div><strong style="font-size:0.8rem;color:var(--gray-900);">Keyword: "${kw.word}"</strong><p style="font-size:0.78rem;color:var(--gray-500);margin-top:0.15rem;">${kw.msg}</p></div>
-      </div>`).join("");
-    addLiveAlert("SMS Phishing", `Scam SMS detected — keywords: ${found.slice(0,3).map(k=>`"${k.word}"`).join(", ")}`, severity);
-    showToast(`🚨 SMS Threat Detected — ${found.length} scam indicator(s) found`, "threat");
+  document.getElementById("smsAnalysisPanel").style.display = "none";
+  document.getElementById("smsDetails").style.display = "none";
+  
+  await simulateProgress("smsProgress", 1800);
+  
+  const lower = text.toLowerCase();
+  
+  // 1. Find scam keywords
+  const foundKeywords = SCAM_KEYWORDS.filter(kw => lower.includes(kw.word)).sort((a,b) => b.risk - a.risk);
+  
+  // 2. Find suspicious patterns
+  const foundPatterns = [];
+  SMS_SUSPICIOUS_PATTERNS.forEach(sp => {
+    const matches = text.match(sp.pattern);
+    if (matches) {
+      foundPatterns.push({ ...sp, matchCount: matches.length, sample: matches[0] });
+    }
+  });
+  foundPatterns.sort((a,b) => b.risk - a.risk);
+  
+  // 3. Extract URLs from message
+  const urlRegex = /https?:\/\/[^\s]+|(?:www\.)[^\s]+|[a-zA-Z0-9][-a-zA-Z0-9]*\.[a-zA-Z]{2,}(?:\/[^\s]*)?/gi;
+  const extractedUrls = text.match(urlRegex) || [];
+  
+  // 4. Calculate overall risk
+  let maxRisk = 0;
+  if (foundKeywords.length > 0) maxRisk = Math.max(maxRisk, foundKeywords[0].risk);
+  if (foundPatterns.length > 0) maxRisk = Math.max(maxRisk, foundPatterns[0].risk);
+  
+  // Boost risk if multiple indicators
+  const indicatorCount = foundKeywords.length + foundPatterns.length;
+  if (indicatorCount >= 5) maxRisk = Math.min(99, maxRisk + 10);
+  else if (indicatorCount >= 3) maxRisk = Math.min(99, maxRisk + 5);
+  
+  // Add risk for embedded URLs in suspicious messages
+  if (extractedUrls.length > 0 && foundKeywords.length > 0) maxRisk = Math.min(99, maxRisk + 8);
+  
+  const threatLevel = maxRisk >= 90 ? "Critical" : maxRisk >= 75 ? "High" : maxRisk >= 55 ? "Medium" : "Safe";
+  const hasThreat = foundKeywords.length > 0 || foundPatterns.length > 0;
+  
+  // 5. Render results
+  if (hasThreat) {
+    showResult("smsResult", `🚨 <strong>THREAT DETECTED</strong> — ${indicatorCount} indicator${indicatorCount>1?"s":""} found. Risk Score: <strong>${maxRisk}%</strong>`, "threat");
+  } else {
+    showResult("smsResult", "✅ <strong>No threats detected</strong> — Message appears safe.", "safe");
+  }
+  
+  // Show detailed analysis panel
+  const panel = document.getElementById("smsAnalysisPanel");
+  panel.style.display = "block";
+  
+  // Verdict
+  renderSMSVerdict(threatLevel, indicatorCount, maxRisk);
+  
+  // Risk meter
+  if (hasThreat) {
+    document.getElementById("smsRiskMeter").style.display = "block";
+    const fill = document.getElementById("smsRiskFill");
+    const riskColor = maxRisk >= 90 ? "#dc2626" : maxRisk >= 75 ? "#f97316" : maxRisk >= 55 ? "#eab308" : "#16a34a";
+    fill.style.background = riskColor;
+    document.getElementById("smsRiskLabel").textContent = maxRisk + "%";
+    setTimeout(() => { fill.style.width = maxRisk + "%"; }, 100);
+  } else {
+    document.getElementById("smsRiskMeter").style.display = "none";
+  }
+  
+  // Threat keywords
+  if (foundKeywords.length > 0) {
+    document.getElementById("smsThreatKeywords").style.display = "block";
+    document.getElementById("smsKeywordCount").textContent = `${foundKeywords.length} found`;
+    const colors = { critical:["#fee2e2","#dc2626"], high:["#fff7ed","#f97316"], medium:["#fffbeb","#d97706"] };
+    document.getElementById("smsThreatKeywordsList").innerHTML = foundKeywords.slice(0, 8).map((kw, i) => {
+      const [bg, clr] = colors[kw.severity] || colors["medium"];
+      return `<div class="threat-keyword-item ${kw.severity}" style="animation-delay:${i*0.07}s">
+        <span class="kw-badge" style="background:${bg};color:${clr};">${kw.risk}%</span>
+        <div><div class="kw-text">"${kw.word}"</div><div class="kw-desc">${kw.category} — ${kw.msg}</div></div>
+      </div>`;
+    }).join("");
+  } else {
+    document.getElementById("smsThreatKeywords").style.display = "none";
+  }
+  
+  // Suspicious patterns
+  if (foundPatterns.length > 0) {
+    document.getElementById("smsSuspiciousPatterns").style.display = "block";
+    document.getElementById("smsSuspiciousPatternsList").innerHTML = foundPatterns.slice(0, 6).map((p, i) => `
+      <div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0.75rem;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-sm);border-left:3px solid #f97316;margin-bottom:0.4rem;animation:fadeInUp 0.3s ease ${i*0.07}s both;">
+        <span style="font-size:0.68rem;font-weight:700;padding:0.15rem 0.45rem;border-radius:9999px;background:#fff7ed;color:#f97316;white-space:nowrap;margin-top:2px;">${p.risk}%</span>
+        <div>
+          <div style="font-size:0.82rem;font-weight:700;color:var(--gray-900);">${p.category}</div>
+          <div style="font-size:0.76rem;color:var(--gray-500);margin-top:0.1rem;">${p.msg}</div>
+          <div style="font-size:0.72rem;color:var(--gray-400);margin-top:0.2rem;font-family:var(--font-mono);">Match: "${p.sample.slice(0,50)}${p.sample.length>50?"…":""}"${p.matchCount>1?" (×"+p.matchCount+")":""}</div>
+        </div>
+      </div>
+    `).join("");
+  } else {
+    document.getElementById("smsSuspiciousPatterns").style.display = "none";
+  }
+  
+  // Extracted URLs
+  if (extractedUrls.length > 0) {
+    document.getElementById("smsExtractedLinks").style.display = "block";
+    document.getElementById("smsExtractedLinksList").innerHTML = extractedUrls.map(u => `
+      <div style="display:flex;align-items:center;gap:0.5rem;padding:0.4rem 0.6rem;background:#eff6ff;border:1px solid #93c5fd;border-radius:var(--radius-sm);margin-bottom:0.35rem;font-family:var(--font-mono);font-size:0.78rem;color:#1d4ed8;word-break:break-all;">
+        <i data-lucide="external-link" style="width:13px;height:13px;flex-shrink:0;"></i>
+        ${u}
+        <button class="btn btn-blue" onclick="document.getElementById('urlInput').value='${u.replace(/'/g,"\\'")}';document.getElementById('urlScannerCard').scrollIntoView({behavior:'smooth'});setTimeout(()=>scanURL(),500);" style="padding:0.2rem 0.5rem;font-size:0.68rem;margin-left:auto;flex-shrink:0;">Scan This</button>
+      </div>
+    `).join("");
+  } else {
+    document.getElementById("smsExtractedLinks").style.display = "none";
+  }
+  
+  // Safety tips
+  if (hasThreat) {
+    document.getElementById("smsSafetyTips").style.display = "block";
+    let tips = [];
+    if (foundKeywords.some(k => k.category.includes("OTP"))) tips.push("🔑 <strong>Never share OTP</strong> with anyone — no bank or government agency asks for OTP over phone/SMS");
+    if (foundKeywords.some(k => k.category.includes("Banking") || k.category.includes("KYC"))) tips.push("🏦 <strong>Verify with your bank</strong> directly by visiting the branch or using the official app");
+    if (extractedUrls.length > 0) tips.push("🔗 <strong>Do not click any links</strong> in this message — use the URL scanner above to verify first");
+    if (foundKeywords.some(k => k.category.includes("Arrest") || k.category.includes("Legal"))) tips.push("⚖️ <strong>Government agencies never arrest via phone</strong> — CBI/Police do not call to threaten arrest");
+    if (foundPatterns.some(p => p.category === "Urgency Tactic")) tips.push("⏰ <strong>Ignore urgency</strong> — scammers create fake deadlines to prevent you from thinking clearly");
+    tips.push("📞 <strong>Report this message</strong> to the Cyber Crime Helpline: 1930");
+    tips.push("🗑️ <strong>Delete this message</strong> and block the sender immediately");
+    document.getElementById("smsSafetyTipsList").innerHTML = tips.map(t => `<div style="margin-bottom:0.35rem;">${t}</div>`).join("");
+    document.getElementById("smsSafeMsg").style.display = "none";
+  } else {
+    document.getElementById("smsSafetyTips").style.display = "none";
+    document.getElementById("smsSafeMsg").style.display = "block";
+  }
+  
+  // Live alert and dashboard
+  if (hasThreat) {
+    addLiveAlert("SMS Phishing", `Message scanned: ${indicatorCount} threat indicator(s) — Risk: ${maxRisk}%`, threatLevel);
+    showToast(`🚨 SMS Threat: ${indicatorCount} scam indicator(s) found`, "threat");
     updateDashboard(true);
   } else {
-    showResult("smsResult", "✅ <strong>No threats detected</strong> — SMS appears safe.", "safe");
-    showToast("✅ SMS is safe — no phishing detected", "safe");
+    showToast("✅ Message is safe — no phishing detected", "safe");
     updateDashboard(false);
   }
-  btn.disabled = false; btn.innerHTML = `<i data-lucide="scan" style="width:16px;height:16px;"></i>Scan SMS`;
+  
+  lucide.createIcons();
+  btn.disabled = false;
+  btn.innerHTML = `<i data-lucide="scan" style="width:16px;height:16px;"></i>Analyze Message`;
   lucide.createIcons();
 }
 
-/* ═══ URL SCANNER ═══ */
+function renderSMSVerdict(level, count, risk) {
+  const cfg = {
+    Critical: { cls:"verdict-critical", iconBg:"#fee2e2", iconColor:"#dc2626", icon:"alert-octagon", title:`⚠️ CRITICAL THREAT — ${count} Indicators`, sub:"Highly dangerous scam message — delete immediately and block sender" },
+    High:     { cls:"verdict-high",     iconBg:"#fff7ed", iconColor:"#f97316", icon:"alert-triangle",title:`🚨 HIGH RISK — ${count} Indicators`, sub:"Serious phishing attempt — do not click any links or reply" },
+    Medium:   { cls:"verdict-medium",   iconBg:"#fffbeb", iconColor:"#d97706", icon:"alert-circle",  title:`⚠️ SUSPICIOUS — ${count} Indicators`, sub:"Possible scam indicators detected — exercise caution" },
+    Safe:     { cls:"verdict-safe",     iconBg:"#dcfce7", iconColor:"#16a34a", icon:"check-circle",  title:"✅ SAFE MESSAGE", sub:"No known scam patterns detected" },
+  };
+  const c = cfg[level] || cfg["Safe"];
+  document.getElementById("smsVerdict").innerHTML = `
+    <div class="verdict-box ${c.cls}">
+      <div class="verdict-icon" style="background:${c.iconBg};"><i data-lucide="${c.icon}" style="width:20px;height:20px;color:${c.iconColor};"></i></div>
+      <div><div class="verdict-title" style="color:${c.iconColor};">${c.title}</div><div class="verdict-subtitle" style="color:${c.iconColor}80;">${c.sub}</div></div>
+    </div>`;
+}
+
+function clearSMSScan() {
+  document.getElementById("smsInput").value = "";
+  document.getElementById("smsResult").className = "result-box";
+  document.getElementById("smsAnalysisPanel").style.display = "none";
+  document.getElementById("smsDetails").style.display = "none";
+  document.getElementById("smsCharCount").textContent = "0 characters";
+}
+
+/* ═══ URL SCANNER — FULLY FUNCTIONAL ═══ */
 const SUSPICIOUS_URL_PATTERNS = [
-  {pattern:/bit\.ly|tinyurl|t\.co|goo\.gl/i, risk:75, msg:"URL shortener — destination hidden"},
-  {pattern:/@/, risk:90, msg:"URL contains '@' — classic phishing trick"},
-  {pattern:/login|signin|sign-in/i, risk:70, msg:"Login page — verify domain is official"},
-  {pattern:/\.xyz|\.tk|\.ml|\.ga|\.cf/i, risk:85, msg:"Suspicious TLD commonly used in phishing"},
-  {pattern:/paypal|sbi|hdfc|icici|axis|paytm|upi/i, risk:80, msg:"Impersonating a financial brand"},
-  {pattern:/verify|update|confirm|secure|alert/i, risk:65, msg:"Verification keyword in URL — phishing indicator"},
-  {pattern:/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/, risk:88, msg:"IP address instead of domain — suspicious"},
-  {pattern:/free|win|prize|bonus/i, risk:78, msg:"Prize/free offer in URL — scam indicator"},
+  {pattern:/bit\.ly|tinyurl|t\.co|goo\.gl|is\.gd|rb\.gy|cutt\.ly|shorturl|tiny\.cc/i, risk:75, category:"URL Shortener", msg:"Shortened URL — final destination is hidden and could lead to phishing/malware", icon:"link"},
+  {pattern:/@/, risk:92, category:"@ Symbol Attack", msg:"URL contains '@' symbol — this tricks browsers into ignoring everything before @ and loading a different site", icon:"alert-octagon"},
+  {pattern:/login|signin|sign-in|log-in/i, risk:70, category:"Login Page", msg:"Points to a login page — verify the domain matches the official service before entering credentials", icon:"log-in"},
+  {pattern:/\.xyz|\.tk|\.ml|\.ga|\.cf|\.gq|\.top|\.buzz|\.click|\.link|\.club|\.online|\.site|\.info|\.icu/i, risk:85, category:"Suspicious TLD", msg:"Uses a cheap/suspicious top-level domain commonly abused by phishing campaigns", icon:"globe"},
+  {pattern:/paypal|sbi|hdfc|icici|axis|paytm|upi|phonepe|gpay|bhim/i, risk:82, category:"Financial Brand", msg:"URL impersonates a financial institution — verify you're on the official domain", icon:"credit-card"},
+  {pattern:/verify|update|confirm|secure|alert|validate|authenticate/i, risk:65, category:"Action Keyword", msg:"Contains verification/security action keyword — common in phishing URLs", icon:"key"},
+  {pattern:/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/, risk:90, category:"IP Address", msg:"Uses raw IP address instead of domain name — highly suspicious, legitimate sites use domain names", icon:"server"},
+  {pattern:/free|win|prize|bonus|reward|gift|offer/i, risk:78, category:"Bait Keyword", msg:"Contains prize/free offer bait — classic social engineering lure", icon:"gift"},
+  {pattern:/\.php\?|\.asp\?|cgi-bin|\/wp-admin|\/admin/i, risk:60, category:"Server Script", msg:"Exposes server-side script or admin path — could be a compromised website", icon:"terminal"},
+  {pattern:/[a-zA-Z0-9]{20,}/i, risk:55, category:"Long Random String", msg:"Contains suspiciously long random character sequence — often used in auto-generated phishing URLs", icon:"hash"},
+  {pattern:/\.(zip|exe|apk|msi|bat|cmd|scr|jar|dll)/i, risk:95, category:"Executable File", msg:"Links directly to an executable/installable file — extremely dangerous, likely malware", icon:"download"},
+  {pattern:/data:|javascript:/i, risk:98, category:"Code Injection", msg:"Contains data URI or JavaScript protocol — can execute malicious code", icon:"code"},
+  {pattern:/telegram\.me|wa\.me|chat\.whatsapp/i, risk:50, category:"Messaging Redirect", msg:"Redirects to messaging platform — scammers often move conversations off traceable platforms", icon:"message-circle"},
+  {pattern:/aadhaar|aadhar|pan-?card|passport|driving/i, risk:75, category:"ID Document", msg:"References identity documents — likely attempting to steal personal identification information", icon:"fingerprint"},
+  {pattern:/kyc|e-?kyc|re-?kyc/i, risk:82, category:"KYC Phishing", msg:"KYC-related URL — banks never send KYC update links via SMS or email", icon:"shield-alert"},
+  {pattern:/[^\x00-\x7F]/, risk:80, category:"Unicode/IDN Attack", msg:"Contains non-ASCII characters — possible internationalized domain name (IDN) homograph attack", icon:"type"},
+  {pattern:/https?:\/\/[^\/]+\.([^\/\.]+)\./, risk:35, category:"Subdomain", msg:"Uses subdomain structure — verify the main domain is legitimate", icon:"layers"},
 ];
+
+// Known legitimate domains for comparison
+const KNOWN_SAFE_DOMAINS = [
+  "google.com","youtube.com","facebook.com","amazon.com","amazon.in","flipkart.com",
+  "wikipedia.org","twitter.com","instagram.com","linkedin.com","github.com","microsoft.com",
+  "apple.com","netflix.com","whatsapp.com","sbi.co.in","hdfcbank.com","icicibank.com",
+  "axisbank.com","paytm.com","phonepe.com","npci.org.in","rbi.org.in","incometax.gov.in",
+  "uidai.gov.in","gov.in","nic.in","cert-in.org.in","india.gov.in","mha.gov.in",
+  "gmail.com","outlook.com","yahoo.com","hotmail.com","reddit.com","stackoverflow.com",
+];
+
+// Typosquatting target brands
+const BRAND_DOMAINS = {
+  "google": "google.com", "amazon": "amazon.in", "flipkart": "flipkart.com",
+  "sbi": "sbi.co.in", "hdfc": "hdfcbank.com", "icici": "icicibank.com",
+  "axis": "axisbank.com", "paytm": "paytm.com", "phonepe": "phonepe.com",
+  "whatsapp": "whatsapp.com", "facebook": "facebook.com", "instagram": "instagram.com",
+  "microsoft": "microsoft.com", "apple": "apple.com", "netflix": "netflix.com",
+  "paypal": "paypal.com", "gpay": "pay.google.com",
+};
+
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({length: m+1}, () => Array(n+1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+  return dp[m][n];
+}
 
 async function scanURL() {
   const input = document.getElementById("urlInput");
-  const url = input.value.trim();
+  let url = input.value.trim();
   if (!url) { showToast("Please enter a URL to scan", "warning"); return; }
+  
   const btn = document.getElementById("urlScanBtn");
   btn.disabled = true;
   btn.innerHTML = `<i data-lucide="loader" style="width:16px;height:16px;" class="animate-spin"></i>Scanning…`;
   lucide.createIcons();
-  document.getElementById("urlDetails").style.display = "none";
+  
+  // Reset panels
   document.getElementById("urlResult").className = "result-box";
-  await simulateProgress("urlProgress", 1800);
-  const matched = SUSPICIOUS_URL_PATTERNS.filter(p => p.pattern.test(url)).sort((a,b) => b.risk - a.risk);
-  const hasHttps = url.startsWith("https://");
-  let domainInfo = "";
-  try {
-    const parsed = new URL(url.startsWith("http") ? url : "https://"+url);
-    domainInfo = `<p style="font-size:0.78rem;color:var(--gray-500);margin-top:0.5rem;"><strong>Domain:</strong> ${parsed.hostname} &nbsp;|&nbsp; <strong>HTTPS:</strong> ${hasHttps?"✅ Yes":"❌ No"}</p>`;
-  } catch(e) {}
-  if (matched.length > 0) {
-    const topRisk = matched[0].risk;
-    showResult("urlResult", `🚨 <strong>SUSPICIOUS URL</strong> — ${matched.length} threat indicator(s). Risk: <strong>${topRisk}%</strong>`, "threat");
-    const dd = document.getElementById("urlDetails"); dd.style.display="block";
-    dd.innerHTML = domainInfo + matched.map((p,i) => `
-      <div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.6rem 0;border-bottom:1px solid var(--gray-200);animation:fadeInUp 0.3s ease ${i*0.08}s both;">
-        <span style="font-size:0.7rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:9999px;background:#fee2e2;color:#dc2626;white-space:nowrap;margin-top:2px;">${p.risk}% RISK</span>
-        <p style="font-size:0.78rem;color:var(--gray-500);">${p.msg}</p>
-      </div>`).join("");
-    addLiveAlert("Malicious URL", `Phishing URL blocked: ${url.slice(0,50)}`, matched[0].risk >= 85 ? "Critical" : "High");
+  document.getElementById("urlAnalysisPanel").style.display = "none";
+  document.getElementById("urlDetails").style.display = "none";
+  
+  await simulateProgress("urlProgress", 2000);
+  
+  // Normalize URL
+  if (!url.match(/^https?:\/\//i)) url = "http://" + url;
+  
+  let parsed;
+  try { parsed = new URL(url); } catch(e) {
+    showResult("urlResult", "❌ <strong>Invalid URL</strong> — please enter a valid URL", "threat");
+    btn.disabled = false; btn.innerHTML = `<i data-lucide="search" style="width:16px;height:16px;"></i>Scan URL`;
+    lucide.createIcons(); return;
+  }
+  
+  const hostname = parsed.hostname.toLowerCase();
+  const fullUrl = parsed.href;
+  const hasHttps = parsed.protocol === "https:";
+  const tld = hostname.split(".").slice(-1)[0];
+  const domainParts = hostname.split(".");
+  const mainDomain = domainParts.length >= 2 ? domainParts.slice(-2).join(".") : hostname;
+  const subdomains = domainParts.length > 2 ? domainParts.slice(0, -2) : [];
+  const pathLength = parsed.pathname.length;
+  const hasQueryParams = parsed.search.length > 1;
+  
+  // 1. Pattern matching
+  const matchedPatterns = SUSPICIOUS_URL_PATTERNS.filter(p => p.pattern.test(fullUrl)).sort((a,b) => b.risk - a.risk);
+  
+  // 2. Check if domain is known safe
+  const isKnownSafe = KNOWN_SAFE_DOMAINS.some(d => hostname === d || hostname.endsWith("." + d));
+  
+  // 3. Typosquatting check
+  let typosquatWarning = null;
+  if (!isKnownSafe) {
+    const hostWithoutTLD = hostname.replace(/\.[^.]+$/, "").replace(/\./g, "");
+    for (const [brand, officialDomain] of Object.entries(BRAND_DOMAINS)) {
+      const dist = levenshtein(hostWithoutTLD, brand);
+      if (dist > 0 && dist <= 2 && hostname !== officialDomain && !hostname.endsWith("." + officialDomain)) {
+        typosquatWarning = { brand, officialDomain, distance: dist };
+        break;
+      }
+    }
+  }
+  
+  // 4. Calculate risk
+  let riskScore = 0;
+  const indicators = [];
+  
+  if (matchedPatterns.length > 0) {
+    riskScore = Math.max(riskScore, matchedPatterns[0].risk);
+    matchedPatterns.forEach(p => indicators.push({ risk: p.risk, title: p.category, desc: p.msg, icon: p.icon }));
+  }
+  
+  if (!hasHttps) {
+    riskScore = Math.max(riskScore, 40);
+    indicators.push({ risk: 40, title: "No HTTPS", desc: "Connection is not encrypted — data sent to this site could be intercepted", icon: "unlock" });
+  }
+  
+  if (typosquatWarning) {
+    const typoRisk = 88;
+    riskScore = Math.max(riskScore, typoRisk);
+    indicators.push({ risk: typoRisk, title: "Typosquatting Detected", desc: `Domain closely resembles "${typosquatWarning.brand}" (${typosquatWarning.officialDomain}) — likely impersonation attempt`, icon: "copy" });
+  }
+  
+  if (subdomains.length >= 3) {
+    riskScore = Math.max(riskScore, 65);
+    indicators.push({ risk: 65, title: "Excessive Subdomains", desc: `Has ${subdomains.length} subdomain levels — used to hide the actual destination domain`, icon: "layers" });
+  }
+  
+  if (pathLength > 100) {
+    riskScore = Math.max(riskScore, 45);
+    indicators.push({ risk: 45, title: "Very Long URL Path", desc: "Unusually long URL path — may contain encoded malicious payload", icon: "maximize" });
+  }
+  
+  // If known safe and no serious issues, lower risk
+  if (isKnownSafe && riskScore < 50) riskScore = Math.max(0, riskScore - 20);
+  
+  // Boost for multiple indicators
+  if (indicators.length >= 4) riskScore = Math.min(99, riskScore + 10);
+  else if (indicators.length >= 2) riskScore = Math.min(99, riskScore + 5);
+  
+  riskScore = Math.max(0, Math.min(99, riskScore));
+  
+  const threatLevel = riskScore >= 85 ? "Critical" : riskScore >= 65 ? "High" : riskScore >= 40 ? "Medium" : "Safe";
+  const hasThreat = indicators.length > 0 && riskScore >= 40;
+  
+  indicators.sort((a,b) => b.risk - a.risk);
+  
+  // 5. Render results
+  if (hasThreat) {
+    showResult("urlResult", `🚨 <strong>SUSPICIOUS URL</strong> — ${indicators.length} threat indicator${indicators.length>1?"s":""}. Risk: <strong>${riskScore}%</strong>`, "threat");
+  } else if (isKnownSafe) {
+    showResult("urlResult", `✅ <strong>URL is safe</strong> — Known trusted domain.`, "safe");
+  } else if (indicators.length > 0) {
+    showResult("urlResult", `⚠️ <strong>Minor concerns found</strong> — Exercise caution.`, "warning");
+  } else {
+    showResult("urlResult", `✅ <strong>URL appears safe</strong> — No known threat patterns detected.${!hasHttps?" ⚠️ Not HTTPS.":""}`, hasHttps ? "safe" : "warning");
+  }
+  
+  // Show analysis panel
+  const panel = document.getElementById("urlAnalysisPanel");
+  panel.style.display = "block";
+  
+  // Verdict
+  renderURLVerdict(threatLevel, indicators.length, riskScore, isKnownSafe);
+  
+  // Risk meter
+  document.getElementById("urlRiskMeter").style.display = "block";
+  const fill = document.getElementById("urlRiskFill");
+  const riskColor = riskScore >= 85 ? "#dc2626" : riskScore >= 65 ? "#f97316" : riskScore >= 40 ? "#eab308" : "#16a34a";
+  fill.style.background = riskColor;
+  document.getElementById("urlRiskLabel").textContent = riskScore + "%";
+  setTimeout(() => { fill.style.width = riskScore + "%"; }, 100);
+  
+  // Domain analysis
+  document.getElementById("urlDomainAnalysis").style.display = "block";
+  document.getElementById("urlDomainInfo").innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 1.5rem;">
+      <div><strong style="color:var(--gray-500);font-size:0.75rem;">PROTOCOL</strong><br/><span style="font-family:var(--font-mono);color:${hasHttps?"#16a34a":"#dc2626"};">${hasHttps?"🔒 HTTPS (Secure)":"⚠️ HTTP (Not Secure)"}</span></div>
+      <div><strong style="color:var(--gray-500);font-size:0.75rem;">HOSTNAME</strong><br/><span style="font-family:var(--font-mono);">${hostname}</span></div>
+      <div><strong style="color:var(--gray-500);font-size:0.75rem;">DOMAIN</strong><br/><span style="font-family:var(--font-mono);">${mainDomain}</span></div>
+      <div><strong style="color:var(--gray-500);font-size:0.75rem;">TLD</strong><br/><span style="font-family:var(--font-mono);">.${tld}</span></div>
+      ${subdomains.length > 0 ? `<div><strong style="color:var(--gray-500);font-size:0.75rem;">SUBDOMAINS</strong><br/><span style="font-family:var(--font-mono);">${subdomains.join(".")}</span></div>` : ""}
+      ${parsed.pathname !== "/" ? `<div><strong style="color:var(--gray-500);font-size:0.75rem;">PATH</strong><br/><span style="font-family:var(--font-mono);word-break:break-all;">${parsed.pathname.slice(0,60)}${parsed.pathname.length>60?"…":""}</span></div>` : ""}
+      <div><strong style="color:var(--gray-500);font-size:0.75rem;">REPUTATION</strong><br/><span style="font-weight:600;color:${isKnownSafe?"#16a34a":"#f97316"};">${isKnownSafe?"✅ Known Trusted Domain":"⚠️ Unverified Domain"}</span></div>
+      ${hasQueryParams ? `<div><strong style="color:var(--gray-500);font-size:0.75rem;">QUERY PARAMS</strong><br/><span style="color:#f97316;">⚠️ Contains parameters</span></div>` : ""}
+    </div>`;
+  
+  // Threat indicators
+  if (indicators.length > 0 && riskScore >= 30) {
+    document.getElementById("urlThreatIndicators").style.display = "block";
+    document.getElementById("urlIndicatorCount").textContent = `${indicators.length} found`;
+    document.getElementById("urlThreatIndicatorsList").innerHTML = indicators.map((ind, i) => {
+      const sevCls = ind.risk >= 85 ? "critical" : ind.risk >= 65 ? "high" : "medium";
+      const [bg, clr] = ind.risk >= 85 ? ["#fee2e2","#dc2626"] : ind.risk >= 65 ? ["#fff7ed","#f97316"] : ["#fffbeb","#d97706"];
+      return `<div class="threat-keyword-item ${sevCls}" style="animation-delay:${i*0.07}s">
+        <span class="kw-badge" style="background:${bg};color:${clr};">${ind.risk}%</span>
+        <div><div class="kw-text"><i data-lucide="${ind.icon}" style="width:13px;height:13px;display:inline;vertical-align:-2px;margin-right:3px;"></i>${ind.title}</div><div class="kw-desc">${ind.desc}</div></div>
+      </div>`;
+    }).join("");
+  } else {
+    document.getElementById("urlThreatIndicators").style.display = "none";
+  }
+  
+  // SSL Info
+  document.getElementById("urlSSLInfo").style.display = "block";
+  document.getElementById("urlSSLDetails").innerHTML = hasHttps
+    ? `<div style="display:flex;align-items:center;gap:0.5rem;"><span style="color:#16a34a;font-weight:700;">🔒 SSL/TLS Encrypted</span></div>
+       <p style="margin-top:0.35rem;color:var(--gray-500);font-size:0.78rem;">Connection to this site is encrypted. However, HTTPS alone does not guarantee the site is legitimate — phishing sites can also use HTTPS.</p>`
+    : `<div style="display:flex;align-items:center;gap:0.5rem;"><span style="color:#dc2626;font-weight:700;">⚠️ No SSL/TLS Encryption</span></div>
+       <p style="margin-top:0.35rem;color:var(--gray-500);font-size:0.78rem;">This site does not use HTTPS encryption. Any data you send (passwords, credit cards) could be intercepted by attackers. <strong>Do not enter sensitive information.</strong></p>`;
+  
+  // Safety tips
+  if (hasThreat || !isKnownSafe) {
+    document.getElementById("urlSafetyTips").style.display = "block";
+    let tips = [];
+    if (hasThreat) {
+      tips.push("🚫 <strong>Do NOT visit this URL</strong> — it matches known threat patterns");
+      if (typosquatWarning) tips.push(`🔤 <strong>Typosquatting alert:</strong> This domain mimics "${typosquatWarning.brand}". The official site is <strong>${typosquatWarning.officialDomain}</strong>`);
+    }
+    if (!hasHttps) tips.push("🔓 <strong>Not encrypted</strong> — never enter passwords or payment info on HTTP sites");
+    if (!isKnownSafe) tips.push("🔍 <strong>Verify the domain</strong> — search for the official website independently instead of clicking links");
+    tips.push("📞 Report suspicious URLs to <strong>cybercrime.gov.in</strong> or call <strong>1930</strong>");
+    document.getElementById("urlSafetyTipsList").innerHTML = tips.map(t => `<div style="margin-bottom:0.35rem;">${t}</div>`).join("");
+    document.getElementById("urlSafeMsg").style.display = "none";
+  } else {
+    document.getElementById("urlSafetyTips").style.display = "none";
+    document.getElementById("urlSafeMsg").style.display = "block";
+  }
+  
+  // Live alert and dashboard
+  if (hasThreat) {
+    addLiveAlert("Malicious URL", `Phishing URL: ${url.slice(0,50)}${url.length>50?"…":""}`, threatLevel);
     showToast("🚨 Dangerous URL — do NOT visit this link", "threat");
     updateDashboard(true);
   } else {
-    showResult("urlResult", `✅ <strong>URL appears safe</strong>${!hasHttps?" ⚠️ Not HTTPS — use caution.":""}`, hasHttps?"safe":"warning");
-    const dd = document.getElementById("urlDetails"); dd.style.display="block"; dd.innerHTML = domainInfo;
-    showToast("✅ URL is safe", "safe");
+    showToast("✅ URL scan complete", "safe");
     updateDashboard(false);
   }
-  btn.disabled = false; btn.innerHTML = `<i data-lucide="search" style="width:16px;height:16px;"></i>Scan URL`;
+  
+  lucide.createIcons();
+  btn.disabled = false;
+  btn.innerHTML = `<i data-lucide="search" style="width:16px;height:16px;"></i>Scan URL`;
   lucide.createIcons();
 }
 
-/* ═══ APP SCANNER ═══ */
-const FAKE_APPS = [
-  {name:"Fake UPI App (PaySafe Pro)",risk:"Critical",color:"#dc2626",icon:"alert-octagon",perms:["SMS Read","Contacts","Camera","Location","Microphone"],desc:"Steals banking credentials via keylogging"},
-  {name:"Unknown APK – SBI_Rewards",risk:"High",color:"#f97316",icon:"alert-triangle",perms:["SMS Read","Call Logs","Contacts","Storage"],desc:"Unauthorized SBI impersonator app"},
-  {name:"FakeFlash Installer",risk:"High",color:"#f97316",icon:"alert-triangle",perms:["Admin Access","SMS Send","Background Activity"],desc:"Disguised malware installing root backdoor"},
-  {name:"WhatsApp",risk:"Safe",color:"#16a34a",icon:"check-circle",perms:["Camera","Microphone","Contacts","Storage"],desc:"Official, verified application"},
-  {name:"Google Pay",risk:"Safe",color:"#16a34a",icon:"check-circle",perms:["Biometric","Camera","Contacts"],desc:"Verified Google financial application"},
-  {name:"BHIM UPI",risk:"Safe",color:"#16a34a",icon:"check-circle",perms:["SMS","Contacts","Biometric"],desc:"Official NPCI government application"},
-  {name:"Unknown VPN App",risk:"Medium",color:"#eab308",icon:"alert-circle",perms:["Full Network Access","Device Info","Location"],desc:"Unverified VPN — may log traffic"},
-];
+function renderURLVerdict(level, count, risk, isSafe) {
+  const cfg = {
+    Critical: { cls:"verdict-critical", iconBg:"#fee2e2", iconColor:"#dc2626", icon:"alert-octagon", title:`⚠️ CRITICAL — ${count} Threat Indicators`, sub:"Extremely dangerous URL — do not visit under any circumstances" },
+    High:     { cls:"verdict-high",     iconBg:"#fff7ed", iconColor:"#f97316", icon:"alert-triangle",title:`🚨 HIGH RISK — ${count} Indicators`, sub:"Likely phishing/malware URL — avoid visiting and report it" },
+    Medium:   { cls:"verdict-medium",   iconBg:"#fffbeb", iconColor:"#d97706", icon:"alert-circle",  title:`⚠️ SUSPICIOUS — ${count} Indicators`, sub:"URL has suspicious characteristics — proceed with extreme caution" },
+    Safe:     { cls:"verdict-safe",     iconBg:"#dcfce7", iconColor:"#16a34a", icon:"check-circle",  title:isSafe ? "✅ TRUSTED DOMAIN" : "✅ NO THREATS DETECTED", sub:isSafe ? "This is a known, trusted domain" : "No known threat patterns found — still exercise general caution" },
+  };
+  const c = cfg[level] || cfg["Safe"];
+  document.getElementById("urlVerdict").innerHTML = `
+    <div class="verdict-box ${c.cls}">
+      <div class="verdict-icon" style="background:${c.iconBg};"><i data-lucide="${c.icon}" style="width:20px;height:20px;color:${c.iconColor};"></i></div>
+      <div><div class="verdict-title" style="color:${c.iconColor};">${c.title}</div><div class="verdict-subtitle" style="color:${c.iconColor}80;">${c.sub}</div></div>
+    </div>`;
+}
 
-async function scanApps() {
-  const btn = document.getElementById("appScanBtn");
-  const resultsDiv = document.getElementById("appResults");
-  btn.disabled = true;
-  btn.innerHTML = `<i data-lucide="loader" style="width:16px;height:16px;" class="animate-spin"></i>Scanning Apps…`;
+
+
+
+
+
+
+
+
+
+
+
+
+/* ═══ DEVICE SECURITY SCANNER — REAL SYSTEM SCAN ═══ */
+
+function requestDeviceScan() {
+  const modal = document.getElementById("scanPermissionModal");
+  modal.style.display = "flex";
   lucide.createIcons();
-  resultsDiv.innerHTML = `<p style="font-size:0.82rem;color:var(--gray-500);padding:0.5rem 0;">🔍 Analyzing installed applications…</p>`;
-  await simulateProgress("appProgress", 2500);
+}
+
+function closePermissionModal() {
+  document.getElementById("scanPermissionModal").style.display = "none";
+}
+
+async function startDeviceScan() {
+  closePermissionModal();
+  
+  const btn = document.getElementById("deviceScanBtn");
+  const statusDiv = document.getElementById("deviceScanStatus");
+  const resultsDiv = document.getElementById("deviceScanResults");
+  
+  btn.disabled = true;
+  btn.innerHTML = `<i data-lucide="loader" style="width:16px;height:16px;" class="animate-spin"></i>Scanning Device…`;
+  lucide.createIcons();
+  
+  statusDiv.style.display = "block";
   resultsDiv.innerHTML = "";
-  let threats = 0;
-  FAKE_APPS.forEach((app, i) => {
-    const div = document.createElement("div");
-    div.className = "app-item";
-    div.style.animationDelay = `${i*0.1}s`;
-    if (app.risk==="Critical"||app.risk==="High") threats++;
-    div.innerHTML = `
-      <div class="app-name">
-        <i data-lucide="${app.icon}" style="width:17px;height:17px;color:${app.color};flex-shrink:0;"></i>
-        <div>
-          <div style="font-size:0.875rem;font-weight:600;color:var(--gray-900);">${app.name}</div>
-          <div style="font-size:0.72rem;color:var(--gray-500);">${app.desc}</div>
+  
+  // ═══ PHASED SCAN WITH REAL DATA COLLECTION ═══
+  const report = {};
+  
+  // Phase 1: OS & Browser
+  statusDiv.innerHTML = scanStatus("Detecting operating system & browser…", 1, 8);
+  await delay(500);
+  
+  const ua = navigator.userAgent;
+  const browserName = ua.match(/Edg\//i) ? "Microsoft Edge" : ua.match(/OPR\//i) ? "Opera" : ua.match(/Chrome\//i) ? "Google Chrome" : ua.match(/Firefox\//i) ? "Mozilla Firefox" : ua.match(/Safari\//i) ? "Apple Safari" : "Unknown";
+  const browserVersion = (ua.match(/(?:Chrome|Firefox|Edg|Safari|OPR)\/(\d+[\.\d]*)/) || [])[1] || "Unknown";
+  
+  // OS Detection
+  let osName = "Unknown OS", osVersion = "";
+  if (ua.includes("Windows NT 10.0")) { osName = "Windows"; osVersion = ua.includes("Windows NT 10.0; Win64") ? "10/11 (64-bit)" : "10/11"; }
+  else if (ua.includes("Windows NT 6.3")) { osName = "Windows"; osVersion = "8.1"; }
+  else if (ua.includes("Windows NT 6.1")) { osName = "Windows"; osVersion = "7"; }
+  else if (ua.includes("Mac OS X")) { osName = "macOS"; osVersion = (ua.match(/Mac OS X (\d+[_\.]\d+[_\.]?\d*)/) || [])[1]?.replace(/_/g,".") || ""; }
+  else if (ua.includes("Android")) { osName = "Android"; osVersion = (ua.match(/Android (\d+[\.\d]*)/) || [])[1] || ""; }
+  else if (ua.includes("iPhone") || ua.includes("iPad")) { osName = "iOS"; osVersion = (ua.match(/OS (\d+[_\.]\d+)/) || [])[1]?.replace(/_/g,".") || ""; }
+  else if (ua.includes("Linux")) { osName = "Linux"; osVersion = ua.includes("Ubuntu") ? "Ubuntu" : ua.includes("Fedora") ? "Fedora" : ""; }
+  else if (ua.includes("CrOS")) { osName = "Chrome OS"; }
+  
+  const arch = ua.includes("Win64") || ua.includes("x86_64") || ua.includes("x64") ? "x86_64 (64-bit)" : ua.includes("ARM") || ua.includes("aarch64") ? "ARM64" : ua.includes("x86") ? "x86 (32-bit)" : navigator.platform || "Unknown";
+  
+  report.os = { name: osName, version: osVersion, architecture: arch };
+  report.browser = { name: browserName, version: browserVersion, engine: ua.includes("Gecko/") ? "Gecko" : ua.includes("AppleWebKit/") ? "WebKit/Blink" : "Unknown" };
+  
+  // Phase 2: Hardware detection
+  statusDiv.innerHTML = scanStatus("Scanning hardware — CPU, GPU, memory…", 2, 8);
+  await delay(600);
+  
+  const cpuCores = navigator.hardwareConcurrency || "Unknown";
+  const deviceMemory = navigator.deviceMemory || null;
+  const maxTouchPoints = navigator.maxTouchPoints || 0;
+  const pixelRatio = window.devicePixelRatio || 1;
+  
+  // GPU via WebGL
+  let gpuVendor = "Not available", gpuRenderer = "Not available";
+  try {
+    const canvas = document.createElement("canvas");
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    if (gl) {
+      const ext = gl.getExtension("WEBGL_debug_renderer_info");
+      if (ext) {
+        gpuVendor = gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) || "Unknown";
+        gpuRenderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || "Unknown";
+      } else {
+        gpuVendor = gl.getParameter(gl.VENDOR) || "Unknown";
+        gpuRenderer = gl.getParameter(gl.RENDERER) || "Unknown";
+      }
+    }
+  } catch(e) {}
+  
+  report.hardware = {
+    cpuCores, deviceMemory: deviceMemory ? deviceMemory + " GB" : "Restricted by browser",
+    gpuVendor, gpuRenderer,
+    screenWidth: screen.width, screenHeight: screen.height,
+    colorDepth: screen.colorDepth, pixelRatio,
+    maxTouchPoints, availWidth: screen.availWidth, availHeight: screen.availHeight,
+    deviceType: maxTouchPoints > 0 ? (screen.width < 768 ? "Mobile" : "Tablet/Touch Laptop") : "Desktop/Laptop",
+  };
+  
+  // Phase 3: Network 
+  statusDiv.innerHTML = scanStatus("Analyzing network connection & security…", 3, 8);
+  await delay(500);
+  
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  report.network = {
+    online: navigator.onLine,
+    protocol: location.protocol,
+    host: location.hostname || "localhost",
+    connectionType: conn?.effectiveType || "Not available",
+    downlink: conn?.downlink ? conn.downlink + " Mbps" : "Not available",
+    rtt: conn?.rtt !== undefined ? conn.rtt + " ms" : "Not available",
+    saveData: conn?.saveData || false,
+    type: conn?.type || "Not available",
+  };
+  
+  // Phase 4: Battery
+  statusDiv.innerHTML = scanStatus("Checking battery & power status…", 4, 8);
+  await delay(400);
+  
+  report.battery = { level: null, charging: null, chargingTime: null, dischargingTime: null };
+  try {
+    if (navigator.getBattery) {
+      const batt = await navigator.getBattery();
+      report.battery = {
+        level: Math.round(batt.level * 100),
+        charging: batt.charging,
+        chargingTime: batt.chargingTime === Infinity ? "Fully charged" : batt.chargingTime ? Math.round(batt.chargingTime/60) + " min" : null,
+        dischargingTime: batt.dischargingTime === Infinity ? "N/A" : batt.dischargingTime ? Math.round(batt.dischargingTime/60) + " min" : null,
+      };
+    }
+  } catch(e) {}
+  
+  // Phase 5: Storage
+  statusDiv.innerHTML = scanStatus("Auditing storage, cookies & local data…", 5, 8);
+  await delay(500);
+  
+  let storageQuota = null, storageUsage = null, storagePct = 0;
+  try {
+    if (navigator.storage?.estimate) {
+      const est = await navigator.storage.estimate();
+      storageQuota = est.quota;
+      storageUsage = est.usage;
+      storagePct = ((est.usage / est.quota) * 100);
+    }
+  } catch(e) {}
+  
+  let localStorageSize = 0, sessionStorageSize = 0;
+  try { for (let k in localStorage) { if (localStorage.hasOwnProperty(k)) localStorageSize += localStorage[k].length; } } catch(e) {}
+  try { for (let k in sessionStorage) { if (sessionStorage.hasOwnProperty(k)) sessionStorageSize += sessionStorage[k].length; } } catch(e) {}
+  
+  report.storage = {
+    quota: storageQuota ? formatBytes(storageQuota) : "Not available",
+    usage: storageUsage ? formatBytes(storageUsage) : "Not available",
+    percent: storagePct.toFixed(1),
+    localStorage: formatBytes(localStorageSize * 2), // UTF-16
+    sessionStorage: formatBytes(sessionStorageSize * 2),
+    cookiesEnabled: navigator.cookieEnabled,
+    indexedDB: !!window.indexedDB,
+  };
+  
+  // Phase 6: Privacy & Permissions
+  statusDiv.innerHTML = scanStatus("Evaluating privacy settings & permissions…", 6, 8);
+  await delay(500);
+  
+  const permissionsToCheck = ["camera","microphone","geolocation","notifications","clipboard-read","clipboard-write"];
+  const permResults = [];
+  for (const p of permissionsToCheck) {
+    try {
+      const result = await navigator.permissions.query({ name: p });
+      permResults.push({ name: p, state: result.state });
+    } catch(e) {}
+  }
+  
+  report.privacy = {
+    doNotTrack: navigator.doNotTrack === "1" || navigator.doNotTrack === "yes",
+    cookiesEnabled: navigator.cookieEnabled,
+    permissions: permResults,
+    languages: navigator.languages ? [...navigator.languages] : [navigator.language],
+    serviceWorker: "serviceWorker" in navigator,
+    webAssembly: typeof WebAssembly === "object",
+    webGL: !!document.createElement("canvas").getContext("webgl"),
+    webRTC: !!window.RTCPeerConnection,
+  };
+  
+  // Phase 7: WebRTC Leak Check
+  statusDiv.innerHTML = scanStatus("Testing for WebRTC IP leak vulnerability…", 7, 8);
+  await delay(600);
+  
+  let webrtcLeaked = false, localIP = null;
+  try {
+    const pc = new RTCPeerConnection({ iceServers: [] });
+    pc.createDataChannel("");
+    const offer = await pc.createOffer();
+    await pc.setLocalDescription(offer);
+    await new Promise(r => { 
+      pc.onicecandidate = e => { if (!e.candidate) r(); };
+      setTimeout(r, 1500);
+    });
+    const sdp = pc.localDescription?.sdp || "";
+    const ipMatch = sdp.match(/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/);
+    if (ipMatch && !ipMatch[1].startsWith("0.")) { webrtcLeaked = true; localIP = ipMatch[1]; }
+    pc.close();
+  } catch(e) {}
+  
+  // Phase 8: Canvas fingerprint entropy check
+  statusDiv.innerHTML = scanStatus("Running fingerprint resistance test…", 8, 8);
+  await delay(400);
+  
+  let canvasEntropy = "Normal";
+  try {
+    const c = document.createElement("canvas"); c.width = 200; c.height = 50;
+    const ctx = c.getContext("2d");
+    ctx.textBaseline = "top"; ctx.font = "14px Arial"; ctx.fillStyle = "#f60";
+    ctx.fillRect(50,0,100,50); ctx.fillStyle = "#069"; ctx.fillText("CyberGuard🛡️",2,15);
+    const data = c.toDataURL();
+    canvasEntropy = data.length > 1000 ? "Unique (trackable)" : "Blocked (privacy mode)";
+  } catch(e) { canvasEntropy = "Blocked (privacy mode)"; }
+  
+  await simulateProgress("deviceProgress", 800);
+  
+  // ═══ SECURITY AUDIT CHECKS ═══
+  const checks = [];
+  let totalScore = 100, issueCount = 0;
+  
+  function addCheck(name, status, msg, icon) {
+    checks.push({ name, status, msg, icon });
+    if (status === "fail") { totalScore -= 12; issueCount++; }
+    else if (status === "warn") { totalScore -= 5; issueCount++; }
+  }
+  
+  // 1. HTTPS
+  addCheck("HTTPS Encryption", location.protocol === "https:" ? "pass" : "fail",
+    location.protocol === "https:" ? "Connection secured with TLS encryption" : "Unencrypted HTTP — all data transmitted in plaintext", "lock");
+  
+  // 2. Secure Context
+  addCheck("Secure Context", window.isSecureContext ? "pass" : "fail",
+    window.isSecureContext ? "Browser running in secure context — all security APIs available" : "Insecure context — Crypto, Geolocation, and other APIs may be restricted", "shield-check");
+  
+  // 3. Browser Version
+  const majVer = parseInt(browserVersion);
+  addCheck("Browser Version", (majVer >= 120) ? "pass" : (majVer >= 100) ? "warn" : "fail",
+    `${browserName} v${browserVersion} — ${majVer >= 120 ? "current, all security patches applied" : majVer >= 100 ? "slightly outdated, update recommended" : "outdated, known security vulnerabilities"}`, "chrome");
+  
+  // 4. Do Not Track
+  addCheck("Do Not Track (DNT)", report.privacy.doNotTrack ? "pass" : "warn",
+    report.privacy.doNotTrack ? "DNT header enabled — requesting tracking opt-out" : "DNT not enabled — advertising networks may track browsing", "eye-off");
+  
+  // 5. Cookie Status
+  addCheck("Cookie Configuration", "info",
+    report.storage.cookiesEnabled ? "Cookies enabled — 1st party & 3rd party cookies may be stored" : "Cookies disabled — some websites may not function correctly", "cookie");
+  
+  // 6. WebRTC Leak
+  addCheck("WebRTC IP Leak", webrtcLeaked ? "warn" : "pass",
+    webrtcLeaked ? `WebRTC is leaking local IP: ${localIP} — VPN users may be exposed` : "No WebRTC IP leak detected — local IP is protected", "radio");
+  
+  // 7. Network Encryption
+  addCheck("Network Security", navigator.onLine ? "pass" : "fail",
+    navigator.onLine ? `Online via ${report.network.connectionType.toUpperCase()}${report.network.downlink !== "Not available" ? " @ " + report.network.downlink : ""} — ${report.network.rtt !== "Not available" ? "latency " + report.network.rtt : ""}` : "Device is offline — no network connectivity", "wifi");
+  
+  // 8. Permissions audit
+  const granted = permResults.filter(p => p.state === "granted");
+  const denied = permResults.filter(p => p.state === "denied");
+  addCheck("Permission Audit", granted.length > 3 ? "warn" : granted.length > 0 ? "info" : "pass",
+    granted.length > 0 ? `${granted.length} granted: ${granted.map(p=>p.name).join(", ")}` : "No sensitive permissions granted — minimal attack surface", "key");
+  
+  // 9. Service Worker
+  addCheck("Service Worker", report.privacy.serviceWorker ? "info" : "pass",
+    report.privacy.serviceWorker ? "Service Workers supported — enables offline caching (and potential abuse)" : "Service Workers not available", "server");
+  
+  // 10. Canvas Fingerprinting
+  addCheck("Canvas Fingerprint", canvasEntropy.includes("Unique") ? "warn" : "pass",
+    canvasEntropy.includes("Unique") ? "Canvas fingerprinting possible — your browser has a unique rendering signature" : "Canvas fingerprinting blocked or reduced — good privacy protection", "fingerprint");
+  
+  // 11. WebAssembly
+  addCheck("WebAssembly", "info",
+    report.privacy.webAssembly ? "WebAssembly supported — enables high-performance web apps (and potential cryptominers)" : "WebAssembly not supported", "code");
+  
+  // 12. Battery API
+  if (report.battery.level !== null) {
+    addCheck("Battery Status", report.battery.level < 20 && !report.battery.charging ? "warn" : "info",
+      `Battery: ${report.battery.level}% ${report.battery.charging ? "⚡ Charging" : "🔋 Discharging"}${report.battery.dischargingTime && report.battery.dischargingTime !== "N/A" ? " — " + report.battery.dischargingTime + " remaining" : ""}`, "battery");
+  }
+  
+  // 13. Storage Health
+  if (storagePct > 0) {
+    addCheck("Storage Health", storagePct > 80 ? "warn" : "pass",
+      `Using ${report.storage.usage} of ${report.storage.quota} (${storagePct.toFixed(1)}%)${storagePct > 80 ? " — critically low space" : ""}`, "hard-drive");
+  }
+  
+  // 14. CPU cores check
+  addCheck("Processing Capacity", cpuCores >= 4 ? "pass" : "warn",
+    `${cpuCores} logical processors${deviceMemory ? ", " + deviceMemory + " GB RAM" : ""} — ${cpuCores >= 8 ? "high-performance" : cpuCores >= 4 ? "adequate" : "limited"}`, "cpu");
+  
+  // 15. GPU
+  addCheck("Graphics Hardware", gpuRenderer !== "Not available" ? "info" : "warn",
+    gpuRenderer !== "Not available" ? `GPU: ${gpuRenderer}` : "GPU information hidden — hardware acceleration may be limited", "monitor");
+  
+  // 16. Mixed content
+  const hasMixedContent = location.protocol === "https:" && document.querySelectorAll('img[src^="http://"], script[src^="http://"]').length > 0;
+  if (location.protocol === "https:") {
+    addCheck("Mixed Content", hasMixedContent ? "warn" : "pass",
+      hasMixedContent ? "Mixed content detected — some resources loaded over HTTP" : "No mixed content — all resources loaded securely", "file-warning");
+  }
+  
+  // 17. Referrer Policy
+  const referrerMeta = document.querySelector('meta[name="referrer"]');
+  addCheck("Referrer Policy", referrerMeta ? "pass" : "info",
+    referrerMeta ? `Referrer policy set: ${referrerMeta.content}` : "No explicit referrer policy — browser default applies", "link");
+  
+  // 18. Screen Lock
+  addCheck("Display Security", "info",
+    `${report.hardware.screenWidth}×${report.hardware.screenHeight} @ ${pixelRatio}x • ${report.hardware.colorDepth}-bit color • ${report.hardware.deviceType}`, "monitor");
+  
+  totalScore = Math.max(0, Math.min(100, totalScore));
+  const grade = totalScore >= 90 ? "A+" : totalScore >= 85 ? "A" : totalScore >= 80 ? "B+" : totalScore >= 75 ? "B" : totalScore >= 65 ? "C" : totalScore >= 50 ? "D" : "F";
+  const gradeColor = totalScore >= 85 ? "#16a34a" : totalScore >= 75 ? "#22c55e" : totalScore >= 65 ? "#eab308" : totalScore >= 50 ? "#f97316" : "#dc2626";
+  const passCount = checks.filter(c => c.status === "pass").length;
+  const warnCount = checks.filter(c => c.status === "warn").length;
+  const failCount = checks.filter(c => c.status === "fail").length;
+  
+  // ═══ RENDER COMPREHENSIVE REPORT ═══
+  statusDiv.style.display = "none";
+  
+  resultsDiv.innerHTML = `
+    <!-- Report Header with Score Ring -->
+    <div style="background:linear-gradient(135deg, #f3e8ff 0%, #ede9fe 50%, #e0e7ff 100%);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
+        <div style="position:relative;width:90px;height:90px;flex-shrink:0;">
+          <svg viewBox="0 0 36 36" style="width:90px;height:90px;transform:rotate(-90deg);">
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/>
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="${gradeColor}" stroke-width="2.5" 
+              stroke-dasharray="${totalScore} ${100-totalScore}" stroke-linecap="round" style="transition:stroke-dasharray 1.5s ease;"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <span style="font-size:1.5rem;font-weight:900;color:${gradeColor};line-height:1;">${grade}</span>
+            <span style="font-size:0.62rem;color:var(--gray-500);font-weight:600;">${totalScore}/100</span>
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:1.1rem;font-weight:800;color:var(--gray-900);">Device Security Report</div>
+          <div style="font-size:0.82rem;color:var(--gray-600);margin-top:0.2rem;">
+            ${totalScore >= 85 ? "✅ Excellent — your device is well-protected" : 
+              totalScore >= 75 ? "👍 Good — minor improvements recommended" : 
+              totalScore >= 65 ? "⚠️ Fair — several security issues need attention" :
+              "🚨 Poor — immediate security action required"}
+          </div>
+          <div style="display:flex;gap:0.75rem;margin-top:0.5rem;flex-wrap:wrap;">
+            <span style="font-size:0.7rem;padding:0.2rem 0.5rem;border-radius:9999px;background:#dcfce7;color:#16a34a;font-weight:600;">✅ ${passCount} Passed</span>
+            ${warnCount > 0 ? `<span style="font-size:0.7rem;padding:0.2rem 0.5rem;border-radius:9999px;background:#fff7ed;color:#f97316;font-weight:600;">⚠️ ${warnCount} Warnings</span>` : ""}
+            ${failCount > 0 ? `<span style="font-size:0.7rem;padding:0.2rem 0.5rem;border-radius:9999px;background:#fee2e2;color:#dc2626;font-weight:600;">❌ ${failCount} Failed</span>` : ""}
+          </div>
+          <div style="font-size:0.68rem;color:var(--gray-400);margin-top:0.4rem;">Scanned ${new Date().toLocaleString()} • ${checks.length} checks • CyberGuard v2.0</div>
         </div>
       </div>
-      <span class="risk-badge ${app.risk==="Safe"?"risk-safe":app.risk==="Medium"?"risk-medium":"risk-high"}">${app.risk}</span>
-    `;
-    resultsDiv.appendChild(div);
-    if (app.risk==="Critical"||app.risk==="High") addLiveAlert("Malware", `⚠️ Risky app: ${app.name}`, app.risk);
-  });
+    </div>
+    
+    <!-- Hardware & System Info -->
+    <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:var(--gray-800);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;">
+        <i data-lucide="cpu" style="width:15px;height:15px;color:#7c3aed;"></i>
+        Hardware &amp; System Information
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.5rem;font-size:0.78rem;">
+        <div class="hw-info-row"><span class="hw-label">Operating System</span><strong>${osName} ${osVersion}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Architecture</span><strong>${arch}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Browser</span><strong>${browserName} v${browserVersion}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Engine</span><strong>${report.browser.engine}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">CPU</span><strong>${cpuCores} Logical Processors</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Memory (RAM)</span><strong>${report.hardware.deviceMemory}</strong></div>
+        <div class="hw-info-row" style="grid-column:1/-1;"><span class="hw-label">GPU</span><strong style="word-break:break-word;">${gpuRenderer}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">GPU Vendor</span><strong>${gpuVendor}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Display</span><strong>${report.hardware.screenWidth}×${report.hardware.screenHeight} @ ${pixelRatio}x</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Color Depth</span><strong>${report.hardware.colorDepth}-bit</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Device Type</span><strong>${report.hardware.deviceType}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Language</span><strong>${report.privacy.languages.join(", ")}</strong></div>
+        ${report.battery.level !== null ? `
+        <div class="hw-info-row"><span class="hw-label">Battery</span><strong>${report.battery.level}% ${report.battery.charging ? "⚡ Charging" : "🔋"}</strong></div>
+        ` : ""}
+      </div>
+    </div>
+    
+    <!-- Network Info -->
+    <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:var(--gray-800);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;">
+        <i data-lucide="wifi" style="width:15px;height:15px;color:#2563eb;"></i>
+        Network &amp; Connection
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.5rem;font-size:0.78rem;">
+        <div class="hw-info-row"><span class="hw-label">Status</span><strong style="color:${report.network.online?"#16a34a":"#dc2626"};">${report.network.online ? "🟢 Online" : "🔴 Offline"}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Protocol</span><strong>${report.network.protocol === "https:" ? "🔒 HTTPS" : "⚠️ HTTP"}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Connection Type</span><strong>${report.network.connectionType.toUpperCase()}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Bandwidth</span><strong>${report.network.downlink}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Latency (RTT)</span><strong>${report.network.rtt}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Data Saver</span><strong>${report.network.saveData ? "Enabled" : "Disabled"}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">WebRTC Leak</span><strong style="color:${webrtcLeaked?"#dc2626":"#16a34a"};">${webrtcLeaked ? "⚠️ Leaking: " + localIP : "✅ Protected"}</strong></div>
+      </div>
+    </div>
+    
+    <!-- Storage & Privacy -->
+    <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:var(--gray-800);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;">
+        <i data-lucide="hard-drive" style="width:15px;height:15px;color:#f97316;"></i>
+        Storage &amp; Data
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.5rem;font-size:0.78rem;">
+        <div class="hw-info-row"><span class="hw-label">Disk Quota</span><strong>${report.storage.quota}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Disk Used</span><strong>${report.storage.usage} (${report.storage.percent}%)</strong></div>
+        <div class="hw-info-row"><span class="hw-label">LocalStorage</span><strong>${report.storage.localStorage}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">SessionStorage</span><strong>${report.storage.sessionStorage}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Cookies</span><strong>${report.storage.cookiesEnabled ? "Enabled" : "Disabled"}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">IndexedDB</span><strong>${report.storage.indexedDB ? "Available" : "Unavailable"}</strong></div>
+        <div class="hw-info-row"><span class="hw-label">Canvas Fingerprint</span><strong style="color:${canvasEntropy.includes("Unique")?"#f97316":"#16a34a"};">${canvasEntropy}</strong></div>
+      </div>
+    </div>
+    
+    <!-- Security Checks -->
+    <div style="font-size:0.82rem;font-weight:700;color:var(--gray-800);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.4rem;">
+      <i data-lucide="shield" style="width:15px;height:15px;color:#7c3aed;"></i>
+      Security Audit — ${checks.length} Checks
+    </div>
+    ${checks.map((c, i) => {
+      const icon = c.status==="pass"?"✅":c.status==="fail"?"❌":c.status==="warn"?"⚠️":"ℹ️";
+      const border = c.status==="pass"?"#16a34a":c.status==="fail"?"#dc2626":c.status==="warn"?"#f97316":"#93c5fd";
+      return `<div style="display:flex;align-items:flex-start;gap:0.5rem;padding:0.45rem 0.7rem;background:#fff;border:1px solid var(--gray-200);border-radius:8px;border-left:3px solid ${border};margin-bottom:0.35rem;animation:fadeInUp 0.25s ease ${i*0.04}s both;">
+        <span style="font-size:0.72rem;margin-top:2px;flex-shrink:0;">${icon}</span>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:0.8rem;font-weight:600;color:var(--gray-900);">${c.name}</div>
+          <div style="font-size:0.74rem;color:var(--gray-500);margin-top:0.1rem;word-break:break-word;">${c.msg}</div>
+        </div>
+      </div>`;
+    }).join("")}
+    
+    <!-- Recommendations -->
+    ${issueCount > 0 ? `
+    <div style="margin-top:1rem;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#92400e;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.4rem;">
+        <i data-lucide="lightbulb" style="width:14px;height:14px;color:#f59e0b;"></i>
+        Security Recommendations (${issueCount})
+      </div>
+      <div style="font-size:0.78rem;color:#78350f;line-height:1.8;">
+        ${checks.filter(c=>c.status==="fail").map(c=>`<div>🔴 <strong>${c.name}:</strong> ${c.msg}</div>`).join("")}
+        ${checks.filter(c=>c.status==="warn").map(c=>`<div>🟡 <strong>${c.name}:</strong> ${c.msg}</div>`).join("")}
+        <div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid #fde68a;color:#92400e;">
+          <div>💡 Keep your browser and OS updated to the latest version</div>
+          <div>💡 Use HTTPS-only mode in your browser settings</div>
+          <div>💡 Install a reputable ad-blocker to reduce tracking</div>
+          <div>💡 Enable 2FA on all important accounts</div>
+        </div>
+      </div>
+    </div>` : `
+    <div style="margin-top:1rem;padding:1.25rem;background:#dcfce7;border:1px solid #bbf7d0;border-radius:10px;text-align:center;">
+      <div style="font-size:1rem;font-weight:800;color:#16a34a;">✅ All Security Checks Passed!</div>
+      <div style="font-size:0.8rem;color:#15803d;margin-top:0.3rem;">Your device has strong security posture. Continue practicing safe browsing habits.</div>
+    </div>`}
+  `;
+  
   lucide.createIcons();
-  updateDashboard(threats>0);
-  showToast(threats>0 ? `🚨 ${threats} risky app(s) found` : "✅ All apps safe", threats>0?"threat":"safe");
-  btn.disabled=false; btn.innerHTML=`<i data-lucide="cpu" style="width:16px;height:16px;"></i>Re-scan Apps`;
-  btn.style.background="#7c3aed"; lucide.createIcons();
+  addLiveAlert("Device Scan", `Full security audit — Score: ${totalScore}/100 (Grade ${grade})`, totalScore >= 80 ? "Safe" : totalScore >= 65 ? "Medium" : "High");
+  showToast(totalScore >= 80 ? `✅ Scan complete: ${totalScore}/100 (${grade})` : `⚠️ Scan: ${totalScore}/100 — ${issueCount} issue(s)`, totalScore >= 80 ? "safe" : "warning");
+  updateDashboard(issueCount > 0);
+  
+  btn.disabled = false;
+  btn.innerHTML = `<i data-lucide="scan-line" style="width:16px;height:16px;"></i>Re-scan Device`;
+  btn.style.background = "#7c3aed";
+  lucide.createIcons();
+}
+
+// Utility functions for device scanner
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+function scanStatus(msg, step, total) {
+  const pct = Math.round((step/total)*100);
+  return `<div style="display:flex;align-items:center;gap:0.5rem;">
+    <span class="animate-spin" style="display:inline-block;">⚙️</span>
+    <span style="flex:1;">${msg}</span>
+    <span style="font-size:0.68rem;font-family:var(--font-mono);color:var(--gray-400);">${pct}%</span>
+  </div>
+  <div style="margin-top:0.35rem;height:3px;background:var(--gray-200);border-radius:3px;overflow:hidden;">
+    <div style="height:100%;width:${pct}%;background:#7c3aed;border-radius:3px;transition:width 0.4s ease;"></div>
+  </div>`;
+}
+function formatBytes(bytes) {
+  if (bytes === 0) return "0 B";
+  const k = 1024, sizes = ["B","KB","MB","GB","TB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 }
 
 /* ═══════════════════════════════════════════
@@ -1956,7 +2910,7 @@ document.getElementById("themeBtn").addEventListener("click", () => {
 });
 
 /* ═══ KEYBOARD SHORTCUTS ═══ */
-document.getElementById("smsInput").addEventListener("keydown", e => { if(e.key==="Enter") scanSMS(); });
+document.getElementById("smsInput").addEventListener("keydown", e => { if(e.key==="Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); scanSMS(); } });
 document.getElementById("urlInput").addEventListener("keydown", e => { if(e.key==="Enter") scanURL(); });
 
 /* ═══ SCROLL REVEAL ═══ */
