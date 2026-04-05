@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CYBERGUARD – Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="auth.js"></script>
+  <!-- Optional print styles for Certificate -->
+  <style>
+    :root {
+      --dash-bg: #f8fafc;
+      --dash-card: #ffffff;
+      --dash-card-dark: #1e293b;
+      --dash-text: #1e293b;
+      --dash-text-soft: #64748b;
+      --primary: #dc2626;
+      --primary-light: #fef2f2;
+      --accent: #2563eb;
+    }
+    body.dark {
+      --dash-bg: #0f172a;
+      --dash-card: #1e293b;
+      --dash-text: #f8fafc;
+      --dash-text-soft: #94a3b8;
+    }
+    body { background: var(--dash-bg); color: var(--dash-text); font-family: 'Inter', sans-serif; transition: background 0.3s; }
+    
+    .dashboard-container { max-width: 1200px; margin: 3rem auto; padding: 0 1rem; }
+    
+    .dashboard-header { margin-bottom: 2rem; position: relative; }
+    .dashboard-header h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .dashboard-header p { color: var(--dash-text-soft); font-size: 1.1rem; margin-top: 0.5rem; }
+
+    .dash-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+    
+    .card { background: var(--dash-card); border-radius: 16px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; }
+    body.dark .card { box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
+    
+    /* Decoration inside cards */
+    .card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(220,38,38,0.1) 0%, transparent 70%); border-radius: 50%; opacity: 0; transition: opacity 0.3s; }
+    .card:hover::before { opacity: 1; }
+
+    .card h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 700; border-bottom: 2px solid var(--dash-bg); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+    
+    /* Layout Spans */
+    .profile-card { grid-column: span 4; }
+    .scores-card { grid-column: span 8; }
+    .reports-card { grid-column: span 6; }
+    .certs-card { grid-column: span 6; }
+    
+    @media (max-width: 900px) {
+      .profile-card, .scores-card, .reports-card, .certs-card { grid-column: span 12; }
+    }
+
+    /* Profile list */
+    .profile-info { list-style: none; padding: 0; }
+    .profile-info li { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px dashed var(--dash-bg); color: var(--dash-text-soft); }
+    .profile-info li:last-child { border-bottom: none; }
+    .profile-info i { color: var(--primary); }
+    .profile-info strong { color: var(--dash-text); font-weight: 600; min-width: 80px; }
+
+    /* Progress bars */
+    .score-item { margin-bottom: 1.25rem; }
+    .score-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+    .score-bar-bg { width: 100%; height: 12px; background: var(--dash-bg); border-radius: 99px; overflow: hidden; }
+    .score-bar-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #10b981); border-radius: 99px; width: 0%; transition: width 1s ease-out; }
+    .score-bar-fill.failed { background: linear-gradient(90deg, #f87171, #dc2626); }
+
+    /* Reports List */
+    .report-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .report-table th { text-align: left; padding: 0.75rem; background: var(--dash-bg); color: var(--dash-text-soft); font-weight: 600; }
+    .report-table td { padding: 1rem 0.75rem; border-bottom: 1px solid var(--dash-bg); }
+    .status-badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .status-pending { background: #fef3c7; color: #b45309; }
+    .status-investigating { background: #dbeafe; color: #1d4ed8; }
+    .status-resolved { background: #dcfce7; color: #15803d; }
+
+    /* Certificates */
+    .cert-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: var(--dash-bg); border-radius: 12px; margin-bottom: 0.75rem; border: 1px solid transparent; transition: border-color 0.2s; }
+    .cert-item:hover { border-color: var(--accent); }
+    .cert-info h4 { font-size: 1rem; margin-bottom: 0.25rem; }
+    .cert-info p { font-size: 0.8rem; color: var(--dash-text-soft); }
+    .download-btn { background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.8rem; cursor: pointer; border: none; display: flex; align-items: center; gap: 0.4rem; transition: background 0.2s; }
+    .download-btn:hover { background: #1d4ed8; }
+    .download-btn[disabled] { background: #94a3b8; cursor: not-allowed; }
+
+    /* Print Template Overlay */
+    #printCertOverlay { display: none; position: fixed; inset: 0; background: #fff; z-index: 9999; padding: 2rem; align-items: center; justify-content: center; }
+    .cert-container { width: 800px; height: 550px; background: url('images/certificate-bg.jpg') center/cover no-repeat; border: 15px solid #1e3a8a; position: relative; text-align: center; color: #1e293b; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #f8fafc; }
+    .cert-container h1 { font-family: 'Times New Roman', serif; font-size: 45px; text-transform: uppercase; color: #1e3a8a; margin-bottom: 10px; }
+    .cert-container h2 { font-family: 'Arial', sans-serif; font-size: 24px; color: #64748b; font-weight: normal; margin-bottom: 40px; }
+    .cert-container .name { font-family: 'Brush Script MT', cursive, serif; font-size: 65px; color: #dc2626; margin-bottom: 20px; border-bottom: 2px solid #cbd5e1; width: 60%; padding-bottom: 10px; }
+    .cert-container p { font-size: 18px; margin-bottom: 20px; max-width: 600px; line-height: 1.5; }
+    
+    @media print {
+      body * { visibility: hidden; }
+      #printCertOverlay, #printCertOverlay * { visibility: visible; }
+      #printCertOverlay { display: flex; position: absolute; left: 0; top: 0; background: white; }
+      .cert-container { border: 15px solid #1e3a8a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ TOP NAVBAR ══ -->
+  <div class="top-navbar">
+    <div class="inner">
+      <div class="logos"></div>
+      <div class="right">
+        <div class="college-logos">
+          <img src="images/COLLEGE.jpg" alt="College Logo" class="college-logo" onerror="this.style.display='none'" />
+        </div>
+        <span class="college-name">Engineering College Ajmer Rajasthan</span>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+          <i data-lucide="moon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MAIN NAVBAR ══ -->
+  <nav class="main-navbar">
+    <div class="inner">
+      <a href="index.html" class="brand">
+        <i data-lucide="shield"></i> CYBERGUARD
+      </a>
+      <div class="nav-links">
+        <a href="awareness.html">AWARENESS</a>
+        <a href="detection.html">REAL TIME DETECTION</a>
+        <a href="reporting.html">REPORTING</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <i data-lucide="menu" id="menuIcon"></i>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="awareness.html">AWARENESS</a>
+      <a href="detection.html">REAL TIME DETECTION</a>
+      <a href="reporting.html">REPORTING</a>
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <h1 id="welcomeName">Welcome back!</h1>
+      <p>Here is your personalized security training & reporting snapshot.</p>
+    </div>
+
+    <div class="dash-grid">
+      
+      <!-- Profile Details -->
+      <div class="card profile-card">
+        <h3><i data-lucide="user-check"></i> Profile Overview</h3>
+        <ul class="profile-info" id="profileList">
+          <li><strong>Loading...</strong></li>
+        </ul>
+      </div>
+
+      <!-- Quiz Scores -->
+      <div class="card scores-card">
+        <h3><i data-lucide="bar-chart-2"></i> My Quiz Scorecard</h3>
+        <div id="scoresContainer">
+          <p style="color:var(--dash-text-soft);">Loading scores...</p>
+        </div>
+      </div>
+
+      <!-- Certificates -->
+      <div class="card certs-card">
+        <h3><i data-lucide="award"></i> Certifications</h3>
+        <div id="certsContainer">
+          <p style="color:var(--dash-text-soft);">Loading certificates...</p>
+        </div>
+      </div>
+
+      <!-- Incident Reports -->
+      <div class="card reports-card">
+        <h3><i data-lucide="file-text"></i> Incident Reports</h3>
+        <div style="overflow-x: auto;">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>Tracking ID</th>
+                <th>Crime Type</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="reportsTableBody">
+              <tr><td colspan="4">Loading reports...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Hidden Print Overlay for Certificate -->
+  <div id="printCertOverlay">
+    <div class="cert-container">
+      <h1>Certificate of Achievement</h1>
+      <h2>CYBERGUARD SECURE CITIZEN PROGRAM</h2>
+      <div class="name" id="certNamePlaceholder">Citizen Name</div>
+      <p>This certifies that the named individual successfully completed the Cyber Awareness module for <strong id="certLevelPlaceholder">Level 1</strong> and demonstrated excellent proficiency in identifying digital threats and safe online practices.</p>
+      
+      <div style="display: flex; width: 80%; justify-content: space-between; margin-top: 50px;">
+        <div style="text-align: center; border-top: 1px solid #94a3b8; padding-top: 5px;">
+          <strong>Date Achieved</strong><br>
+          <span id="certDatePlaceholder">--</span>
+        </div>
+        <div style="text-align: center; border-top: 1px solid #94a3b8; padding-top: 5px;">
+          <strong>Verified By</strong><br>
+          Ministry of Electronics & IT
+        </div>
+      </div>
+      <i data-lucide="shield-check" style="color: #16a34a; width: 64px; height: 64px; position: absolute; bottom: 30px; margin-left: 20px;"></i>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Theme toggle
+    const themeBtn = document.getElementById('themeBtn');
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark');
+      themeBtn.innerHTML = '<i data-lucide="sun"></i>';
+      lucide.createIcons();
+    }
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      themeBtn.innerHTML = isDark ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      lucide.createIcons();
+    });
+
+    // Mobile Menu
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    });
+
+    // Global variable to store active user name for certificates
+    let currentUserName = '';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!AUTH.isLoggedIn()) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      try {
+        // Fetch User Profile
+        const profileRes = await AUTH.api('/api/auth/profile');
+        const user = profileRes.user;
+        currentUserName = user.name;
+        document.getElementById('welcomeName').innerHTML = `Hello, <span style="color:var(--primary);">${user.name.split(' ')[0]}</span>!`;
+        
+        document.getElementById('profileList').innerHTML = `
+          <li><i data-lucide="user"></i> <strong>Name:</strong> ${user.name}</li>
+          <li><i data-lucide="mail"></i> <strong>Email:</strong> ${user.email}</li>
+          <li><i data-lucide="graduation-cap"></i> <strong>College:</strong> ${user.college || 'N/A'}</li>
+          <li><i data-lucide="calendar"></i> <strong>Joined:</strong> ${new Date(user.createdAt).toLocaleDateString()}</li>
+        `;
+
+        lucide.createIcons();
+      } catch (err) {
+        document.getElementById('profileList').innerHTML = `<li><strong style="color:red;">Error loading profile</strong></li>`;
+      }
+
+      try {
+        // Fetch Quiz Scores
+        const scoresRes = await AUTH.api('/api/quiz-scores/my');
+        const scores = scoresRes.scores || [];
+        const scoresContainer = document.getElementById('scoresContainer');
+        const certsContainer = document.getElementById('certsContainer');
+
+        if (scores.length === 0) {
+          scoresContainer.innerHTML = '<p style="color:var(--dash-text-soft);">You haven\'t taken any quizzes yet.</p><a href="awareness.html" class="download-btn" style="width:max-content;margin-top:1rem;text-decoration:none;">Take a Quiz</a>';
+          certsContainer.innerHTML = '<p style="color:var(--dash-text-soft);">Pass a quiz to earn a certificate.</p>';
+        } else {
+          scoresContainer.innerHTML = '';
+          certsContainer.innerHTML = '';
+
+          scores.forEach(s => {
+            // Render Scorecard
+            const passedClass = s.passed ? '' : 'failed';
+            const statusText = s.passed ? 'PASSED' : 'FAILED';
+            
+            scoresContainer.innerHTML += `
+              <div class="score-item">
+                <div class="score-header">
+                  <span>Level ${s.level}</span>
+                  <span>${s.percentage}% - ${statusText}</span>
+                </div>
+                <div class="score-bar-bg">
+                  <div class="score-bar-fill ${passedClass}" style="width: ${s.percentage}%"></div>
+                </div>
+              </div>
+            `;
+
+            // Render Certificate only if passed
+            if (s.passed) {
+              const formattedDate = new Date(s.createdAt).toLocaleDateString();
+              certsContainer.innerHTML += `
+                <div class="cert-item">
+                  <div class="cert-info">
+                    <h4>Cyber Awareness: Level ${s.level}</h4>
+                    <p>Achieved on ${formattedDate}</p>
+                  </div>
+                  <button class="download-btn" onclick="printCertificate(${s.level}, '${formattedDate}')">
+                    <i data-lucide="download"></i> Download
+                  </button>
+                </div>
+              `;
+            }
+          });
+
+          if (certsContainer.innerHTML === '') {
+             certsContainer.innerHTML = '<p style="color:var(--dash-text-soft);">Pass a quiz with 80%+ to unlock a certificate.</p>';
+          }
+
+          lucide.createIcons();
+        }
+      } catch(err) {
+        document.getElementById('scoresContainer').innerHTML = `<p style="color:red;">Failed to load scores.</p>`;
+        document.getElementById('certsContainer').innerHTML = `<p style="color:red;">Failed to load certificates.</p>`;
+      }
+
+      try {
+        // Fetch Incident Reports
+        const reportsRes = await AUTH.api('/api/reports/my');
+        const reports = reportsRes.reports || [];
+        const tbody = document.getElementById('reportsTableBody');
+
+        if (reports.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--dash-text-soft);">No reports filed yet.</td></tr>`;
+        } else {
+          tbody.innerHTML = reports.map(r => {
+            const date = new Date(r.createdAt).toLocaleDateString();
+            const badgeClass = r.status.toLowerCase() == 'pending' ? 'status-pending' : (r.status.toLowerCase() == 'investigating' ? 'status-investigating' : 'status-resolved');
+            return `
+              <tr>
+                <td style="font-family:monospace;font-weight:600;">#${r.trackingId}</td>
+                <td>${r.crimeType.replace(/-/g, ' ').toUpperCase()}</td>
+                <td>${date}</td>
+                <td><span class="status-badge ${badgeClass}">${r.status}</span></td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch(err) {
+        document.getElementById('reportsTableBody').innerHTML = `<tr><td colspan="4" style="color:red;">Failed to load reports.</td></tr>`;
+      }
+    });
+
+    // Handle Certificate Printing Overlay
+    window.printCertificate = function(level, date) {
+      document.getElementById('certNamePlaceholder').innerText = currentUserName;
+      document.getElementById('certLevelPlaceholder').innerText = `Level ${level}`;
+      document.getElementById('certDatePlaceholder').innerText = date;
+      
+      const overlay = document.getElementById('printCertOverlay');
+      overlay.style.display = 'flex';
+      
+      window.print();
+      
+      overlay.style.display = 'none';
+      
+      // Attempt to clean up specific print artifact glitches dynamically 
+      setTimeout(() => { if(typeof lucide !== 'undefined') lucide.createIcons(); }, 100);
+    }
+  </script>
+</body>
+</html>

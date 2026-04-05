@@ -47,10 +47,10 @@ const AUTH = {
 
     if (user) {
       const btnHTML = `<a href="#" onclick="AUTH.logout();return false;" style="display:inline-flex;align-items:center;gap:0.35rem;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;background:#dc2626;color:#fff;transition:background 0.2s;" onmouseover="this.style.background='#b91c1c'" onmouseout="this.style.background='#dc2626'"><i data-lucide="log-out" style="width:14px;height:14px;"></i>LOGOUT</a>`;
-      const nameHTML = `<span style="display:inline-flex;align-items:center;gap:0.35rem;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;background:rgba(34,197,94,0.15);color:#16a34a;"><i data-lucide="user" style="width:14px;height:14px;"></i>${user.name.split(' ')[0]}</span>`;
+      const nameHTML = `<a href="dashboard.html" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.35rem;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;background:rgba(34,197,94,0.15);color:#16a34a;transition:background 0.2s;" onmouseover="this.style.background='rgba(34,197,94,0.25)'" onmouseout="this.style.background='rgba(34,197,94,0.15)'"><i data-lucide="user" style="width:14px;height:14px;"></i>${user.name.split(' ')[0]}</a>`;
       navLinks.forEach(nl => { nl.insertAdjacentHTML('beforeend', nameHTML + btnHTML); });
       mobileMenus.forEach(mm => {
-        mm.insertAdjacentHTML('beforeend', `<a href="#" onclick="AUTH.logout();return false;" style="color:#dc2626;">LOGOUT (${user.name.split(' ')[0]})</a>`);
+        mm.insertAdjacentHTML('beforeend', `<a href="dashboard.html" style="color:#16a34a;">DASHBOARD (${user.name.split(' ')[0]})</a><a href="#" onclick="AUTH.logout();return false;" style="color:#dc2626;">LOGOUT</a>`);
       });
     } else {
       const btnHTML = `<a href="login.html" style="display:inline-flex;align-items:center;gap:0.35rem;padding:0.4rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;background:#16a34a;color:#fff;transition:background 0.2s;" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='#16a34a'"><i data-lucide="log-in" style="width:14px;height:14px;"></i>LOGIN</a>`;
