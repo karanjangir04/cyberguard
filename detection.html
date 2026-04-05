@@ -193,6 +193,9 @@
   .alerts-panel { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-md); overflow: hidden; }
   body.dark .alerts-panel { background: var(--gray-100); }
   .alerts-header { background: var(--gray-900); color: #fff; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+  #alertsList { max-height: 340px; overflow-y: auto; }
+  #alertsList::-webkit-scrollbar { width: 8px; }
+  #alertsList::-webkit-scrollbar-thumb { background: rgba(75, 85, 99, 0.35); border-radius: 9999px; }
   .alerts-header h3 { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.95rem; }
   .live-badge { font-size: 0.72rem; font-weight: 700; background: var(--red); color: #fff; padding: 0.2rem 0.65rem; border-radius: 9999px; display: flex; align-items: center; gap: 0.35rem; }
   .live-badge .dot { width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: pulse 1.5s infinite; }
@@ -648,24 +651,6 @@
     </div>
     <h1>Real-Time Cyber Threat Detection</h1>
     <p>Advanced AI-powered tools to detect and prevent SMS phishing, malicious URLs, app threats, and voice scams in real-time.</p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="val" id="heroCallsVal">1,247</div>
-        <div class="lbl">CALLS ANALYZED</div>
-      </div>
-      <div class="hero-stat">
-        <div class="val" id="heroThreatsVal">89</div>
-        <div class="lbl">THREATS BLOCKED</div>
-      </div>
-      <div class="hero-stat">
-        <div class="val" id="heroUsersVal">756</div>
-        <div class="lbl">USERS PROTECTED</div>
-      </div>
-      <div class="hero-stat">
-        <div class="val">99.8%</div>
-        <div class="lbl">ACCURACY RATE</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -825,68 +810,7 @@
       </div>
     </div>
 
-    <!-- DEVICE SECURITY SCANNER — REAL SYSTEM SCAN -->
-    <div class="tool-card reveal" style="margin-bottom:1.5rem;" id="deviceScannerCard">
-      <div class="tool-card-header">
-        <div class="card-icon bg-purple-100" style="width:48px;height:48px;margin:0;border-radius:12px;">
-          <i data-lucide="shield-check" style="width:22px;height:22px;color:#7c3aed;"></i>
-        </div>
-        <div style="flex:1;">
-          <h3 style="display:flex;align-items:center;gap:0.5rem;">
-            Device Security Scanner
-            <span style="font-size:0.68rem;font-weight:700;background:#7c3aed;color:#fff;padding:0.15rem 0.55rem;border-radius:9999px;letter-spacing:0.06em;">LIVE SCAN</span>
-          </h3>
-          <p>Perform a real-time security audit of your device — scans browser settings, connection security, system capabilities, and privacy configuration</p>
-        </div>
-      </div>
-      <div class="tool-card-body">
-        <div class="feature-pills">
-          <span class="pill pill-purple">Browser Security</span>
-          <span class="pill pill-blue">Network Analysis</span>
-          <span class="pill pill-red">Privacy Audit</span>
-          <span class="pill pill-gray">System Info</span>
-          <span class="pill pill-teal">Storage Check</span>
-        </div>
-        <div style="margin-top:0.75rem;">
-          <button class="btn btn-primary" onclick="requestDeviceScan()" id="deviceScanBtn" style="background:#7c3aed;" onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">
-            <i data-lucide="scan-line" style="width:16px;height:16px;"></i>Start Device Scan
-          </button>
-        </div>
-        <div class="scan-progress" id="deviceProgress"><div class="scan-bar" style="animation-duration:3s;"></div></div>
-        <div id="deviceScanStatus" style="display:none;margin-top:0.75rem;font-size:0.82rem;color:var(--gray-500);padding:0.5rem 0;"></div>
-        <div id="deviceScanResults" style="margin-top:0.75rem;"></div>
-      </div>
-    </div>
 
-    <!-- Permission Popup Modal -->
-    <div id="scanPermissionModal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
-      <div style="background:#fff;border-radius:16px;padding:2rem;max-width:420px;width:90%;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);animation:fadeInUp 0.3s ease;">
-        <div style="text-align:center;margin-bottom:1.25rem;">
-          <div style="width:56px;height:56px;border-radius:50%;background:#f3e8ff;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
-            <i data-lucide="shield-alert" style="width:28px;height:28px;color:#7c3aed;"></i>
-          </div>
-          <h3 style="font-size:1.1rem;font-weight:700;color:var(--gray-900);margin-bottom:0.4rem;">Device Security Scan</h3>
-          <p style="font-size:0.85rem;color:var(--gray-500);line-height:1.6;">CyberGuard wants to perform a security audit of your device. This scan will check:</p>
-        </div>
-        <div style="background:var(--gray-50);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.82rem;color:var(--gray-700);line-height:1.8;">
-          <div>✅ Browser security settings &amp; version</div>
-          <div>✅ Network connection &amp; encryption</div>
-          <div>✅ System hardware capabilities</div>
-          <div>✅ Cookie &amp; tracking configuration</div>
-          <div>✅ Storage &amp; memory usage</div>
-          <div>✅ Privacy &amp; permission settings</div>
-        </div>
-        <p style="font-size:0.75rem;color:var(--gray-400);margin-bottom:1rem;text-align:center;">
-          🔒 All data is processed locally. Nothing is sent to any server.
-        </p>
-        <div style="display:flex;gap:0.75rem;">
-          <button onclick="closePermissionModal()" class="btn btn-secondary" style="flex:1;padding:0.6rem;">Cancel</button>
-          <button onclick="startDeviceScan()" class="btn btn-primary" style="flex:1;padding:0.6rem;background:#7c3aed;" onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">
-            <i data-lucide="scan-line" style="width:14px;height:14px;"></i>Allow Scan
-          </button>
-        </div>
-      </div>
-    </div>
 
 
 
@@ -1266,6 +1190,28 @@ const INITIAL_ALERTS = [
   {type:"Fraud",message:"OLX scam using fake army ID cards active in Delhi NCR",time:"8 hours ago",severity:"Medium",color:"#eab308"},
 ];
 
+const LIVE_ALERT_TEMPLATES = [
+  {type:"Phishing",message:"Urgent action required: verify your account now via fake bank link",severity:"High"},
+  {type:"Scam Call",message:"Caller claims police complaint filed unless OTP is shared",severity:"Critical"},
+  {type:"Fraud",message:"Unauthorized transaction alert asking for account number details",severity:"High"},
+  {type:"Malware",message:"Delivery failed message asks to install a fake courier app",severity:"High"},
+  {type:"Phishing",message:"Income tax notice demands KYC update on a suspicious site",severity:"High"},
+  {type:"Warning",message:"Police FIR threat is being used to force immediate payment",severity:"Critical"},
+];
+
+function scheduleLiveAlerts() {
+  const list = document.getElementById("alertsList");
+  setInterval(() => {
+    const template = LIVE_ALERT_TEMPLATES[Math.floor(Math.random() * LIVE_ALERT_TEMPLATES.length)];
+    addLiveAlert(template.type, template.message, template.severity);
+    if (list.scrollHeight > list.clientHeight) {
+      list.scrollTop = 0;
+    }
+  }, 9000 + Math.floor(Math.random() * 8000));
+}
+
+scheduleLiveAlerts();
+
 /* ═══ COMPREHENSIVE SCAM KEYWORD DATABASE ═══ */
 const SCAM_KEYWORDS = [
   // Critical — Immediate danger (90–100%)
@@ -1297,6 +1243,15 @@ const SCAM_KEYWORDS = [
   {word:"customs",            risk:82, severity:"high",     category:"Customs Scam",            msg:"Fake customs duty scam — package detained scam targeting online shoppers"},
   {word:"package detained",   risk:83, severity:"high",     category:"Parcel Scam",             msg:"Fake parcel detention scam — requests payment for non-existent customs duty"},
   {word:"verify account",     risk:78, severity:"high",     category:"Phishing",                msg:"Account verification phishing — always verify through official channels"},
+  {word:"unauthorized transaction", risk:85, severity:"high", category:"Banking Fraud", msg:"Unauthorized transaction alert — verify directly with your bank, never through calls"},
+  {word:"notice", risk:75, severity:"high", category:"Fake Notice", msg:"Fake notice scam — government agencies don't send notices via SMS or calls"},
+  {word:"police complaint", risk:88, severity:"high", category:"Authority Impersonation", msg:"Fake police complaint — verify by contacting official police station directly"},
+  {word:"delivery failed", risk:80, severity:"high", category:"Parcel Scam", msg:"Fake delivery failure — common scam to extract payment for non-existent deliveries"},
+  {word:"fir", risk:95, severity:"critical", category:"Fake FIR", msg:"Fake FIR threat — police don't issue FIRs over phone calls"},
+  {word:"FIR", risk:95, severity:"critical", category:"Fake FIR", msg:"Fake FIR threat — police don't issue FIRs over phone calls"},
+  {word:"account number", risk:82, severity:"high", category:"Banking Fraud", msg:"Account number request — banks never ask for full account numbers over calls"},
+  {word:"account no", risk:82, severity:"high", category:"Banking Fraud", msg:"Account number request — banks never ask for full account numbers over calls"},
+  {word:"acc no", risk:82, severity:"high", category:"Banking Fraud", msg:"Account number request — banks never ask for full account numbers over calls"},
   // Medium — Suspicious (55–74%)
   {word:"urgent",             risk:68, severity:"medium",   category:"Urgency Tactic",          msg:"Urgency manipulation — scammers create artificial time pressure"},
   {word:"immediately",        risk:65, severity:"medium",   category:"Pressure Tactic",         msg:"Immediate action demand — designed to prevent you from thinking clearly"},
@@ -2784,16 +2739,23 @@ function copyTranscript() {
 }
 
 /* ═══ VOICE DETECTION (existing) ═══ */
-function analyzeVoiceText(text) {
+function analyzeVoiceText(text, isInterim = false) {
   if (!text.trim()) return;
   const transcript = document.getElementById("voiceTranscript");
-  transcript.textContent = `"${text}"`;
-  const found = SCAM_KEYWORDS.filter(kw => text.toLowerCase().includes(kw.word.toLowerCase()));
+  if (!isInterim) transcript.textContent = `"${text}"`;
+  const lower = text.toLowerCase();
+  const words = lower.split(/\s+/);
+  const found = SCAM_KEYWORDS.filter(kw => {
+    const kwLower = kw.word.toLowerCase();
+    return lower.includes(kwLower) || words.some(word => word.includes(kwLower) || kwLower.includes(word));
+  });
   if (found.length > 0) {
     const top = found[0];
-    addLiveAlert("Scam Call", `Voice: "${top.word}" — ${top.msg}`, top.risk >= 90 ? "Critical" : "High");
-    showToast(`🎤 Scam keyword: "${top.word}"`, "threat");
-    updateDashboard(true);
+    if (!isInterim) {
+      addLiveAlert("Scam Call", `Voice: "${top.word}" — ${top.msg}`, top.risk >= 90 ? "Critical" : "High");
+      showToast(`🎤 Scam keyword: "${top.word}"`, "threat");
+      updateDashboard(true);
+    }
     transcript.style.color = "#f87171";
     document.getElementById("voiceStatus").innerHTML = `<span style="color:#f87171;font-weight:700;">⚠️ Scam keywords detected!</span>`;
   } else {
@@ -2809,7 +2771,7 @@ function startVoiceDetection() {
   voiceRecognition = new SR();
   voiceRecognition.continuous = true;
   voiceRecognition.interimResults = true;
-  voiceRecognition.lang = "en-IN";
+  voiceRecognition.lang = "hi-IN";
   voiceRecognition.onstart = () => {
     isListening = true;
     document.getElementById("voiceWaveform").classList.add("active");
@@ -2822,9 +2784,17 @@ function startVoiceDetection() {
     showToast("🎤 Voice detection active", "info");
   };
   voiceRecognition.onresult = (event) => {
+    let transcript = "";
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      transcript += event.results[i][0].transcript;
+    }
     const last = event.results[event.results.length-1];
-    if (last.isFinal) analyzeVoiceText(last[0].transcript);
-    else document.getElementById("voiceTranscript").textContent = `"${last[0].transcript}…"`;
+    if (last.isFinal) {
+      analyzeVoiceText(transcript, false);
+    } else {
+      analyzeVoiceText(transcript, true);
+      document.getElementById("voiceTranscript").textContent = `"${transcript}…"`;
+    }
   };
   voiceRecognition.onerror = (e) => { showToast(`Voice error: ${e.error}`, "warning"); stopVoiceDetection(); };
   voiceRecognition.onend = () => { if (isListening) voiceRecognition.start(); };
