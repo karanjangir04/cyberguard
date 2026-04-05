@@ -2760,6 +2760,7 @@ function analyzeVoiceText(text, isInterim = false) {
   if (found.length > 0) {
     const top = found[0];
     if (!isInterim) {
+      incrementThreatsDetected(found.length); // Pass count of threats found
       addLiveAlert("Scam Call", `Voice: "${top.word}" — ${top.msg}`, top.risk >= 90 ? "Critical" : "High");
       showToast(`🎤 Scam keyword: "${top.word}"`, "threat");
       updateDashboard(true);
@@ -2767,6 +2768,9 @@ function analyzeVoiceText(text, isInterim = false) {
     transcript.style.color = "#f87171";
     document.getElementById("voiceStatus").innerHTML = `<span style="color:#f87171;font-weight:700;">⚠️ Scam keywords detected!</span>`;
   } else {
+    if (!isInterim) {
+      incrementUsersProtected(); // Increment users protected when no threats
+    }
     document.getElementById("voiceStatus").innerHTML = `<span style="color:#4ade80;">✅ No scam keywords in current speech</span>`;
     transcript.style.color = "#4ade80";
   }
@@ -2782,6 +2786,7 @@ function startVoiceDetection() {
   voiceRecognition.lang = "hi-IN";
   voiceRecognition.onstart = () => {
     isListening = true;
+    incrementCallsAnalyzed(); // Increment calls analyzed when detection starts
     document.getElementById("voiceWaveform").classList.add("active");
     document.getElementById("voiceTranscript").classList.add("show");
     document.getElementById("voiceTranscript").textContent = "🎤 Listening — speak now…";
@@ -2830,15 +2835,74 @@ function updateClock() {
 updateClock(); setInterval(updateClock, 1000);
 
 /* ═══ LIVE STATS ═══ */
-let liveCallsBase=1247, liveThreatsBase=89, liveUsersBase=756;
-setInterval(() => {
-  liveCallsBase += Math.floor(Math.random()*3);
-  if (Math.random()>0.7) liveThreatsBase++;
-  if (Math.random()>0.5) liveUsersBase++;
+let liveCallsBase = 0, liveThreatsBase = 0, liveUsersBase = 0;
+
+// Fetch initial stats from API
+async function loadDetectionStats() {
+  try {
+    const response = await fetch('/api/detection/stats');
+    const stats = await response.json();
+    liveCallsBase = stats.callsAnalyzedToday || 0;
+    liveThreatsBase = stats.threatsDetected || 0;
+    liveUsersBase = stats.usersProtected || 0;
+    updateStatsDisplay();
+  } catch (error) {
+    console.error('Failed to load detection stats:', error);
+  }
+}
+
+// Update all stat displays
+function updateStatsDisplay() {
   ["heroCallsVal","voiceCallsVal"].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=liveCallsBase.toLocaleString(); });
   ["heroThreatsVal","voiceThreatsVal"].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=liveThreatsBase; });
   ["heroUsersVal","voiceUsersVal"].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=liveUsersBase; });
-}, 3000);
+}
+
+// Increment calls analyzed when voice detection is enabled
+async function incrementCallsAnalyzed() {
+  try {
+    const response = await fetch('/api/detection/increment-calls', { method: 'POST' });
+    const stats = await response.json();
+    liveCallsBase = stats.callsAnalyzedToday;
+    updateStatsDisplay();
+  } catch (error) {
+    console.error('Failed to increment calls:', error);
+  }
+}
+
+// Increment threats detected by threat count
+async function incrementThreatsDetected(threatCount = 1) {
+  try {
+    const response = await fetch('/api/detection/increment-threats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ threatCount })
+    });
+    const stats = await response.json();
+    liveThreatsBase = stats.threatsDetected;
+    updateStatsDisplay();
+  } catch (error) {
+    console.error('Failed to increment threats:', error);
+  }
+}
+
+// Increment users protected when no threats detected
+async function incrementUsersProtected() {
+  try {
+    const response = await fetch('/api/detection/increment-users-protected', { method: 'POST' });
+    const stats = await response.json();
+    liveUsersBase = stats.usersProtected;
+    updateStatsDisplay();
+  } catch (error) {
+    console.error('Failed to increment users protected:', error);
+  }
+}
+
+// Initialize stats on page load
+loadDetectionStats();
+
+// Update display every 5 seconds (just for UI refresh, actual data comes from API)
+setInterval(updateStatsDisplay, 5000);
 
 /* ═══ HOW IT WORKS ═══ */
 document.getElementById("howItWorks").innerHTML = HOW_IT_WORKS.map(h =>

@@ -10,6 +10,7 @@ const reportRoutes = require('./routes/reports');
 const workshopRoutes = require('./routes/workshops');
 const quizScoreRoutes = require('./routes/quizScores');
 const scamAlertRoutes = require('./routes/scamAlerts');
+const detectionRoutes = require('./routes/detection');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,6 +29,7 @@ app.use('/api/reports', reportRoutes);
 app.use('/api/workshops', workshopRoutes);
 app.use('/api/quiz-scores', quizScoreRoutes);
 app.use('/api/scam-alerts', scamAlertRoutes);
+app.use('/api/detection', detectionRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
